@@ -1,0 +1,213 @@
+body{
+    margin:0;
+    font-family: "Yu Gothic";
+    background:#ffd6ec;
+}
+
+.page{
+    max-width:600px;
+    margin:auto;
+    padding:30px;
+    text-align:center;
+}
+
+h1{
+    color:#ff4fa3;
+    font-size:48px;
+}
+
+.message{
+    font-size:28px;
+    color:#d14c87;
+    margin-bottom:40px;
+}
+
+button{
+
+    width:100%;
+
+    padding:30px;
+
+    margin:20px 0;
+
+    font-size:30px;
+
+    border:none;
+
+    border-radius:30px;
+
+    cursor:pointer;
+
+    font-weight:bold;
+
+}
+
+#firstDayButton{
+
+    background:#ff9ad5;
+
+    color:white;
+
+}
+
+#normalButton{
+
+    background:#b89cff;
+
+    color:white;
+
+}
+
+.princess{
+
+    width:220px;
+
+    display:block;
+
+    margin:30px auto;
+
+}
+
+#app{
+
+    width:100%;
+
+    max-width:600px;
+
+    padding:30px;
+
+    box-sizing:border-box;
+
+}
+
+body{
+
+    margin:0;
+
+    font-family:"Yu Gothic";
+
+    background:#ffd6ec;
+
+    display:flex;
+
+    justify-content:center;
+
+}
+
+h1{
+
+    font-size:60px;
+
+    margin:10px 0;
+
+}
+
+h2{
+
+    text-align:center;
+
+    color:#ff4fa3;
+
+    font-size:42px;
+
+    margin-bottom:40px;
+
+}
+
+button{
+
+    width:100%;
+
+    padding:24px;
+
+    margin:18px 0;
+
+    border:none;
+
+    border-radius:30px;
+
+    font-size:32px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+    box-shadow:0 8px 18px rgba(0,0,0,.15);
+
+}
+
+.check-button{
+
+    background:white;
+
+    color:#444;
+
+}
+
+.check-button.done{
+
+    background:#ff8cc8;
+
+    color:white;
+
+}
+
+.finish-screen{
+
+    text-align:center;
+
+    animation:pop .5s;
+
+}
+
+.sparkle{
+
+    font-size:50px;
+
+    animation:kira 1s infinite;
+
+}
+
+@keyframes kira{
+
+    0%{
+
+        transform:scale(1);
+
+    }
+
+    50%{
+
+        transform:scale(1.15);
+
+    }
+
+    100%{
+
+        transform:scale(1);
+
+    }
+
+}
+
+@keyframes pop{
+
+    from{
+
+        opacity:0;
+
+        transform:scale(.8);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:scale(1);
+
+    }
+
+}
