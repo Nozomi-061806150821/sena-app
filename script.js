@@ -66,19 +66,27 @@ function render() {
 
     switch (state.screen) {
 
-        case "start":
-            renderStart();
-            break;
+    case "start":
+        renderStart();
+        break;
 
-        case "check":
-            renderCheck();
-            break;
+    case "menu":
+        renderMenu();
+        break;
 
-        case "finish":
-            renderFinish();
-            break;
+    case "check":
+        renderCheck();
+        break;
 
-    }
+    case "finish":
+        renderFinish();
+        break;
+
+    case "stamp":
+        renderStamp();
+        break;
+
+}
 
 }
 
@@ -161,38 +169,49 @@ function renderStart() {
     finishSound.pause();
 
     app.innerHTML = `
-        <section class="start-screen">
 
-            <h2>
-            👑<br>
-                せなの じゅんびらんど🦄💗💗💗
-            </h2>
+<section class="start-screen">
 
-            <button id="firstButton">
-                💖<br>
-                こんしゅう<br>
-                はじめて
-                <br>ほいくえんに　いくよ！
-            </button>
+<h2>
+👑<br>
+せなの じゅんびらんど
+</h2>
 
-            <button id="normalButton">
-                💜<br>
-                こんしゅう<br>
-                なんかいか<br>
-                ほいくえんに　いってるよ！
-            </button>
+<button id="morningButton">
 
-        </section>
-    `;
+💖<br>
+あさのじゅんび
 
-    // ⭐ ボタンを取得
-    const firstButton = document.getElementById("firstButton");
-    const normalButton = document.getElementById("normalButton");
+</button>
 
-    // ⭐ イベント登録
-    firstButton.addEventListener("click", onClickFirst);
+<button id="stampButton">
 
-    normalButton.addEventListener("click", onClickNormal);
+🌸<br>
+すたんぷかーど
+
+</button>
+
+</section>
+
+`;
+
+   document
+    .getElementById("morningButton")
+    .addEventListener("click", () => {
+
+        state.screen = "menu";
+        render();
+
+    });
+
+document
+    .getElementById("stampButton")
+    .addEventListener("click", () => {
+
+        state.screen = "stamp";
+        render();
+
+    });
 
 }
 
@@ -256,6 +275,114 @@ function renderFinish() {
             state.mode = null;
             state.screen = "start";
 
+            render();
+
+        });
+
+}
+
+// ======================================
+// メニュー画面
+// ======================================
+
+function renderMenu() {
+
+    app.innerHTML = `
+
+    <section class="start-screen">
+
+        <h2>
+            🌞<br>
+            あさのじゅんび
+        </h2>
+
+        <button id="firstButton">
+
+            💖<br>
+            こんしゅう はじめて<br>
+            ほいくえんに いくよ！
+
+        </button>
+
+        <button id="normalButton">
+
+            💜<br>
+            こんしゅう なんかいか<br>
+            ほいくえんに いってるよ！
+
+        </button>
+
+        <button id="backMenu">
+
+            ⬅️<br>
+            もどる
+
+        </button>
+
+    </section>
+
+    `;
+
+    document
+        .getElementById("firstButton")
+        .addEventListener("click", onClickFirst);
+
+    document
+        .getElementById("normalButton")
+        .addEventListener("click", onClickNormal);
+
+    document
+        .getElementById("backMenu")
+        .addEventListener("click", () => {
+
+            state.screen = "start";
+            render();
+
+        });
+
+}
+
+// ======================================
+// スタンプ画面
+// ======================================
+
+function renderStamp() {
+
+    app.innerHTML = `
+
+    <section class="finish-screen">
+
+        <h1>🌸</h1>
+
+        <h2>
+
+            すたんぷかーど
+
+        </h2>
+
+        <p>
+
+            じゅんびちゅうだから<br><br>
+
+            もうすこしまってね💓🥰
+
+        </p>
+
+        <button id="backStamp">
+
+            ⬅️ もどる
+
+        </button>
+
+    </section>
+
+    `;
+
+    document
+        .getElementById("backStamp")
+        .addEventListener("click", () => {
+
+            state.screen = "start";
             render();
 
         });

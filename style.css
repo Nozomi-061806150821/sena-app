@@ -1,92 +1,10 @@
 body{
-    margin:0;
-    font-family: "Yu Gothic";
-    background:#ffd6ec;
-}
-
-.page{
-    max-width:600px;
-    margin:auto;
-    padding:30px;
-    text-align:center;
-}
-
-h1{
-    color:#ff4fa3;
-    font-size:48px;
-}
-
-.message{
-    font-size:28px;
-    color:#d14c87;
-    margin-bottom:40px;
-}
-
-button{
-
-    width:100%;
-
-    padding:30px;
-
-    margin:20px 0;
-
-    font-size:30px;
-
-    border:none;
-
-    border-radius:30px;
-
-    cursor:pointer;
-
-    font-weight:bold;
-
-}
-
-#firstDayButton{
-
-    background:#ff9ad5;
-
-    color:white;
-
-}
-
-#normalButton{
-
-    background:#b89cff;
-
-    color:white;
-
-}
-
-.princess{
-
-    width:220px;
-
-    display:block;
-
-    margin:30px auto;
-
-}
-
-#app{
-
-    width:100%;
-
-    max-width:600px;
-
-    padding:30px;
-
-    box-sizing:border-box;
-
-}
-
-body{
 
     margin:0;
 
-    font-family:"Yu Gothic";
+    font-family:"M PLUS Rounded 1c",sans-serif;
 
-    background:#ffd6ec;
+    background:linear-gradient(#ffd9ef,#ffeef8);
 
     display:flex;
 
@@ -94,49 +12,163 @@ body{
 
 }
 
+#app{
+
+    width:100%;
+
+    max-width:700px;
+
+    padding:30px;
+
+    box-sizing:border-box;
+
+}
+
+.start-screen,
+.check-screen,
+.finish-screen{
+
+    text-align:center;
+
+}
+
 h1{
 
-    font-size:60px;
+    font-size:64px;
 
     margin:10px 0;
+
+    color:#ff4fa3;
+
+    font-weight:800;
+
+    letter-spacing:2px;
 
 }
 
 h2{
 
-    text-align:center;
-
     color:#ff4fa3;
 
     font-size:42px;
 
-    margin-bottom:40px;
+    margin:20px 0 40px;
+
+    line-height:1.5;
+
+    font-weight:800;
+
+    letter-spacing:2px;
 
 }
+
+p{
+
+    font-size:28px;
+
+    color:#d14c87;
+
+    line-height:1.8;
+
+    font-weight:700;
+
+}
+
+/* ------------------------------
+   ボタン共通
+------------------------------ */
 
 button{
 
     width:100%;
 
-    padding:24px;
+    padding:28px;
 
     margin:18px 0;
 
     border:none;
 
-    border-radius:30px;
+    border-radius:35px;
 
-    font-size:32px;
+    font-size:30px;
 
-    font-weight:bold;
+    font-family:"M PLUS Rounded 1c",sans-serif;
+
+    font-weight:800;
+
+    color:white;
 
     cursor:pointer;
 
     transition:.2s;
 
-    box-shadow:0 8px 18px rgba(0,0,0,.15);
+    box-shadow:0 10px 20px rgba(255,105,180,.25);
 
 }
+
+button:hover{
+
+    transform:translateY(-4px);
+
+}
+
+button:active{
+
+    transform:scale(.97);
+
+}
+
+/* ------------------------------
+   ホーム画面
+------------------------------ */
+
+#morningButton{
+
+    background:linear-gradient(
+        180deg,
+        #ffb8df,
+        #ff69b4
+    );
+
+}
+
+#stampButton{
+
+    background:linear-gradient(
+        180deg,
+        #ffe57d,
+        #ffc800
+    );
+
+}
+
+/* ------------------------------
+   モード選択
+------------------------------ */
+
+#firstButton{
+
+    background:linear-gradient(
+        180deg,
+        #ff9cd5,
+        #ff6cb8
+    );
+
+}
+
+#normalButton{
+
+    background:linear-gradient(
+        180deg,
+        #c0a4ff,
+        #9b73ff
+    );
+
+}
+
+/* ------------------------------
+   チェックボタン
+------------------------------ */
 
 .check-button{
 
@@ -144,29 +176,55 @@ button{
 
     color:#444;
 
+    font-size:28px;
+
 }
 
 .check-button.done{
 
-    background:#ff8cc8;
+    background:linear-gradient(
+        180deg,
+        #ff9cd5,
+        #ff5db0
+    );
 
     color:white;
 
 }
 
-.finish-screen{
+/* ------------------------------
+   完了画面
+------------------------------ */
 
-    text-align:center;
+.finish-screen{
 
     animation:pop .5s;
 
 }
 
+.princess{
+
+    width:260px;
+
+    display:block;
+
+    margin:25px auto;
+
+    border-radius:25px;
+
+    box-shadow:0 12px 25px rgba(0,0,0,.2);
+
+}
+
+/* ------------------------------
+   キラキラ
+------------------------------ */
+
 .sparkle{
 
-    font-size:50px;
+    font-size:60px;
 
-    animation:kira 1s infinite;
+    animation:kira 1.2s infinite;
 
 }
 
@@ -174,19 +232,19 @@ button{
 
     0%{
 
-        transform:scale(1);
+        transform:scale(1) rotate(0deg);
 
     }
 
     50%{
 
-        transform:scale(1.15);
+        transform:scale(1.15) rotate(8deg);
 
     }
 
     100%{
 
-        transform:scale(1);
+        transform:scale(1) rotate(0deg);
 
     }
 
@@ -209,5 +267,23 @@ button{
         transform:scale(1);
 
     }
+
+}
+
+/* ------------------------------
+   戻るボタン
+------------------------------ */
+
+#backButton,
+#backMenu,
+#backStamp{
+
+    background:linear-gradient(
+        180deg,
+        #9fdfff,
+        #67c8ff
+    );
+
+    color:white;
 
 }
