@@ -172,10 +172,10 @@ function renderStart() {
 
 <section class="start-screen">
 
-<h2>
-👑<br>
-せなの じゅんびらんど
-</h2>
+<img
+    src="assets/images/logo.png"
+    class="logo"
+    alt="せなちゃれ♡">
 
 <button id="morningButton">
 
