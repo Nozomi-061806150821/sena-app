@@ -12,6 +12,7 @@ let lists = {
         { id: "shirt", icon: "👕", text: "はんそで" },
         { id: "pants", icon: "👖", text: "ずぼん" },
         { id: "underwear", icon: "👙", text: "したぎ" },
+        { id: "bag", icon: "🛍️", text: "よごれた せんたくものを いれる ふくろ" },
         { id: "cup", icon: "🥤", text: "こっぷ と こっぷいれ" },
         { id: "tea", icon: "🧃", text: "むぎちゃ" }
     ],
@@ -21,10 +22,28 @@ let lists = {
         { id: "shirt", icon: "👕", text: "はんそで" },
         { id: "pants", icon: "👖", text: "ずぼん" },
         { id: "underwear", icon: "👙", text: "したぎ" },
+        { id: "bag", icon: "🛍️", text: "よごれた せんたくものを いれる ふくろ" },
         { id: "cup", icon: "🥤", text: "こっぷ と こっぷいれ" },
         { id: "tea", icon: "🧃", text: "むぎちゃ" }
     ]
 };
+
+const morningList = [
+
+    { id: "toilet", icon: "🚽", text: "といれ" },
+
+    { id: "clothes", icon: "👕", text: "おきがえ" },
+
+    { id: "temperature", icon: "🌡️", text: "たいおん" },
+
+    { id: "items", icon: "🎒", text: "もちものちぇっく" },
+
+    { id: "breakfast", icon: "🍚", text: "あさごはん・かみのけ" },
+
+    { id: "brush", icon: "🪥", text: "はみがき・おかお" }
+
+];
+
 
 // ======================================
 // アプリの状態
@@ -36,7 +55,11 @@ const state = {
 
     mode: null,
 
-    checked: []
+    checked: [],
+
+    checkedMorning: [],
+
+    morningComplete: false
 
 };
 
@@ -66,27 +89,30 @@ function render() {
 
     switch (state.screen) {
 
-    case "start":
-        renderStart();
-        break;
+        case "start":
+            renderStart();
+            break;
 
-    case "menu":
-        renderMenu();
-        break;
+        case "menu":
+            renderMenu();
+            break;
 
-    case "check":
-        renderCheck();
-        break;
+        case "check":
+            renderCheck();
+            break;
 
-    case "finish":
-        renderFinish();
-        break;
+        case "finish":
+            renderFinish();
+            break;
 
-    case "stamp":
-        renderStamp();
-        break;
+        case "stamp":
+            renderStamp();
+            break;
 
-}
+        case "mode":
+            renderMode();
+            break;
+    }
 
 }
 
@@ -127,7 +153,13 @@ function renderCheck() {
         finishSound.currentTime = 0;
         finishSound.play();
 
-        state.screen = "finish";
+        if (!state.checkedMorning.includes("items")) {
+
+            state.checkedMorning.push("items");
+
+        }
+
+        state.screen = "menu";
 
         render();
 
@@ -179,15 +211,34 @@ function renderStart() {
 
 <button id="morningButton">
 
-💖<br>
-あさのじゅんび
+🌞<br>
+あさちゃれんじ
+${state.morningComplete ? "<br>✅" : ""}
 
 </button>
 
 <button id="stampButton">
 
-🌸<br>
+🏆<br>
 すたんぷかーど
+
+</button>
+
+<button
+    id="fortuneButton"
+    ${state.morningComplete ? "" : "disabled"}>
+
+🔮<br>
+きょうのうらない
+
+</button>
+
+<button
+    id="jankenButton"
+    ${state.morningComplete ? "" : "disabled"}>
+
+✌️<br>
+じゃんけんたいむ
 
 </button>
 
@@ -195,23 +246,39 @@ function renderStart() {
 
 `;
 
-   document
-    .getElementById("morningButton")
-    .addEventListener("click", () => {
+    document
+        .getElementById("morningButton")
+        .addEventListener("click", () => {
 
-        state.screen = "menu";
-        render();
+            state.screen = "menu";
+            render();
 
-    });
+        });
 
-document
-    .getElementById("stampButton")
-    .addEventListener("click", () => {
+    document
+        .getElementById("stampButton")
+        .addEventListener("click", () => {
 
-        state.screen = "stamp";
-        render();
+            state.screen = "stamp";
+            render();
 
-    });
+        });
+
+    document
+        .getElementById("fortuneButton")
+        .addEventListener("click", () => {
+
+            alert("もうすぐできるよ♡");
+
+        });
+
+    document
+        .getElementById("jankenButton")
+        .addEventListener("click", () => {
+
+            alert("もうすぐできるよ♡");
+
+        });
 
 }
 
@@ -259,7 +326,7 @@ function renderFinish() {
         <button id="backButton">
 
             👑
-            もういちど
+            さいしょにもどる
 
         </button>
 
@@ -271,8 +338,12 @@ function renderFinish() {
         .getElementById("backButton")
         .addEventListener("click", () => {
 
+            state.checkedMorning = [];
             state.checked = [];
             state.mode = null;
+
+            state.morningComplete = true;
+
             state.screen = "start";
 
             render();
@@ -287,32 +358,102 @@ function renderFinish() {
 
 function renderMenu() {
 
+    let html = "";
+
+    morningList.forEach(item => {
+
+        const checked =
+            state.checkedMorning.includes(item.id);
+
+        html += `
+            <button
+                class="morning-button ${checked ? "done" : ""}"
+                data-id="${item.id}">
+
+                ${checked ? "✅" : item.icon}
+                ${item.text}
+
+            </button>
+
+            <br><br>
+        `;
+
+    });
+
+    app.innerHTML = `
+
+    <section class="check-screen">
+
+        <h2>
+            🌞<br>
+            あさちゃれんじ
+        </h2>
+
+        ${html}
+
+        <button id="backMenu">
+
+            ⬅️<br>
+            もどる
+
+        </button>
+
+    </section>
+
+    `;
+
+    document
+        .querySelectorAll(".morning-button")
+        .forEach(button => {
+
+            button.addEventListener("click", () => {
+
+                toggleMorning(button.dataset.id);
+
+            });
+
+        });
+
+    document
+        .getElementById("backMenu")
+        .addEventListener("click", () => {
+
+            state.screen = "start";
+
+            render();
+
+        });
+
+}
+
+function renderMode() {
+
     app.innerHTML = `
 
     <section class="start-screen">
 
         <h2>
-            🌞<br>
-            あさのじゅんび
+
+            🎒<br>
+            もちものちぇっく
+
         </h2>
 
         <button id="firstButton">
 
-            💖<br>
-            こんしゅう はじめて<br>
-            ほいくえんに いくよ！
+            🌸<br>
+            こんしゅう はじめてだよ！
 
         </button>
 
         <button id="normalButton">
 
             💜<br>
-            こんしゅう なんかいか<br>
-            ほいくえんに いってるよ！
+            こんしゅう はじめてじゃないよ！
 
         </button>
 
-        <button id="backMenu">
+        <button id="backMode">
 
             ⬅️<br>
             もどる
@@ -332,16 +473,59 @@ function renderMenu() {
         .addEventListener("click", onClickNormal);
 
     document
-        .getElementById("backMenu")
+        .getElementById("backMode")
         .addEventListener("click", () => {
 
-            state.screen = "start";
+            state.screen = "menu";
             render();
 
         });
 
 }
 
+function toggleMorning(id) {
+
+    // 持ち物チェックを押したら
+    if (id === "items") {
+
+        // モード選択画面へ
+        state.screen = "mode";
+        render();
+        return;
+
+    }
+
+    // チェック音
+    checkSound.currentTime = 0;
+    checkSound.play();
+
+    // チェック切り替え
+    if (state.checkedMorning.includes(id)) {
+
+        state.checkedMorning =
+            state.checkedMorning.filter(item => item !== id);
+
+    } else {
+
+        state.checkedMorning.push(id);
+
+    }
+
+    // 全部終わった？
+    if (state.checkedMorning.length === morningList.length) {
+
+        finishSound.currentTime = 0;
+        finishSound.play();
+
+        state.morningComplete = true;
+
+        state.screen = "finish";
+
+    }
+
+    render();
+
+}
 // ======================================
 // スタンプ画面
 // ======================================

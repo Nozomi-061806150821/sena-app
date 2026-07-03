@@ -1,76 +1,76 @@
-body{
+body {
 
-    margin:0;
+    margin: 0;
 
-    font-family:"M PLUS Rounded 1c",sans-serif;
+    font-family: "M PLUS Rounded 1c", sans-serif;
 
-    background:linear-gradient(#ffd9ef,#ffeef8);
+    background: linear-gradient(#ffd9ef, #ffeef8);
 
-    display:flex;
+    display: flex;
 
-    justify-content:center;
+    justify-content: center;
 
 }
 
-#app{
+#app {
 
-    width:100%;
+    width: 100%;
 
-    max-width:700px;
+    max-width: 700px;
 
-    padding:30px;
+    padding: 30px;
 
-    box-sizing:border-box;
+    box-sizing: border-box;
 
 }
 
 .start-screen,
 .check-screen,
-.finish-screen{
+.finish-screen {
 
-    text-align:center;
-
-}
-
-h1{
-
-    font-size:64px;
-
-    margin:10px 0;
-
-    color:#ff4fa3;
-
-    font-weight:800;
-
-    letter-spacing:2px;
+    text-align: center;
 
 }
 
-h2{
+h1 {
 
-    color:#ff4fa3;
+    font-size: 64px;
 
-    font-size:42px;
+    margin: 10px 0;
 
-    margin:20px 0 40px;
+    color: #ff4fa3;
 
-    line-height:1.5;
+    font-weight: 800;
 
-    font-weight:800;
-
-    letter-spacing:2px;
+    letter-spacing: 2px;
 
 }
 
-p{
+h2 {
 
-    font-size:28px;
+    color: #ff4fa3;
 
-    color:#d14c87;
+    font-size: 42px;
 
-    line-height:1.8;
+    margin: 20px 0 40px;
 
-    font-weight:700;
+    line-height: 1.5;
+
+    font-weight: 800;
+
+    letter-spacing: 2px;
+
+}
+
+p {
+
+    font-size: 28px;
+
+    color: #d14c87;
+
+    line-height: 1.8;
+
+    font-weight: 700;
 
 }
 
@@ -78,43 +78,43 @@ p{
    ボタン共通
 ------------------------------ */
 
-button{
+button {
 
-    width:100%;
+    width: 100%;
 
-    padding:28px;
+    padding: 28px;
 
-    margin:18px 0;
+    margin: 18px 0;
 
-    border:none;
+    border: none;
 
-    border-radius:35px;
+    border-radius: 35px;
 
-    font-size:30px;
+    font-size: 30px;
 
-    font-family:"M PLUS Rounded 1c",sans-serif;
+    font-family: "M PLUS Rounded 1c", sans-serif;
 
-    font-weight:800;
+    font-weight: 800;
 
-    color:white;
+    color: white;
 
-    cursor:pointer;
+    cursor: pointer;
 
-    transition:.2s;
+    transition: .2s;
 
-    box-shadow:0 10px 20px rgba(255,105,180,.25);
-
-}
-
-button:hover{
-
-    transform:translateY(-4px);
+    box-shadow: 0 10px 20px rgba(255, 105, 180, .25);
 
 }
 
-button:active{
+button:hover {
 
-    transform:scale(.97);
+    transform: translateY(-4px);
+
+}
+
+button:active {
+
+    transform: scale(.97);
 
 }
 
@@ -122,23 +122,35 @@ button:active{
    ホーム画面
 ------------------------------ */
 
-#morningButton{
+#morningButton {
 
-    background:linear-gradient(
-        180deg,
-        #ffb8df,
-        #ff69b4
-    );
+    background: linear-gradient(180deg,
+            #ffb8df,
+            #ff69b4);
 
 }
 
-#stampButton{
+#stampButton {
 
-    background:linear-gradient(
-        180deg,
-        #ffe57d,
-        #ffc800
-    );
+    background: linear-gradient(180deg,
+            #ffe57d,
+            #ffc800);
+
+}
+
+#fortuneButton {
+
+    background: linear-gradient(180deg,
+            #b88cff,
+            #8d63ff);
+
+}
+
+#jankenButton {
+
+    background: linear-gradient(180deg,
+            #8ee7ff,
+            #3fc9ff);
 
 }
 
@@ -146,23 +158,19 @@ button:active{
    モード選択
 ------------------------------ */
 
-#firstButton{
+#firstButton {
 
-    background:linear-gradient(
-        180deg,
-        #ff9cd5,
-        #ff6cb8
-    );
+    background: linear-gradient(180deg,
+            #ff9cd5,
+            #ff6cb8);
 
 }
 
-#normalButton{
+#normalButton {
 
-    background:linear-gradient(
-        180deg,
-        #c0a4ff,
-        #9b73ff
-    );
+    background: linear-gradient(180deg,
+            #c0a4ff,
+            #9b73ff);
 
 }
 
@@ -170,25 +178,23 @@ button:active{
    チェックボタン
 ------------------------------ */
 
-.check-button{
+.check-button {
 
-    background:white;
+    background: white;
 
-    color:#444;
+    color: #444;
 
-    font-size:28px;
+    font-size: 28px;
 
 }
 
-.check-button.done{
+.check-button.done {
 
-    background:linear-gradient(
-        180deg,
-        #ff9cd5,
-        #ff5db0
-    );
+    background: linear-gradient(180deg,
+            #ff9cd5,
+            #ff5db0);
 
-    color:white;
+    color: white;
 
 }
 
@@ -196,23 +202,23 @@ button:active{
    完了画面
 ------------------------------ */
 
-.finish-screen{
+.finish-screen {
 
-    animation:pop .5s;
+    animation: pop .5s;
 
 }
 
-.princess{
+.princess {
 
-    width:260px;
+    width: 260px;
 
-    display:block;
+    display: block;
 
-    margin:25px auto;
+    margin: 25px auto;
 
-    border-radius:25px;
+    border-radius: 25px;
 
-    box-shadow:0 12px 25px rgba(0,0,0,.2);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, .2);
 
 }
 
@@ -220,51 +226,51 @@ button:active{
    キラキラ
 ------------------------------ */
 
-.sparkle{
+.sparkle {
 
-    font-size:60px;
+    font-size: 60px;
 
-    animation:kira 1.2s infinite;
-
-}
-
-@keyframes kira{
-
-    0%{
-
-        transform:scale(1) rotate(0deg);
-
-    }
-
-    50%{
-
-        transform:scale(1.15) rotate(8deg);
-
-    }
-
-    100%{
-
-        transform:scale(1) rotate(0deg);
-
-    }
+    animation: kira 1.2s infinite;
 
 }
 
-@keyframes pop{
+@keyframes kira {
 
-    from{
+    0% {
 
-        opacity:0;
-
-        transform:scale(.8);
+        transform: scale(1) rotate(0deg);
 
     }
 
-    to{
+    50% {
 
-        opacity:1;
+        transform: scale(1.15) rotate(8deg);
 
-        transform:scale(1);
+    }
+
+    100% {
+
+        transform: scale(1) rotate(0deg);
+
+    }
+
+}
+
+@keyframes pop {
+
+    from {
+
+        opacity: 0;
+
+        transform: scale(.8);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform: scale(1);
 
     }
 
@@ -276,15 +282,14 @@ button:active{
 
 #backButton,
 #backMenu,
-#backStamp{
+#backStamp,
+#backMode {
 
-    background:linear-gradient(
-        180deg,
-        #9fdfff,
-        #67c8ff
-    );
+    background: linear-gradient(180deg,
+            #9fdfff,
+            #67c8ff);
 
-    color:white;
+    color: white;
 
 }
 
@@ -292,14 +297,87 @@ button:active{
    ロゴ
 ------------------------------ */
 
-.logo{
+.logo {
 
-    width:100%;
+    width: 100%;
 
-    max-width:520px;
+    max-width: 520px;
 
-    display:block;
+    display: block;
 
-    margin:0 auto 30px;
+    margin: 0 auto 30px;
+
+}
+
+button:disabled {
+
+    background: #dddddd;
+
+    color: #888888;
+
+    cursor: not-allowed;
+
+    box-shadow: none;
+
+}
+
+.morning-button {
+
+    width: 90%;
+    padding: 18px;
+
+    border: none;
+
+    border-radius: 18px;
+
+    margin-bottom: 14px;
+
+    font-size: 28px;
+
+    color: white;
+
+    background: linear-gradient(135deg,
+            #ff9ad5,
+            #ff6fb3);
+
+    box-shadow: 0 6px 12px rgba(0, 0, 0, .15);
+
+}
+
+.morning-button.done {
+
+    background: linear-gradient(135deg,
+            #7ddc82,
+            #4caf50);
+
+}
+
+.morning-button:active {
+
+    transform: scale(.96);
+
+}
+
+.morning-button.done {
+
+    background: linear-gradient(180deg,
+            #baf5c7,
+            #61d987);
+
+}
+
+/* モード選択 */
+
+#firstButton {
+
+    background: linear-gradient(180deg, #ff9cd5, #ff6cb8);
+    color: white;
+
+}
+
+#normalButton {
+
+    background: linear-gradient(180deg, #c0a4ff, #9b73ff);
+    color: white;
 
 }
