@@ -42,7 +42,7 @@ const morningList = [
 
     { id: "items", icon: "🎒", text: "もちものちぇっく" },
 
-    { id: "brushHair", icon: "🪮", text: "かみのけをとかす" },
+    { id: "brushHair", icon: "🧜‍♀️", text: "かみのけをとかす" },
 
     { id: "breakfast", icon: "🍚", text: "あさごはん・かみのけ" },
 
