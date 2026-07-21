@@ -13,6 +13,8 @@ let lists = {
         { id: "pants", icon: "👖", text: "ずぼん" },
         { id: "underwear", icon: "👙", text: "したぎ" },
         { id: "bag", icon: "🛍️", text: "よごれた せんたくものを いれる ふくろ" },
+        { id: "swimsuit", icon: "🩱", text: "みずぎ" },
+        { id: "poolTowel", icon: "🏖️", text: "ぷーるたおる" },
         { id: "cup", icon: "🥤", text: "こっぷ と こっぷいれ" },
         { id: "tea", icon: "🧃", text: "むぎちゃ" }
     ],
@@ -23,6 +25,8 @@ let lists = {
         { id: "pants", icon: "👖", text: "ずぼん" },
         { id: "underwear", icon: "👙", text: "したぎ" },
         { id: "bag", icon: "🛍️", text: "よごれた せんたくものを いれる ふくろ" },
+        { id: "swimsuit", icon: "🩱", text: "みずぎ" },
+        { id: "poolTowel", icon: "🏖️", text: "ぷーるたおる" },
         { id: "cup", icon: "🥤", text: "こっぷ と こっぷいれ" },
         { id: "tea", icon: "🧃", text: "むぎちゃ" }
     ]
@@ -38,9 +42,28 @@ const morningList = [
 
     { id: "items", icon: "🎒", text: "もちものちぇっく" },
 
+    { id: "brushHair", icon: "🪮", text: "かみのけをとかす" },
+
     { id: "breakfast", icon: "🍚", text: "あさごはん・かみのけ" },
 
-    { id: "brush", icon: "🪥", text: "はみがき・おかお" }
+    { id: "brushTeeth", icon: "🪥", text: "はみがき・おかお" },
+
+    { id: "pajama", icon: "🛏️", text: "ぱじゃまをかたづける" },
+
+    { id: "contact", icon: "📖", text: "まま れんらくちょう" },
+
+    { id: "pool", icon: "🏊", text: "ぷーるかーど" }
+
+];
+
+// ======================================
+// しんくんにあえるひ
+// ======================================
+
+const shinDays = [
+
+    new Date(2026, 7, 20), // 2026/8/20
+    new Date(2026, 8, 18), // 2026/9/18
 
 ];
 
@@ -111,6 +134,10 @@ function render() {
 
         case "mode":
             renderMode();
+            break;
+
+        case "countdown":
+            renderCountdown();
             break;
     }
 
@@ -242,6 +269,16 @@ ${state.morningComplete ? "<br>✅" : ""}
 
 </button>
 
+<button id="countdownButton">
+
+🥰<br>
+
+つぎ あえるまで<br>
+
+あと なんにち？
+
+</button>
+
 </section>
 
 `;
@@ -277,6 +314,16 @@ ${state.morningComplete ? "<br>✅" : ""}
         .addEventListener("click", () => {
 
             alert("もうすぐできるよ♡");
+
+        });
+
+    document
+        .getElementById("countdownButton")
+        .addEventListener("click", () => {
+
+            state.screen = "countdown";
+
+            render();
 
         });
 
@@ -570,7 +617,6 @@ function renderStamp() {
             render();
 
         });
-
 }
 
 // ======================================
@@ -604,6 +650,47 @@ function onClickNormal() {
     render();
 }
 
+function getNextShinDay() {
+
+    const today = new Date();
+
+    today.setHours(0, 0, 0, 0);
+
+    for (const day of shinDays) {
+
+        const d = new Date(day);
+        d.setHours(0, 0, 0, 0);
+
+        if (d >= today) {
+            return d;
+        }
+    }
+
+    return null;
+
+}
+
+function getShinCountdown() {
+
+    const next = getNextShinDay();
+
+    if (!next) {
+        return null;
+    }
+
+    const today = new Date();
+
+    today.setHours(0, 0, 0, 0);
+
+    const diff = Math.ceil(
+        (next - today) /
+        (1000 * 60 * 60 * 24)
+    );
+
+    return diff;
+
+}
+
 // ======================================
 // サウンド
 // ======================================
@@ -633,5 +720,153 @@ function toggleCheck(id) {
     }
 
     render();
+
+}
+
+function createCalendar(year, month, nextDay) {
+
+    const today = new Date();
+
+    const firstDay = new Date(year, month, 1);
+    const lastDate = new Date(year, month + 1, 0).getDate();
+
+    const startWeek = firstDay.getDay();
+
+    let html = `
+
+    <div class="calendar-box">
+
+        <h3 class="month-title">
+💖🌈 ${month + 1}がつ 🌈💖
+</h3>
+
+        <div class="calendar">
+
+            <div class="week">日</div>
+            <div class="week">月</div>
+            <div class="week">火</div>
+            <div class="week">水</div>
+            <div class="week">木</div>
+            <div class="week">金</div>
+            <div class="week">土</div>
+
+    `;
+
+    for (let i = 0; i < startWeek; i++) {
+        html += `<div class="day empty"></div>`;
+    }
+
+    for (let d = 1; d <= lastDate; d++) {
+
+        let cls = "day";
+
+        if (
+            d === today.getDate() &&
+            month === today.getMonth() &&
+            year === today.getFullYear()
+        ) {
+            cls += " today";
+        }
+
+        if (
+            nextDay &&
+            d === nextDay.getDate() &&
+            month === nextDay.getMonth() &&
+            year === nextDay.getFullYear()
+        ) {
+            cls += " shin";
+        }
+
+        let text = d;
+
+        html += `
+<div class="${cls}">
+    ${text}
+</div>
+`;
+    }
+
+    html += `
+        </div>
+    </div>
+    `;
+
+    return html;
+}
+
+const days = getShinCountdown();
+
+function renderCountdown() {
+
+    const next = getNextShinDay();
+
+    // ★今日は何月？
+    const today = new Date();
+
+    const year1 = today.getFullYear();
+    const month1 = today.getMonth();
+
+    // ★次の月
+    const nextMonth = new Date(year1, month1 + 1, 1);
+
+    const calendarHTML =
+        createCalendar(year1, month1, next) +
+        createCalendar(
+            nextMonth.getFullYear(),
+            nextMonth.getMonth(),
+            next
+        );
+
+    app.innerHTML = `
+
+    <section class="finish-screen">
+
+        <h2>
+        💛💚💙❤️🧡<br>
+        つぎ あえるまで
+        </h2>
+
+        <h1>
+        あと ${getShinCountdown()} にち♡
+        </h1>
+
+        <div class="calendar-wrapper">
+
+            ${calendarHTML}
+
+        </div>
+
+        <div class="calendar-legend">
+
+<div class="legend-item">
+<div class="today-color"></div>
+きょう
+</div>
+
+<div class="legend-item">
+<div class="shin-color"></div>
+しんくんにあえるひ
+</div>
+
+</div>
+
+        <button id="backCountdown">
+
+            ⬅️ もどる
+
+        </button>
+
+    </section>
+
+    `;
+
+    document
+        .getElementById("backCountdown")
+        .addEventListener("click", () => {
+
+            state.screen = "start";
+            render();
+
+        });
 
 }

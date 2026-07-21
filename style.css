@@ -154,6 +154,34 @@ button:active {
 
 }
 
+#countdownButton {
+
+    background: linear-gradient(180deg,
+            #ff9ee5,
+            #ff5fae);
+
+    color: white;
+
+    animation: heartBeat 1.5s infinite;
+
+}
+
+@keyframes heartBeat {
+
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+
+}
+
 /* ------------------------------
    モード選択
 ------------------------------ */
@@ -379,5 +407,202 @@ button:disabled {
 
     background: linear-gradient(180deg, #c0a4ff, #9b73ff);
     color: white;
+
+}
+
+/*=========================
+  カレンダー
+=========================*/
+
+.calendar {
+
+    display: grid;
+
+    grid-template-columns: repeat(7, 40px);
+
+    gap: 8px;
+
+    justify-content: center;
+
+    margin: 20px auto;
+
+}
+
+.week {
+
+    font-size: 22px;
+
+    font-weight: bold;
+
+    color: #ff69b4;
+
+}
+
+.day {
+
+    width: 40px;
+
+    height: 40px;
+
+    border-radius: 12px;
+
+    background: white;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 18px;
+
+    box-shadow: 0 3px 8px rgba(0, 0, 0, .12);
+
+}
+
+.day.today {
+
+    background: #ff6fb2;
+    color: white;
+    font-weight: bold;
+
+}
+
+.day.shin {
+
+    background: #ffd84d;
+    color: #ff4f8b;
+    font-weight: bold;
+
+}
+
+.today {
+
+    background: #ff8dc9;
+
+    color: white;
+
+}
+
+.shin {
+
+    background: linear-gradient(180deg,
+            #ffb0d9,
+            #ff69b4);
+
+    color: white;
+
+    border: 4px solid gold;
+
+    animation: pika 1s infinite;
+}
+
+.empty {
+
+    visibility: hidden;
+
+}
+
+@keyframes pika {
+
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.08);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+
+}
+
+.month-title {
+
+    font-size: 34px;
+
+    color: #ff4da6;
+
+    text-align: center;
+
+    margin-bottom: 20px;
+
+    text-shadow:
+        2px 2px white,
+        0 0 10px #ffd8ec;
+
+}
+
+.calendar-legend {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin: 25px 0;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #ff4d94;
+    font-weight: bold;
+}
+
+.today-color {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #ff77c8;
+}
+
+.shin-color {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #ffd54d;
+}
+
+#backCountdown {
+
+    background: #ff77c8;
+    color: white;
+
+    border: none;
+
+    border-radius: 40px;
+
+    padding: 18px 50px;
+
+    font-size: 24px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    box-shadow: 0 6px 15px rgba(255, 120, 180, .4);
+
+    transition: .2s;
+
+}
+
+.calendar-wrapper {
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: flex-start;
+
+    gap: 40px;
+
+    flex-wrap: nowrap;
+
+    margin: 30px 0;
+
+}
+
+.calendar-box {
+
+    width: 340px;
 
 }
