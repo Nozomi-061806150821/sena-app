@@ -40,6 +40,8 @@ body {
 .check-screen,
 .finish-screen {
 
+    position:relative;
+
     text-align: center;
 
 }
@@ -428,18 +430,28 @@ background:linear-gradient(
 ========================= */
 
 
-.logo {
+.logo{
 
-width:100%;
+    width:100%;
 
-max-width:520px;
+    max-width:520px;
 
-display:block;
+    display:block;
 
-margin:0 auto 30px;
+    margin:0 auto 30px;
+
+    position:relative;
+
+    z-index:2;
+
+    animation:floatLogo 3s ease-in-out infinite;
+
+    filter:
+        drop-shadow(0 0 8px #fff)
+        drop-shadow(0 0 18px #ffd8ec)
+        drop-shadow(0 0 28px #fff6b5);
 
 }
-
 
 
 /* =========================
@@ -761,6 +773,99 @@ button {
     #app {
 
         max-width:900px;
+
+    }
+
+}
+
+.start-screen::before{
+
+    content:"✨ 💖 ⭐";
+
+    position:absolute;
+
+    top:20px;
+    left:8%;
+
+    font-size:30px;
+
+    animation:spark1 2.2s infinite alternate;
+
+}
+
+.start-screen::after{
+
+    content:"💗 ✨ 💎";
+
+    position:absolute;
+
+    top:35px;
+    right:8%;
+
+    font-size:30px;
+
+    animation:spark2 2.6s infinite alternate;
+
+}
+
+
+@keyframes floatLogo{
+
+    0%{
+
+        transform:translateY(0);
+
+    }
+
+    50%{
+
+        transform:translateY(-8px);
+
+    }
+
+    100%{
+
+        transform:translateY(0);
+
+    }
+
+}
+
+@keyframes spark1{
+
+    from{
+
+        transform:translateY(0) rotate(0deg);
+
+        opacity:.5;
+
+    }
+
+    to{
+
+        transform:translateY(-12px) rotate(15deg);
+
+        opacity:1;
+
+    }
+
+}
+
+@keyframes spark2{
+
+    from{
+
+        transform:translateY(0) scale(1);
+
+        opacity:.6;
+
+    }
+
+    to{
+
+        transform:translateY(-10px) scale(1.2);
+
+        opacity:1;
 
     }
 
