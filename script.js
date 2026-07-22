@@ -202,6 +202,13 @@ function renderCheck() {
 
             ${html}
 
+            <button id="backCheck">
+
+    ⬅️<br>
+    もどる
+
+</button>
+
             ${complete ? `
                 <h2>🎉🎉🎉</h2>
                 <h1>じゅんびできたね！✨</h1>
@@ -220,6 +227,18 @@ function renderCheck() {
         });
 
     });
+
+    document
+        .getElementById("backCheck")
+        .addEventListener("click", () => {
+
+            state.checked = [];
+
+            state.screen = "mode";
+
+            render();
+
+        });
 
 }
 
@@ -823,7 +842,8 @@ function renderCountdown() {
 
         <h2>
         💛💚💙❤️🧡<br>
-        つぎ あえるまで
+        つぎ あえるまで<br>
+        💛💚💙❤️🧡
         </h2>
 
         <h1>

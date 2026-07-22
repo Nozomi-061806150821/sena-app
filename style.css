@@ -10,7 +10,14 @@ body {
 
     justify-content: center;
 
+    min-height: 100vh;
+
 }
+
+
+/* =========================
+   アプリ全体
+========================= */
 
 #app {
 
@@ -18,11 +25,16 @@ body {
 
     max-width: 700px;
 
-    padding: 30px;
+    padding: clamp(15px, 5vw, 30px);
 
     box-sizing: border-box;
 
 }
+
+
+/* =========================
+   共通
+========================= */
 
 .start-screen,
 .check-screen,
@@ -32,9 +44,10 @@ body {
 
 }
 
+
 h1 {
 
-    font-size: 64px;
+    font-size: clamp(36px, 8vw, 64px);
 
     margin: 10px 0;
 
@@ -46,11 +59,12 @@ h1 {
 
 }
 
+
 h2 {
 
     color: #ff4fa3;
 
-    font-size: 42px;
+    font-size: clamp(26px, 6vw, 42px);
 
     margin: 20px 0 40px;
 
@@ -62,9 +76,10 @@ h2 {
 
 }
 
+
 p {
 
-    font-size: 28px;
+    font-size: clamp(18px, 4vw, 28px);
 
     color: #d14c87;
 
@@ -74,535 +89,679 @@ p {
 
 }
 
-/* ------------------------------
+
+/* =========================
    ボタン共通
------------------------------- */
+========================= */
+
 
 button {
 
-    width: 100%;
+    width:100%;
 
-    padding: 28px;
+    max-width:600px;
 
-    margin: 18px 0;
+    min-height:90px;
 
-    border: none;
+    padding:20px;
 
-    border-radius: 35px;
+    margin:18px auto;
 
-    font-size: 30px;
+    display:block;
 
-    font-family: "M PLUS Rounded 1c", sans-serif;
+    border:none;
 
-    font-weight: 800;
+    border-radius:35px;
 
-    color: white;
+    font-size:clamp(20px,4vw,30px);
 
-    cursor: pointer;
+    font-family:"M PLUS Rounded 1c", sans-serif;
 
-    transition: .2s;
+    font-weight:800;
 
-    box-shadow: 0 10px 20px rgba(255, 105, 180, .25);
+    color:white;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+    box-shadow:
+    0 10px 20px rgba(255,105,180,.25);
 
 }
+
 
 button:hover {
 
-    transform: translateY(-4px);
+    transform:translateY(-4px);
 
 }
+
 
 button:active {
 
-    transform: scale(.97);
+    transform:scale(.97);
 
 }
 
-/* ------------------------------
-   ホーム画面
------------------------------- */
+
+button:disabled {
+
+    background:#ddd;
+
+    color:#888;
+
+    cursor:not-allowed;
+
+    box-shadow:none;
+
+}
+
+
+/* =========================
+   トップ画面
+========================= */
+
 
 #morningButton {
 
-    background: linear-gradient(180deg,
-            #ffb8df,
-            #ff69b4);
+background:linear-gradient(
+180deg,
+#ffb8df,
+#ff69b4
+);
 
 }
+
 
 #stampButton {
 
-    background: linear-gradient(180deg,
-            #ffe57d,
-            #ffc800);
+background:linear-gradient(
+180deg,
+#ffe57d,
+#ffc800
+);
 
 }
+
 
 #fortuneButton {
 
-    background: linear-gradient(180deg,
-            #b88cff,
-            #8d63ff);
+background:linear-gradient(
+180deg,
+#b88cff,
+#8d63ff
+);
 
 }
+
 
 #jankenButton {
 
-    background: linear-gradient(180deg,
-            #8ee7ff,
-            #3fc9ff);
+background:linear-gradient(
+180deg,
+#8ee7ff,
+#3fc9ff
+);
 
 }
+
 
 #countdownButton {
 
-    background: linear-gradient(180deg,
-            #ff9ee5,
-            #ff5fae);
+background:linear-gradient(
+180deg,
+#ff9ee5,
+#ff5fae
+);
 
-    color: white;
-
-    animation: heartBeat 1.5s infinite;
+animation:heartBeat 1.5s infinite;
 
 }
+
 
 @keyframes heartBeat {
 
-    0% {
-        transform: scale(1);
-    }
+50%{
 
-    50% {
-        transform: scale(1.05);
-    }
-
-    100% {
-        transform: scale(1);
-    }
+transform:scale(1.05);
 
 }
 
-/* ------------------------------
+}
+
+
+
+/* =========================
    モード選択
------------------------------- */
+========================= */
+
 
 #firstButton {
 
-    background: linear-gradient(180deg,
-            #ff9cd5,
-            #ff6cb8);
+background:linear-gradient(
+180deg,
+#ff9cd5,
+#ff6cb8
+);
 
 }
+
 
 #normalButton {
 
-    background: linear-gradient(180deg,
-            #c0a4ff,
-            #9b73ff);
+background:linear-gradient(
+180deg,
+#c0a4ff,
+#9b73ff
+);
 
 }
 
-/* ------------------------------
-   チェックボタン
------------------------------- */
+
+
+/* =========================
+   チェック
+========================= */
+
 
 .check-button {
 
-    background: white;
+background:white;
 
-    color: #444;
+color:#444;
 
-    font-size: 28px;
+font-size:clamp(18px,4vw,28px);
+
+word-break:break-word;
 
 }
+
 
 .check-button.done {
 
-    background: linear-gradient(180deg,
-            #ff9cd5,
-            #ff5db0);
+background:linear-gradient(
+180deg,
+#ff9cd5,
+#ff5db0
+);
 
-    color: white;
+color:white;
 
 }
 
-/* ------------------------------
+
+
+/* =========================
+   あさちゃれんじ
+========================= */
+
+
+.morning-button {
+
+padding:20px;
+
+border-radius:18px;
+
+font-size:clamp(18px,4vw,28px);
+
+background:linear-gradient(
+135deg,
+#ff9ad5,
+#ff6fb3
+);
+
+}
+
+
+.morning-button.done {
+
+background:linear-gradient(
+180deg,
+#baf5c7,
+#61d987
+);
+
+}
+
+
+
+/* =========================
    完了画面
------------------------------- */
+========================= */
+
 
 .finish-screen {
 
-    animation: pop .5s;
+animation:pop .5s;
 
 }
+
 
 .princess {
 
-    width: 260px;
+width:70%;
 
-    display: block;
+max-width:260px;
 
-    margin: 25px auto;
+display:block;
 
-    border-radius: 25px;
+margin:25px auto;
 
-    box-shadow: 0 12px 25px rgba(0, 0, 0, .2);
+border-radius:25px;
+
+box-shadow:
+0 12px 25px rgba(0,0,0,.2);
 
 }
 
-/* ------------------------------
-   キラキラ
------------------------------- */
+
 
 .sparkle {
 
-    font-size: 60px;
+font-size:clamp(40px,8vw,60px);
 
-    animation: kira 1.2s infinite;
+animation:kira 1.2s infinite;
 
 }
+
 
 @keyframes kira {
 
-    0% {
+50%{
 
-        transform: scale(1) rotate(0deg);
-
-    }
-
-    50% {
-
-        transform: scale(1.15) rotate(8deg);
-
-    }
-
-    100% {
-
-        transform: scale(1) rotate(0deg);
-
-    }
+transform:scale(1.15)
+rotate(8deg);
 
 }
+
+}
+
 
 @keyframes pop {
 
-    from {
+from{
 
-        opacity: 0;
+opacity:0;
 
-        transform: scale(.8);
-
-    }
-
-    to {
-
-        opacity: 1;
-
-        transform: scale(1);
-
-    }
+transform:scale(.8);
 
 }
 
-/* ------------------------------
+to{
+
+opacity:1;
+
+transform:scale(1);
+
+}
+
+}
+
+
+
+/* =========================
    戻るボタン
------------------------------- */
+========================= */
+
 
 #backButton,
 #backMenu,
 #backStamp,
-#backMode {
+#backMode,
+#backCountdown,
+#backCheck
+ {
 
-    background: linear-gradient(180deg,
-            #9fdfff,
-            #67c8ff);
-
-    color: white;
+background:linear-gradient(
+180deg,
+#9fdfff,
+#67c8ff
+);
 
 }
 
-/* ------------------------------
+
+
+/* =========================
    ロゴ
------------------------------- */
+========================= */
+
 
 .logo {
 
-    width: 100%;
+width:100%;
 
-    max-width: 520px;
+max-width:520px;
 
-    display: block;
+display:block;
 
-    margin: 0 auto 30px;
-
-}
-
-button:disabled {
-
-    background: #dddddd;
-
-    color: #888888;
-
-    cursor: not-allowed;
-
-    box-shadow: none;
+margin:0 auto 30px;
 
 }
 
-.morning-button {
 
-    width: 90%;
-    padding: 18px;
 
-    border: none;
+/* =========================
+   カレンダー
+========================= */
 
-    border-radius: 18px;
-
-    margin-bottom: 14px;
-
-    font-size: 28px;
-
-    color: white;
-
-    background: linear-gradient(135deg,
-            #ff9ad5,
-            #ff6fb3);
-
-    box-shadow: 0 6px 12px rgba(0, 0, 0, .15);
-
-}
-
-.morning-button.done {
-
-    background: linear-gradient(135deg,
-            #7ddc82,
-            #4caf50);
-
-}
-
-.morning-button:active {
-
-    transform: scale(.96);
-
-}
-
-.morning-button.done {
-
-    background: linear-gradient(180deg,
-            #baf5c7,
-            #61d987);
-
-}
-
-/* モード選択 */
-
-#firstButton {
-
-    background: linear-gradient(180deg, #ff9cd5, #ff6cb8);
-    color: white;
-
-}
-
-#normalButton {
-
-    background: linear-gradient(180deg, #c0a4ff, #9b73ff);
-    color: white;
-
-}
-
-/*=========================
-  カレンダー
-=========================*/
-
-.calendar {
-
-    display: grid;
-
-    grid-template-columns: repeat(7, 40px);
-
-    gap: 8px;
-
-    justify-content: center;
-
-    margin: 20px auto;
-
-}
-
-.week {
-
-    font-size: 22px;
-
-    font-weight: bold;
-
-    color: #ff69b4;
-
-}
-
-.day {
-
-    width: 40px;
-
-    height: 40px;
-
-    border-radius: 12px;
-
-    background: white;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    font-size: 18px;
-
-    box-shadow: 0 3px 8px rgba(0, 0, 0, .12);
-
-}
-
-.day.today {
-
-    background: #ff6fb2;
-    color: white;
-    font-weight: bold;
-
-}
-
-.day.shin {
-
-    background: #ffd84d;
-    color: #ff4f8b;
-    font-weight: bold;
-
-}
-
-.today {
-
-    background: #ff8dc9;
-
-    color: white;
-
-}
-
-.shin {
-
-    background: linear-gradient(180deg,
-            #ffb0d9,
-            #ff69b4);
-
-    color: white;
-
-    border: 4px solid gold;
-
-    animation: pika 1s infinite;
-}
-
-.empty {
-
-    visibility: hidden;
-
-}
-
-@keyframes pika {
-
-    0% {
-        transform: scale(1);
-    }
-
-    50% {
-        transform: scale(1.08);
-    }
-
-    100% {
-        transform: scale(1);
-    }
-
-}
-
-.month-title {
-
-    font-size: 34px;
-
-    color: #ff4da6;
-
-    text-align: center;
-
-    margin-bottom: 20px;
-
-    text-shadow:
-        2px 2px white,
-        0 0 10px #ffd8ec;
-
-}
-
-.calendar-legend {
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    margin: 25px 0;
-}
-
-.legend-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: #ff4d94;
-    font-weight: bold;
-}
-
-.today-color {
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    background: #ff77c8;
-}
-
-.shin-color {
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    background: #ffd54d;
-}
-
-#backCountdown {
-
-    background: #ff77c8;
-    color: white;
-
-    border: none;
-
-    border-radius: 40px;
-
-    padding: 18px 50px;
-
-    font-size: 24px;
-
-    font-weight: bold;
-
-    cursor: pointer;
-
-    box-shadow: 0 6px 15px rgba(255, 120, 180, .4);
-
-    transition: .2s;
-
-}
 
 .calendar-wrapper {
 
-    display: flex;
+display:flex;
 
-    justify-content: center;
+justify-content:center;
 
-    align-items: flex-start;
+align-items:flex-start;
 
-    gap: 40px;
+gap:40px;
 
-    flex-wrap: nowrap;
+flex-wrap:nowrap;
 
-    margin: 30px 0;
+margin:30px 0;
 
 }
 
+
 .calendar-box {
 
-    width: 340px;
+width:100%;
+
+max-width:340px;
+
+}
+
+
+.calendar {
+
+display:grid;
+
+grid-template-columns:
+repeat(7,minmax(30px,1fr));
+
+gap:5px;
+
+width:100%;
+
+margin:20px auto;
+
+}
+
+
+
+.week {
+
+font-size:clamp(14px,3vw,22px);
+
+font-weight:bold;
+
+color:#ff69b4;
+
+text-align:center;
+
+}
+
+
+
+.day {
+
+aspect-ratio:1;
+
+border-radius:12px;
+
+background:white;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+font-size:clamp(14px,3vw,18px);
+
+box-shadow:
+0 3px 8px rgba(0,0,0,.12);
+
+}
+
+
+
+.day.today {
+
+background:#ff6fb2;
+
+color:white;
+
+font-weight:bold;
+
+}
+
+
+.day.shin {
+
+background:#ffd84d;
+
+color:#ff4f8b;
+
+font-weight:bold;
+
+border:3px solid gold;
+
+animation:pika 1s infinite;
+
+}
+
+
+
+.empty {
+
+visibility:hidden;
+
+}
+
+
+
+@keyframes pika {
+
+50%{
+
+transform:scale(1.08);
+
+}
+
+}
+
+
+
+.month-title {
+
+font-size:clamp(22px,5vw,34px);
+
+color:#ff4da6;
+
+text-align:center;
+
+margin-bottom:20px;
+
+text-shadow:
+
+2px 2px white,
+0 0 10px #ffd8ec;
+
+}
+
+
+
+/* =========================
+   カレンダー説明
+========================= */
+
+
+.calendar-legend {
+
+display:flex;
+
+justify-content:center;
+
+gap:30px;
+
+margin:25px 0;
+
+flex-wrap:wrap;
+
+}
+
+
+.legend-item {
+
+display:flex;
+
+align-items:center;
+
+gap:8px;
+
+color:#ff4d94;
+
+font-weight:bold;
+
+}
+
+
+.today-color,
+.shin-color {
+
+width:18px;
+
+height:18px;
+
+border-radius:50%;
+
+}
+
+
+.today-color {
+
+background:#ff77c8;
+
+}
+
+
+.shin-color {
+
+background:#ffd54d;
+
+}
+
+
+
+/* =========================
+   スマホ
+========================= */
+
+
+@media(max-width:768px){
+
+
+.calendar-wrapper {
+
+flex-direction:column;
+
+align-items:center;
+
+gap:20px;
+
+}
+
+
+#backCountdown {
+
+width:100%;
+
+}
+
+
+}
+
+
+/* =========================
+   iPad以上
+========================= */
+
+
+@media(min-width:769px){
+
+
+button {
+
+max-width:600px;
+
+}
+
+
+}
+
+@media(min-width:769px){
+
+
+button {
+
+max-width:600px;
+
+}
+
+
+}
+
+
+/* =========================
+   追加レスポンシブ調整
+========================= */
+
+
+/* 横ズレ防止 */
+body {
+
+    overflow-x:hidden;
+
+}
+
+
+/* ボタン共通追加 */
+button {
+
+    word-break:break-word;
+
+    -webkit-tap-highlight-color:transparent;
+
+}
+
+
+/* 持ち物チェックは押しやすく */
+.check-button {
+
+    min-height:80px;
+
+}
+
+
+/* 完了画像 */
+.princess {
+
+    max-height:40vh;
+
+    object-fit:contain;
+
+}
+
+
+/* 大きいiPad・横向き対応 */
+@media(min-width:1000px){
+
+    #app {
+
+        max-width:900px;
+
+    }
 
 }
