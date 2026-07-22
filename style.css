@@ -40,7 +40,7 @@ body {
 .check-screen,
 .finish-screen {
 
-    position:relative;
+    position: relative;
 
     text-align: center;
 
@@ -99,63 +99,63 @@ p {
 
 button {
 
-    width:100%;
+    width: 100%;
 
-    max-width:600px;
+    max-width: 600px;
 
-    min-height:90px;
+    min-height: 90px;
 
-    padding:20px;
+    padding: 20px;
 
-    margin:18px auto;
+    margin: 18px auto;
 
-    display:block;
+    display: block;
 
-    border:none;
+    border: none;
 
-    border-radius:35px;
+    border-radius: 35px;
 
-    font-size:clamp(20px,4vw,30px);
+    font-size: clamp(20px, 4vw, 30px);
 
-    font-family:"M PLUS Rounded 1c", sans-serif;
+    font-family: "M PLUS Rounded 1c", sans-serif;
 
-    font-weight:800;
+    font-weight: 800;
 
-    color:white;
+    color: white;
 
-    cursor:pointer;
+    cursor: pointer;
 
-    transition:.2s;
+    transition: .2s;
 
     box-shadow:
-    0 10px 20px rgba(255,105,180,.25);
+        0 10px 20px rgba(255, 105, 180, .25);
 
 }
 
 
 button:hover {
 
-    transform:translateY(-4px);
+    transform: translateY(-4px);
 
 }
 
 
 button:active {
 
-    transform:scale(.97);
+    transform: scale(.97);
 
 }
 
 
 button:disabled {
 
-    background:#ddd;
+    background: #ddd;
 
-    color:#888;
+    color: #888;
 
-    cursor:not-allowed;
+    cursor: not-allowed;
 
-    box-shadow:none;
+    box-shadow: none;
 
 }
 
@@ -167,68 +167,58 @@ button:disabled {
 
 #morningButton {
 
-background:linear-gradient(
-180deg,
-#ffb8df,
-#ff69b4
-);
+    background: linear-gradient(180deg,
+            #ffb8df,
+            #ff69b4);
 
 }
 
 
 #stampButton {
 
-background:linear-gradient(
-180deg,
-#ffe57d,
-#ffc800
-);
+    background: linear-gradient(180deg,
+            #ffe57d,
+            #ffc800);
 
 }
 
 
 #fortuneButton {
 
-background:linear-gradient(
-180deg,
-#b88cff,
-#8d63ff
-);
+    background: linear-gradient(180deg,
+            #b88cff,
+            #8d63ff);
 
 }
 
 
 #jankenButton {
 
-background:linear-gradient(
-180deg,
-#8ee7ff,
-#3fc9ff
-);
+    background: linear-gradient(180deg,
+            #8ee7ff,
+            #3fc9ff);
 
 }
 
 
 #countdownButton {
 
-background:linear-gradient(
-180deg,
-#ff9ee5,
-#ff5fae
-);
+    background: linear-gradient(180deg,
+            #ff9ee5,
+            #ff5fae);
 
-animation:heartBeat 1.5s infinite;
+    animation: heartBeat 1.5s infinite;
 
 }
 
 
 @keyframes heartBeat {
 
-50%{
+    50% {
 
-transform:scale(1.05);
+        transform: scale(1.05);
 
-}
+    }
 
 }
 
@@ -241,22 +231,18 @@ transform:scale(1.05);
 
 #firstButton {
 
-background:linear-gradient(
-180deg,
-#ff9cd5,
-#ff6cb8
-);
+    background: linear-gradient(180deg,
+            #ff9cd5,
+            #ff6cb8);
 
 }
 
 
 #normalButton {
 
-background:linear-gradient(
-180deg,
-#c0a4ff,
-#9b73ff
-);
+    background: linear-gradient(180deg,
+            #c0a4ff,
+            #9b73ff);
 
 }
 
@@ -269,26 +255,24 @@ background:linear-gradient(
 
 .check-button {
 
-background:white;
+    background: white;
 
-color:#444;
+    color: #444;
 
-font-size:clamp(18px,4vw,28px);
+    font-size: clamp(18px, 4vw, 28px);
 
-word-break:break-word;
+    word-break: break-word;
 
 }
 
 
 .check-button.done {
 
-background:linear-gradient(
-180deg,
-#ff9cd5,
-#ff5db0
-);
+    background: linear-gradient(180deg,
+            #ff9cd5,
+            #ff5db0);
 
-color:white;
+    color: white;
 
 }
 
@@ -301,28 +285,24 @@ color:white;
 
 .morning-button {
 
-padding:20px;
+    padding: 20px;
 
-border-radius:18px;
+    border-radius: 18px;
 
-font-size:clamp(18px,4vw,28px);
+    font-size: clamp(18px, 4vw, 28px);
 
-background:linear-gradient(
-135deg,
-#ff9ad5,
-#ff6fb3
-);
+    background: linear-gradient(135deg,
+            #ff9ad5,
+            #ff6fb3);
 
 }
 
 
 .morning-button.done {
 
-background:linear-gradient(
-180deg,
-#baf5c7,
-#61d987
-);
+    background: linear-gradient(180deg,
+            #baf5c7,
+            #61d987);
 
 }
 
@@ -335,25 +315,25 @@ background:linear-gradient(
 
 .finish-screen {
 
-animation:pop .5s;
+    animation: pop .5s;
 
 }
 
 
 .princess {
 
-width:70%;
+    width: 70%;
 
-max-width:260px;
+    max-width: 260px;
 
-display:block;
+    display: block;
 
-margin:25px auto;
+    margin: 25px auto;
 
-border-radius:25px;
+    border-radius: 25px;
 
-box-shadow:
-0 12px 25px rgba(0,0,0,.2);
+    box-shadow:
+        0 12px 25px rgba(0, 0, 0, .2);
 
 }
 
@@ -361,42 +341,41 @@ box-shadow:
 
 .sparkle {
 
-font-size:clamp(40px,8vw,60px);
+    font-size: clamp(40px, 8vw, 60px);
 
-animation:kira 1.2s infinite;
+    animation: kira 1.2s infinite;
 
 }
 
 
 @keyframes kira {
 
-50%{
+    50% {
 
-transform:scale(1.15)
-rotate(8deg);
+        transform: scale(1.15) rotate(8deg);
 
-}
+    }
 
 }
 
 
 @keyframes pop {
 
-from{
+    from {
 
-opacity:0;
+        opacity: 0;
 
-transform:scale(.8);
+        transform: scale(.8);
 
-}
+    }
 
-to{
+    to {
 
-opacity:1;
+        opacity: 1;
 
-transform:scale(1);
+        transform: scale(1);
 
-}
+    }
 
 }
 
@@ -412,14 +391,12 @@ transform:scale(1);
 #backStamp,
 #backMode,
 #backCountdown,
-#backCheck
- {
+#backCheck,
+#backJanken {
 
-background:linear-gradient(
-180deg,
-#9fdfff,
-#67c8ff
-);
+    background: linear-gradient(180deg,
+            #9fdfff,
+            #67c8ff);
 
 }
 
@@ -430,26 +407,24 @@ background:linear-gradient(
 ========================= */
 
 
-.logo{
+.logo {
 
-    width:100%;
+    width: 100%;
 
-    max-width:520px;
+    max-width: 520px;
 
-    display:block;
+    display: block;
 
-    margin:0 auto 30px;
+    margin: 0 auto 30px;
 
-    position:relative;
+    position: relative;
 
-    z-index:2;
+    z-index: 2;
 
-    animation:floatLogo 3s ease-in-out infinite;
+    animation: floatLogo 3s ease-in-out infinite;
 
     filter:
-        drop-shadow(0 0 8px #fff)
-        drop-shadow(0 0 18px #ffd8ec)
-        drop-shadow(0 0 28px #fff6b5);
+        drop-shadow(0 0 8px #fff) drop-shadow(0 0 18px #ffd8ec) drop-shadow(0 0 28px #fff6b5);
 
 }
 
@@ -461,42 +436,42 @@ background:linear-gradient(
 
 .calendar-wrapper {
 
-display:flex;
+    display: flex;
 
-justify-content:center;
+    justify-content: center;
 
-align-items:flex-start;
+    align-items: flex-start;
 
-gap:40px;
+    gap: 40px;
 
-flex-wrap:nowrap;
+    flex-wrap: nowrap;
 
-margin:30px 0;
+    margin: 30px 0;
 
 }
 
 
 .calendar-box {
 
-width:100%;
+    width: 100%;
 
-max-width:340px;
+    max-width: 340px;
 
 }
 
 
 .calendar {
 
-display:grid;
+    display: grid;
 
-grid-template-columns:
-repeat(7,minmax(30px,1fr));
+    grid-template-columns:
+        repeat(7, minmax(30px, 1fr));
 
-gap:5px;
+    gap: 5px;
 
-width:100%;
+    width: 100%;
 
-margin:20px auto;
+    margin: 20px auto;
 
 }
 
@@ -504,13 +479,13 @@ margin:20px auto;
 
 .week {
 
-font-size:clamp(14px,3vw,22px);
+    font-size: clamp(14px, 3vw, 22px);
 
-font-weight:bold;
+    font-weight: bold;
 
-color:#ff69b4;
+    color: #ff69b4;
 
-text-align:center;
+    text-align: center;
 
 }
 
@@ -518,22 +493,22 @@ text-align:center;
 
 .day {
 
-aspect-ratio:1;
+    aspect-ratio: 1;
 
-border-radius:12px;
+    border-radius: 12px;
 
-background:white;
+    background: white;
 
-display:flex;
+    display: flex;
 
-justify-content:center;
+    justify-content: center;
 
-align-items:center;
+    align-items: center;
 
-font-size:clamp(14px,3vw,18px);
+    font-size: clamp(14px, 3vw, 18px);
 
-box-shadow:
-0 3px 8px rgba(0,0,0,.12);
+    box-shadow:
+        0 3px 8px rgba(0, 0, 0, .12);
 
 }
 
@@ -541,26 +516,26 @@ box-shadow:
 
 .day.today {
 
-background:#ff6fb2;
+    background: #ff6fb2;
 
-color:white;
+    color: white;
 
-font-weight:bold;
+    font-weight: bold;
 
 }
 
 
 .day.shin {
 
-background:#ffd84d;
+    background: #ffd84d;
 
-color:#ff4f8b;
+    color: #ff4f8b;
 
-font-weight:bold;
+    font-weight: bold;
 
-border:3px solid gold;
+    border: 3px solid gold;
 
-animation:pika 1s infinite;
+    animation: pika 1s infinite;
 
 }
 
@@ -568,7 +543,7 @@ animation:pika 1s infinite;
 
 .empty {
 
-visibility:hidden;
+    visibility: hidden;
 
 }
 
@@ -576,11 +551,11 @@ visibility:hidden;
 
 @keyframes pika {
 
-50%{
+    50% {
 
-transform:scale(1.08);
+        transform: scale(1.08);
 
-}
+    }
 
 }
 
@@ -588,18 +563,18 @@ transform:scale(1.08);
 
 .month-title {
 
-font-size:clamp(22px,5vw,34px);
+    font-size: clamp(22px, 5vw, 34px);
 
-color:#ff4da6;
+    color: #ff4da6;
 
-text-align:center;
+    text-align: center;
 
-margin-bottom:20px;
+    margin-bottom: 20px;
 
-text-shadow:
+    text-shadow:
 
-2px 2px white,
-0 0 10px #ffd8ec;
+        2px 2px white,
+        0 0 10px #ffd8ec;
 
 }
 
@@ -612,30 +587,30 @@ text-shadow:
 
 .calendar-legend {
 
-display:flex;
+    display: flex;
 
-justify-content:center;
+    justify-content: center;
 
-gap:30px;
+    gap: 30px;
 
-margin:25px 0;
+    margin: 25px 0;
 
-flex-wrap:wrap;
+    flex-wrap: wrap;
 
 }
 
 
 .legend-item {
 
-display:flex;
+    display: flex;
 
-align-items:center;
+    align-items: center;
 
-gap:8px;
+    gap: 8px;
 
-color:#ff4d94;
+    color: #ff4d94;
 
-font-weight:bold;
+    font-weight: bold;
 
 }
 
@@ -643,25 +618,25 @@ font-weight:bold;
 .today-color,
 .shin-color {
 
-width:18px;
+    width: 18px;
 
-height:18px;
+    height: 18px;
 
-border-radius:50%;
+    border-radius: 50%;
 
 }
 
 
 .today-color {
 
-background:#ff77c8;
+    background: #ff77c8;
 
 }
 
 
 .shin-color {
 
-background:#ffd54d;
+    background: #ffd54d;
 
 }
 
@@ -672,25 +647,25 @@ background:#ffd54d;
 ========================= */
 
 
-@media(max-width:768px){
+@media(max-width:768px) {
 
 
-.calendar-wrapper {
+    .calendar-wrapper {
 
-flex-direction:column;
+        flex-direction: column;
 
-align-items:center;
+        align-items: center;
 
-gap:20px;
+        gap: 20px;
 
-}
+    }
 
 
-#backCountdown {
+    #backCountdown {
 
-width:100%;
+        width: 100%;
 
-}
+    }
 
 
 }
@@ -701,26 +676,26 @@ width:100%;
 ========================= */
 
 
-@media(min-width:769px){
+@media(min-width:769px) {
 
 
-button {
+    button {
 
-max-width:600px;
+        max-width: 600px;
+
+    }
+
 
 }
 
-
-}
-
-@media(min-width:769px){
+@media(min-width:769px) {
 
 
-button {
+    button {
 
-max-width:600px;
+        max-width: 600px;
 
-}
+    }
 
 
 }
@@ -734,7 +709,7 @@ max-width:600px;
 /* 横ズレ防止 */
 body {
 
-    overflow-x:hidden;
+    overflow-x: hidden;
 
 }
 
@@ -742,9 +717,9 @@ body {
 /* ボタン共通追加 */
 button {
 
-    word-break:break-word;
+    word-break: break-word;
 
-    -webkit-tap-highlight-color:transparent;
+    -webkit-tap-highlight-color: transparent;
 
 }
 
@@ -752,7 +727,7 @@ button {
 /* 持ち物チェックは押しやすく */
 .check-button {
 
-    min-height:80px;
+    min-height: 80px;
 
 }
 
@@ -760,112 +735,193 @@ button {
 /* 完了画像 */
 .princess {
 
-    max-height:40vh;
+    max-height: 40vh;
 
-    object-fit:contain;
+    object-fit: contain;
 
 }
 
 
 /* 大きいiPad・横向き対応 */
-@media(min-width:1000px){
+@media(min-width:1000px) {
 
     #app {
 
-        max-width:900px;
+        max-width: 900px;
 
     }
 
 }
 
-.start-screen::before{
+.start-screen::before {
 
-    content:"✨ 💖 ⭐";
+    content: "✨ 💖 ⭐";
 
-    position:absolute;
+    position: absolute;
 
-    top:20px;
-    left:8%;
+    top: 20px;
+    left: 8%;
 
-    font-size:30px;
+    font-size: 30px;
 
-    animation:spark1 2.2s infinite alternate;
-
-}
-
-.start-screen::after{
-
-    content:"💗 ✨ 💎";
-
-    position:absolute;
-
-    top:35px;
-    right:8%;
-
-    font-size:30px;
-
-    animation:spark2 2.6s infinite alternate;
+    animation: spark1 2.2s infinite alternate;
 
 }
 
+.start-screen::after {
 
-@keyframes floatLogo{
+    content: "💗 ✨ 💎";
 
-    0%{
+    position: absolute;
 
-        transform:translateY(0);
+    top: 35px;
+    right: 8%;
 
-    }
+    font-size: 30px;
 
-    50%{
-
-        transform:translateY(-8px);
-
-    }
-
-    100%{
-
-        transform:translateY(0);
-
-    }
+    animation: spark2 2.6s infinite alternate;
 
 }
 
-@keyframes spark1{
 
-    from{
+@keyframes floatLogo {
 
-        transform:translateY(0) rotate(0deg);
+    0% {
 
-        opacity:.5;
+        transform: translateY(0);
 
     }
 
-    to{
+    50% {
 
-        transform:translateY(-12px) rotate(15deg);
+        transform: translateY(-8px);
 
-        opacity:1;
+    }
+
+    100% {
+
+        transform: translateY(0);
 
     }
 
 }
 
-@keyframes spark2{
+@keyframes spark1 {
 
-    from{
+    from {
 
-        transform:translateY(0) scale(1);
+        transform: translateY(0) rotate(0deg);
 
-        opacity:.6;
+        opacity: .5;
 
     }
 
-    to{
+    to {
 
-        transform:translateY(-10px) scale(1.2);
+        transform: translateY(-12px) rotate(15deg);
 
-        opacity:1;
+        opacity: 1;
+
+    }
+
+}
+
+@keyframes spark2 {
+
+    from {
+
+        transform: translateY(0) scale(1);
+
+        opacity: .6;
+
+    }
+
+    to {
+
+        transform: translateY(-10px) scale(1.2);
+
+        opacity: 1;
+
+    }
+
+}
+
+/* =========================
+   じゃんけん
+========================= */
+
+.hand {
+
+    background: linear-gradient(180deg,
+            #ff9cd5,
+            #ff5db0);
+
+}
+
+.hand:nth-of-type(2) {
+
+    background: linear-gradient(180deg,
+            #b88cff,
+            #8d63ff);
+
+}
+
+.hand:nth-of-type(3) {
+
+    background: linear-gradient(180deg,
+            #8ee7ff,
+            #3fc9ff);
+
+}
+
+.hand {
+
+    background: linear-gradient(180deg,
+            #ff9cd5,
+            #ff5db0);
+
+}
+
+.hand:nth-of-type(2) {
+
+    background: linear-gradient(180deg,
+            #b88cff,
+            #8d63ff);
+
+}
+
+.hand:nth-of-type(3) {
+
+    background: linear-gradient(180deg,
+            #8ee7ff,
+            #3fc9ff);
+
+}
+
+/* もういっかい */
+#again {
+
+    background: linear-gradient(180deg,
+            #ffcf6b,
+            #ffb100);
+
+}
+
+すると 🩷 ぐー 💜 ちょき 🩵 ぱー 💛 もういっかい！ になる✨ さらに可愛くするなら… 「もういっかい！」は子どもが何回も押すボタンだから、動かしちゃおう😍 #again {
+
+    background: linear-gradient(180deg,
+            #ffd86e,
+            #ffb300);
+
+    animation: againJump 1.2s infinite;
+
+}
+
+@keyframes againJump {
+
+    50% {
+
+        transform: translateY(-5px);
 
     }
 

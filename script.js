@@ -82,7 +82,11 @@ const state = {
 
     checkedMorning: [],
 
-    morningComplete: false
+    morningComplete: false,
+
+    playerHand: null,
+    cpuHand: null,
+    result: ""
 
 };
 
@@ -107,10 +111,20 @@ document.addEventListener("DOMContentLoaded", init);
 // ======================================
 // 画面描画
 // ======================================
+let previousScreen = "";
 
 function render() {
 
-     window.scrollTo(0, 0);
+    if (previousScreen !== state.screen) {
+
+        window.scrollTo({
+            top: 0,
+            behavior: "instant"
+        });
+
+        previousScreen = state.screen;
+    }
+
     switch (state.screen) {
 
         case "start":
@@ -139,6 +153,14 @@ function render() {
 
         case "countdown":
             renderCountdown();
+            break;
+
+        case "janken":
+            renderJanken();
+            break;
+
+        case "jankenResult":
+            renderJankenResult();
             break;
     }
 
@@ -333,7 +355,9 @@ ${state.morningComplete ? "<br>✅" : ""}
         .getElementById("jankenButton")
         .addEventListener("click", () => {
 
-            alert("もうすぐできるよ♡");
+            state.screen = "janken";
+
+            render();
 
         });
 
@@ -886,6 +910,218 @@ function renderCountdown() {
         .addEventListener("click", () => {
 
             state.screen = "start";
+            render();
+
+        });
+}
+
+// ======================================
+// じゃんけん
+// ======================================
+
+function renderJanken() {
+
+    app.innerHTML = `
+
+<section class="start-screen">
+
+<h2>
+
+🐰💕🐱<br>
+じゃんけんたいむ
+
+</h2>
+
+<div style="
+display:flex;
+justify-content:center;
+gap:30px;
+margin:30px 0;
+">
+
+<img
+src="assets/images/rabbit.png"
+style="width:150px;">
+
+<img
+src="assets/images/cat.png"
+style="width:150px;">
+
+</div>
+
+<p>
+
+ぐー・ちょき・ぱーを
+えらんでね♡
+
+</p>
+
+<button class="hand" data-hand="rock">
+✊<br>ぐー
+</button>
+
+<button class="hand" data-hand="scissors">
+✌️<br>ちょき
+</button>
+
+<button class="hand" data-hand="paper">
+✋<br>ぱー
+</button>
+
+<button id="backJanken">
+⬅️<br>
+もどる
+</button>
+
+</section>
+
+`;
+
+    document.querySelectorAll(".hand").forEach(button => {
+
+        button.addEventListener("click", () => {
+
+            playJanken(button.dataset.hand);
+
+        });
+
+    });
+
+    document
+        .getElementById("backJanken")
+        .addEventListener("click", () => {
+
+            state.screen = "start";
+
+            render();
+
+        });
+
+}
+
+function playJanken(player) {
+
+    const hands = [
+        "rock",
+        "scissors",
+        "paper"
+    ];
+
+    const cpu =
+        hands[Math.floor(Math.random() * 3)];
+
+    state.playerHand = player;
+
+    state.cpuHand = cpu;
+
+    if (player === cpu) {
+
+        state.result = "🤝 あいこ！";
+
+    }
+
+    else if (
+
+        player === "rock" && cpu === "scissors" ||
+
+        player === "scissors" && cpu === "paper" ||
+
+        player === "paper" && cpu === "rock"
+
+    ) {
+
+        state.result = "🎉 かった！！";
+
+    }
+
+    else {
+
+        state.result = "🥺 まけちゃった";
+
+    }
+
+    state.screen = "jankenResult";
+
+    render();
+
+}
+
+function renderJankenResult() {
+
+    const icon = {
+
+        rock: "✊",
+
+        scissors: "✌️",
+
+        paper: "✋"
+
+    };
+
+    app.innerHTML = `
+
+<section class="finish-screen">
+
+<h2>
+
+じゃーーーんけー－－－－ん！！
+
+</h2>
+
+<div style="font-size:90px;">
+
+💃 ${icon[state.playerHand]}
+
+<br><br>
+
+VS
+
+<br><br>
+
+🐱 ${icon[state.cpuHand]}
+
+</div>
+
+<h1>
+
+${state.result}
+
+</h1>
+
+<button id="again">
+
+🌸<br>
+もういっかい！
+
+</button>
+
+<button id="backJanken">
+
+⬅️<br>
+もどる
+
+</button>
+
+</section>
+
+`;
+
+    document
+        .getElementById("again")
+        .addEventListener("click", () => {
+
+            state.screen = "janken";
+
+            render();
+
+        });
+
+    document
+        .getElementById("backJanken")
+        .addEventListener("click", () => {
+
+            state.screen = "start";
+
             render();
 
         });
