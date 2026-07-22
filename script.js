@@ -110,6 +110,7 @@ document.addEventListener("DOMContentLoaded", init);
 
 function render() {
 
+     window.scrollTo(0, 0);
     switch (state.screen) {
 
         case "start":
