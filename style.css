@@ -926,3 +926,11 @@ button {
     }
 
 }
+
+.locked{
+
+    color:#888;
+    opacity:.7;
+    filter:saturate(.6);
+
+}

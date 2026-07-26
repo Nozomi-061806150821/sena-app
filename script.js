@@ -86,7 +86,9 @@ const state = {
 
     playerHand: null,
     cpuHand: null,
-    result: ""
+    result: "",
+
+    debugCount: 0
 
 };
 
@@ -295,19 +297,23 @@ ${state.morningComplete ? "<br>✅" : ""}
 
 <button
     id="fortuneButton"
-    ${state.morningComplete ? "" : "disabled"}>
+    class="${state.morningComplete ? "" : "locked"}">
 
 🔮<br>
 きょうのうらない
+
+${state.morningComplete ? "" : "<br>🔒"}
 
 </button>
 
 <button
     id="jankenButton"
-    ${state.morningComplete ? "" : "disabled"}>
+    class="${state.morningComplete ? "" : "locked"}">
 
 ✌️<br>
 じゃんけんたいむ
+
+${state.morningComplete ? "" : "<br>🔒"}
 
 </button>
 
@@ -355,9 +361,25 @@ ${state.morningComplete ? "<br>✅" : ""}
         .getElementById("jankenButton")
         .addEventListener("click", () => {
 
-            state.screen = "janken";
+            // 通常はクリア後だけ
+            if (state.morningComplete) {
 
-            render();
+                state.screen = "janken";
+                render();
+                return;
+
+                
+            }
+
+            // 裏コマンド
+            state.debugCount++;
+
+            if (state.debugCount >= 5) {
+
+                state.screen = "janken";
+                render();
+
+            }
 
         });
 
@@ -1064,7 +1086,8 @@ function renderJankenResult() {
 
 <h2>
 
-じゃーーーんけー－－－－ん！！
+じゃーーーん<br>
+けー－－－－ん！！
 
 </h2>
 
