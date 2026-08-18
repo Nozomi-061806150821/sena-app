@@ -934,3 +934,215 @@ button {
     filter:saturate(.6);
 
 }
+
+/* =========================
+   スタンプカード
+========================= */
+
+.stamp-screen {
+
+    text-align:center;
+
+    animation:pop .4s;
+
+}
+
+
+.stamp-screen h2 {
+
+    margin-bottom:25px;
+
+}
+
+
+.stamp-card {
+
+    width:100%;
+
+    max-width:560px;
+
+    margin:20px auto;
+
+    padding:30px 20px;
+
+    box-sizing:border-box;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #fff7fc,
+            #ffe5f3
+        );
+
+    border-radius:35px;
+
+    border:5px solid #ff9ed3;
+
+    box-shadow:
+
+        0 10px 25px rgba(255,105,180,.25),
+
+        inset 0 0 20px rgba(255,255,255,.8);
+
+}
+
+
+.stamp-card h3 {
+
+    margin:0 0 25px;
+
+    font-size:clamp(24px,5vw,34px);
+
+    color:#ff5cab;
+
+    line-height:1.5;
+
+}
+
+
+.stamp-list {
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:12px;
+
+    flex-wrap:wrap;
+
+    margin:25px 0;
+
+}
+
+
+.stamp {
+
+    width:65px;
+
+    height:65px;
+
+    border-radius:50%;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:35px;
+
+    background:#fff;
+
+    border:4px dashed #ffc4df;
+
+    box-sizing:border-box;
+
+    color:#ffc9e3;
+
+}
+
+
+.stamp.active {
+
+    background:
+
+        radial-gradient(
+            circle,
+            #fff 20%,
+            #ffd1e8 100%
+        );
+
+    border:4px solid #ff72b8;
+
+    animation:stampPop .4s;
+
+    box-shadow:
+
+        0 5px 12px rgba(255,105,180,.25),
+
+        0 0 15px rgba(255,180,220,.7);
+
+}
+
+
+@keyframes stampPop {
+
+    0% {
+
+        transform:scale(.5) rotate(-20deg);
+
+        opacity:0;
+
+    }
+
+    70% {
+
+        transform:scale(1.15) rotate(8deg);
+
+    }
+
+    100% {
+
+        transform:scale(1) rotate(0);
+
+        opacity:1;
+
+    }
+
+}
+
+
+.stamp-count {
+
+    font-size:32px;
+
+    color:#ff4fa3;
+
+    font-weight:800;
+
+}
+
+
+.completed-card {
+
+    margin:25px auto;
+
+    padding:20px;
+
+    max-width:500px;
+
+    box-sizing:border-box;
+
+    border-radius:25px;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #fff3b0,
+            #ffd75e
+        );
+
+    color:#a86b00;
+
+    font-size:20px;
+
+    font-weight:800;
+
+    box-shadow:
+
+        0 8px 18px rgba(255,190,0,.2);
+
+}
+
+
+.completed-card strong {
+
+    font-size:32px;
+
+    color:#ff8c00;
+
+    margin:0 5px;
+
+}
