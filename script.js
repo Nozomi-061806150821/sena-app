@@ -88,6 +88,11 @@ const state = {
     cpuHand: null,
     result: "",
 
+    // 🌸 スタンプ
+    stamps: Number(localStorage.getItem("senaStamps")) || 0,
+    completedCards: Number(localStorage.getItem("senaCompletedCards")) || 0,
+
+    // 🔐 じゃんけん裏コマンド
     debugCount: 0
 
 };
@@ -361,25 +366,16 @@ ${state.morningComplete ? "" : "<br>🔒"}
         .getElementById("jankenButton")
         .addEventListener("click", () => {
 
-            // 通常はクリア後だけ
-            if (state.morningComplete) {
+            if (!state.morningComplete) {
 
-                state.screen = "janken";
-                render();
+                alert("🔒 あさちゃれんじを がんばってね♡");
+
                 return;
 
-                
             }
 
-            // 裏コマンド
-            state.debugCount++;
-
-            if (state.debugCount >= 5) {
-
-                state.screen = "janken";
-                render();
-
-            }
+            state.screen = "janken";
+            render();
 
         });
 
@@ -632,9 +628,13 @@ function toggleMorning(id) {
 
         state.morningComplete = true;
 
+        // 🌸 スタンプを1個プレゼント！
+        addStamp();
+
         state.screen = "finish";
 
     }
+
 
     render();
 
@@ -645,29 +645,76 @@ function toggleMorning(id) {
 
 function renderStamp() {
 
+    const stamps = [];
+
+    for (let i = 0; i < 5; i++) {
+
+        if (i < state.stamps) {
+
+            stamps.push(`
+                <div class="stamp active">
+                    🌸
+                </div>
+            `);
+
+        } else {
+
+            stamps.push(`
+                <div class="stamp">
+                    ☆
+                </div>
+            `);
+
+        }
+
+    }
+
     app.innerHTML = `
 
-    <section class="finish-screen">
+    <section class="stamp-screen">
 
-        <h1>🌸</h1>
+        <h2 id="stampTitle">
+    🌸💖🌸<br>
+    すたんぷかーど
+</h2>
 
-        <h2>
+        <div class="stamp-card">
 
-            すたんぷかーど
+            <h3>
+                せなちゃんの<br>
+                がんばりカード
+            </h3>
 
-        </h2>
+            <div class="stamp-list">
 
-        <p>
+                ${stamps.join("")}
 
-            じゅんびちゅうだから<br><br>
+            </div>
 
-            もうすこしまってね💓🥰
+            <p class="stamp-count">
+                ${state.stamps} / 5
+            </p>
 
-        </p>
+            <p>
+                あさちゃれんじを<br>
+                がんばるとスタンプがもらえるよ💕
+            </p>
+
+        </div>
+
+        <div class="completed-card">
+
+            🏆
+            こんぷりーとしたカード
+            <strong>${state.completedCards}</strong>
+            まい
+
+        </div>
 
         <button id="backStamp">
 
-            ⬅️ もどる
+            ⬅️<br>
+            もどる
 
         </button>
 
@@ -680,10 +727,109 @@ function renderStamp() {
         .addEventListener("click", () => {
 
             state.screen = "start";
+
             render();
 
         });
+    // ======================================
+    // 🔐 保護者用・裏コマンド
+    // タイトルを3回タッチ
+    // ======================================
+
+    let stampTapCount = 0;
+
+    let stampTapTimer = null;
+
+
+    document
+        .getElementById("stampTitle")
+        .addEventListener("click", () => {
+
+            stampTapCount++;
+
+            clearTimeout(stampTapTimer);
+
+            stampTapTimer = setTimeout(() => {
+
+                stampTapCount = 0;
+
+            }, 1000);
+
+
+            if (stampTapCount >= 3) {
+
+                stampTapCount = 0;
+
+
+                const code = prompt(
+                    "🔐 ほごしゃモード\n\n" +
+                    "コードをいれてね"
+                );
+
+
+                if (code !== "0618") {
+
+                    alert("ちがうよ〜🙅‍♀️");
+
+                    return;
+
+                }
+
+
+                const amount = prompt(
+                    "🌸 スタンプを何個復活する？\n\n" +
+                    "1〜4の数字を入れてね"
+                );
+
+
+                const count = Number(amount);
+
+
+                if (
+                    !Number.isInteger(count) ||
+                    count < 1 ||
+                    count > 4
+                ) {
+
+                    alert("1〜4で入力してね💕");
+
+                    return;
+
+                }
+
+
+                state.stamps += count;
+
+
+                // 5個を超えないようにする
+                if (state.stamps > 5) {
+
+                    state.stamps = 5;
+
+                }
+
+
+                localStorage.setItem(
+                    "senaStamps",
+                    state.stamps
+                );
+
+
+                alert(
+                    "🌸 スタンプを " +
+                    count +
+                    "こ復活したよ！💕"
+                );
+
+
+                render();
+
+            }
+
+        });
+
 }
+
 
 // ======================================
 // スタート画面イベント
@@ -1067,6 +1213,75 @@ function playJanken(player) {
     render();
 
 }
+
+// ======================================
+// 🌸 スタンプを1個追加
+// ======================================
+
+function addStamp() {
+
+    // 📅 今日の日付
+    const today = new Date();
+
+    const todayKey =
+        today.getFullYear() +
+        "-" +
+        (today.getMonth() + 1) +
+        "-" +
+        today.getDate();
+
+    // ⭐ 今日すでにスタンプをもらっている？
+    const lastStampDate =
+        localStorage.getItem("senaLastStampDate");
+
+    if (lastStampDate === todayKey) {
+
+        return;
+
+    }
+
+    // ⭐ スタンプ追加
+    state.stamps++;
+
+    // 📅 今日の日付を保存
+    localStorage.setItem(
+        "senaLastStampDate",
+        todayKey
+    );
+
+    // 💾 スタンプ保存
+    localStorage.setItem(
+        "senaStamps",
+        state.stamps
+    );
+
+    // ⭐ 5個たまった！
+    if (state.stamps >= 5) {
+
+        state.stamps = 0;
+
+        state.completedCards++;
+
+        localStorage.setItem(
+            "senaStamps",
+            state.stamps
+        );
+
+        localStorage.setItem(
+            "senaCompletedCards",
+            state.completedCards
+        );
+
+        alert(
+            "🎉🎉🎉\n\n" +
+            "スタンプカード\n" +
+            "コンプリート！！💕"
+        );
+
+    }
+
+}
+
 
 function renderJankenResult() {
 
