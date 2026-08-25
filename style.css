@@ -49,45 +49,47 @@ body {
 
 h1 {
 
-    font-size: clamp(36px, 8vw, 64px);
+    font-size: clamp(32px, 7vw, 56px);
 
-    margin: 10px 0;
+    margin: 15px 0;
 
     color: #ff4fa3;
 
     font-weight: 800;
 
-    letter-spacing: 2px;
+    letter-spacing: 1px;
+
+    line-height: 1.4;
 
 }
-
 
 h2 {
 
     color: #ff4fa3;
 
-    font-size: clamp(26px, 6vw, 42px);
+    font-size: clamp(24px, 5vw, 38px);
 
-    margin: 20px 0 40px;
+    margin: 20px 0 30px;
 
     line-height: 1.5;
 
     font-weight: 800;
 
-    letter-spacing: 2px;
+    letter-spacing: 1px;
 
 }
 
-
 p {
 
-    font-size: clamp(18px, 4vw, 28px);
+    font-size: clamp(18px, 4vw, 26px);
 
     color: #d14c87;
 
     line-height: 1.8;
 
     font-weight: 700;
+
+    letter-spacing: 1px;
 
 }
 
@@ -392,7 +394,9 @@ button:disabled {
 #backMode,
 #backCountdown,
 #backCheck,
-#backJanken {
+#backJanken,
+#backFortune,
+#parentBack {
 
     background: linear-gradient(180deg,
             #9fdfff,
@@ -1002,16 +1006,19 @@ button {
 
 
 .stamp-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    justify-items: center;
+    align-items: center;
+}
 
-    display:flex;
+@media (max-width: 500px) {
 
-    justify-content:center;
-
-    gap:12px;
-
-    flex-wrap:wrap;
-
-    margin:25px 0;
+    .stamp-list {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+    }
 
 }
 
@@ -1144,5 +1151,360 @@ button {
     color:#ff8c00;
 
     margin:0 5px;
+
+}
+
+.completed-card strong {
+    display: block;
+    font-size: 1.4em;
+    margin-top: 8px;
+}
+
+/* ======================================
+   🔐 保護者モード
+====================================== */
+
+.parent-control {
+
+    width: 100%;
+    max-width: 500px;
+
+    margin: 20px auto;
+    padding: 25px 20px;
+
+    box-sizing: border-box;
+
+    background: rgba(255, 255, 255, 0.75);
+
+    border: 3px solid #f6b6d8;
+
+    border-radius: 30px;
+
+    box-shadow:
+        0 6px 15px rgba(220, 120, 180, 0.18);
+
+}
+
+
+/* タイトル */
+
+.parent-control h3 {
+
+    margin: 0 0 15px;
+
+    font-size: clamp(22px, 5vw, 30px);
+
+    color: #d96aa5;
+
+}
+
+
+/* ＋ 数字 − の部分 */
+
+.parent-number {
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    margin: 15px 0;
+
+}
+
+
+/* ＋と−ボタン */
+
+.parent-number button {
+
+    width: 75px;
+    height: 55px;
+
+    border: none;
+
+    border-radius: 20px;
+
+    font-size: 32px;
+    font-weight: bold;
+
+    font-family: inherit;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 4px 8px rgba(200, 100, 160, 0.2);
+
+    transition:
+        transform 0.1s,
+        box-shadow 0.1s;
+
+}
+
+
+/* ＋ボタン */
+
+.parent-plus {
+
+    background: #ffd1e8;
+
+    color: #d94f91;
+
+}
+
+
+/* −ボタン */
+
+.parent-minus {
+
+    background: #e8d9ff;
+
+    color: #8959c7;
+
+}
+
+
+/* 押したとき */
+
+.parent-number button:active {
+
+    transform: scale(0.92);
+
+    box-shadow:
+        0 2px 4px rgba(200, 100, 160, 0.2);
+
+}
+
+
+/* 数字 */
+
+.parent-number strong {
+
+    min-width: 100px;
+
+    text-align: center;
+
+    font-size: 42px;
+
+    line-height: 1.2;
+
+    color: #555;
+
+}
+
+
+/* おわるボタン */
+
+#parentBack {
+
+    margin-top: 25px;
+
+}
+
+/* ======================================
+   🔐 保護者モード 数字変更ボタン
+====================================== */
+
+.parent-number strong {
+    font-size: 32px;
+    min-width: 70px;
+    text-align: center;
+}
+
+/* ＋ボタン */
+.parent-plus {
+    width: 80px;
+    height: 55px;
+    font-size: 32px;
+    border: none;
+    border-radius: 20px;
+    background: #ffd6ec;
+    color: #ff69a8;
+    box-shadow: 0 4px 8px rgba(255, 120, 180, 0.25);
+    cursor: pointer;
+}
+
+/* −ボタン */
+.parent-minus {
+    width: 80px;
+    height: 55px;
+    font-size: 32px;
+    border: none;
+    border-radius: 20px;
+    background: #e8ddff;
+    color: #8b6fc9;
+    box-shadow: 0 4px 8px rgba(140, 110, 200, 0.25);
+    cursor: pointer;
+}
+
+/* 押したとき */
+.parent-plus:active,
+.parent-minus:active {
+    transform: scale(0.92);
+}
+
+/* ======================================
+   🔐 保護者モード・おわるボタン
+====================================== */
+
+#parentBack {
+
+    display: block;
+
+    width: 100%;
+    max-width: 400px;
+
+    margin: 30px auto 0;
+
+    padding: 18px 20px;
+
+    border: none;
+    border-radius: 25px;
+
+    font-family: "M PLUS Rounded 1c", sans-serif;
+
+    font-size: 24px;
+    font-weight: bold;
+
+    background: #f5d6ff;
+
+    color: #7b4b8a;
+
+    box-shadow:
+        0 5px 0 #d5a9e5,
+        0 8px 15px rgba(150, 100, 180, 0.2);
+
+    cursor: pointer;
+
+    transition: transform 0.1s;
+}
+
+#parentBack:active {
+
+    transform: translateY(4px);
+
+    box-shadow:
+        0 1px 0 #d5a9e5,
+        0 3px 8px rgba(150, 100, 180, 0.15);
+
+}
+
+/* ======================================
+   🔮 うらない
+====================================== */
+
+.fortune-result {
+
+    width: 100%;
+    max-width: 600px;
+
+    margin: 20px auto;
+
+    padding: 25px 20px;
+
+    box-sizing: border-box;
+
+    background: linear-gradient(
+        135deg,
+        #fffaff,
+        #ffe8f6
+    );
+
+    border: 4px solid #ffb5dc;
+
+    border-radius: 35px;
+
+    box-shadow:
+        0 10px 25px rgba(255, 105, 180, .2);
+
+    animation: fortunePop .5s ease;
+
+}
+
+
+.fortune-result h1 {
+
+    font-size: clamp(26px, 6vw, 44px);
+
+    color: #ff4fa3;
+
+    line-height: 1.5;
+
+    margin: 20px 0;
+
+}
+
+
+.fortune-result p {
+
+    font-size: clamp(18px, 4vw, 26px);
+
+    color: #d14c87;
+
+    line-height: 1.8;
+
+    margin: 20px 0;
+
+}
+
+
+/* ラッキーあそび・アイテム */
+
+.fortune-item {
+
+    margin: 18px auto;
+
+    padding: 18px;
+
+    max-width: 480px;
+
+    box-sizing: border-box;
+
+    background: white;
+
+    border-radius: 25px;
+
+    color: #d14c87;
+
+    font-size: clamp(18px, 4vw, 24px);
+
+    line-height: 1.7;
+
+    box-shadow:
+        0 5px 12px rgba(255, 105, 180, .12);
+
+}
+
+
+.fortune-item strong {
+
+    color: #ff5cab;
+
+    font-size: clamp(18px, 4vw, 24px);
+
+}
+
+
+@keyframes fortunePop {
+
+    from {
+
+        opacity: 0;
+
+        transform: scale(.85);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform: scale(1);
+
+    }
 
 }

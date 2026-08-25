@@ -13,8 +13,6 @@ let lists = {
         { id: "pants", icon: "👖", text: "ずぼん" },
         { id: "underwear", icon: "👙", text: "したぎ" },
         { id: "bag", icon: "🛍️", text: "よごれた せんたくものを いれる ふくろ" },
-        { id: "swimsuit", icon: "🩱", text: "みずぎ" },
-        { id: "poolTowel", icon: "🏖️", text: "ぷーるたおる" },
         { id: "cup", icon: "🥤", text: "こっぷ と こっぷいれ" },
         { id: "tea", icon: "🧃", text: "むぎちゃ" }
     ],
@@ -25,8 +23,6 @@ let lists = {
         { id: "pants", icon: "👖", text: "ずぼん" },
         { id: "underwear", icon: "👙", text: "したぎ" },
         { id: "bag", icon: "🛍️", text: "よごれた せんたくものを いれる ふくろ" },
-        { id: "swimsuit", icon: "🩱", text: "みずぎ" },
-        { id: "poolTowel", icon: "🏖️", text: "ぷーるたおる" },
         { id: "cup", icon: "🥤", text: "こっぷ と こっぷいれ" },
         { id: "tea", icon: "🧃", text: "むぎちゃ" }
     ]
@@ -38,6 +34,8 @@ const morningList = [
 
     { id: "clothes", icon: "👕", text: "おきがえ" },
 
+    { id: "pajama", icon: "🛏️", text: "ぱじゃまをかたづける" },
+
     { id: "temperature", icon: "🌡️", text: "たいおん" },
 
     { id: "items", icon: "🎒", text: "もちものちぇっく" },
@@ -46,13 +44,96 @@ const morningList = [
 
     { id: "breakfast", icon: "🍚", text: "あさごはん・かみのけ" },
 
+    { id: "shokki", icon: "🥄", text: "たべたものをかたづける" },
+
     { id: "brushTeeth", icon: "🪥", text: "はみがき・おかお" },
 
-    { id: "pajama", icon: "🛏️", text: "ぱじゃまをかたづける" },
+    { id: "contact", icon: "📖", text: "まま れんらくちょう" }
+];
 
-    { id: "contact", icon: "📖", text: "まま れんらくちょう" },
+// ======================================
+// 🔮 きょうのうらない
+// ======================================
 
-    { id: "pool", icon: "🏊", text: "ぷーるかーど" }
+const fortunes = [
+
+    {
+        title: "おともだちと<br>めっちゃなかよくできる<br>だいきち！",
+
+        messages: [
+            "おともだちと いっしょに あそべるかも♡",
+            "「いっしょに あそぼ！」って いわれるかも💕",
+            "おともだちと にこにこ できそう！",
+            "おともだちと たのしいことが はじまりそう🌸"
+        ],
+
+        luckyPlay: [
+            "おままごと",
+            "おえかき",
+            "おにごっこ",
+            "おもちゃあそび"
+        ],
+
+        luckyItem: [
+            "おきにいりの おもちゃ",
+            "おえかきの くれよん",
+            "すきな ぬいぐるみ",
+            "かわいい ハンカチ"
+        ]
+    },
+
+    {
+        title: "いちにち<br>るんるんで<br>あそべる<br>だいきち！",
+
+        messages: [
+            "きょうは いっぱい あそべそう！🌈",
+            "おそとあそびが たのしくなりそう♡",
+            "おへやでも おそとでも るんるん💕",
+            "たのしいことが いっぱい みつかるかも！"
+        ],
+
+        luckyPlay: [
+            "おにごっこ",
+            "かけっこ",
+            "すべりだい",
+            "おままごと",
+            "おもちゃあそび"
+        ],
+
+        luckyItem: [
+            "ぼうし",
+            "おきにいりのおもちゃ",
+            "ハンカチ",
+            "すきな ぬいぐるみ"
+        ]
+    },
+
+    {
+        title: "なにかで<br>かつやくしちゃうかも<br>だいきち！",
+
+        messages: [
+            "せんせいに ほめてもらえるかも👑",
+            "「すごいね！」って いわれちゃうかも✨",
+            "じょうずに できることが ありそう！🌸",
+            "おてつだいで かつやくしちゃうかも💕",
+            "みんなの おてほんに なっちゃうかも！"
+        ],
+
+        luckyPlay: [
+            "こうさく",
+            "おえかき",
+            "うた",
+            "おどり",
+            "ブロックあそび"
+        ],
+
+        luckyItem: [
+            "くれよん",
+            "おえかきちょう",
+            "おきにいりの ハンカチ",
+            "すきな おもちゃ"
+        ]
+    }
 
 ];
 
@@ -62,9 +143,8 @@ const morningList = [
 
 const shinDays = [
 
-    new Date(2026, 7, 20), // 2026/8/20
     new Date(2026, 8, 18), // 2026/9/18
-
+    new Date(2026, 10, 21),// 2026/11/21
 ];
 
 
@@ -84,9 +164,15 @@ const state = {
 
     morningComplete: false,
 
+    morningStampReceived: false,
+
     playerHand: null,
     cpuHand: null,
     result: "",
+
+    // 🔮 うらない
+    fortuneResult: null,
+    fortuneTapCount: 0,
 
     // 🌸 スタンプ
     stamps: Number(localStorage.getItem("senaStamps")) || 0,
@@ -162,6 +248,10 @@ function render() {
             renderCountdown();
             break;
 
+        case "fortune":
+            renderFortune();
+            break;
+
         case "janken":
             renderJanken();
             break;
@@ -169,6 +259,7 @@ function render() {
         case "jankenResult":
             renderJankenResult();
             break;
+
     }
 
 }
@@ -216,6 +307,9 @@ function renderCheck() {
 
         }
 
+        // 🧹 持ち物チェック終了後にリセット
+        state.checked = [];
+
         state.screen = "menu";
 
         render();
@@ -224,20 +318,21 @@ function renderCheck() {
     }
 
     app.innerHTML = `
-        <section class="check-screen">
+    <section class="check-screen">
 
-            <h2>🎀<br>
+        <h2>
+            🎀<br>
+            もちものちぇっく
+        </h2>
 
-            <h2>もちものちぇっく</h2>
+        ${html}
 
-            ${html}
+        <button id="backCheck">
+            ⬅️<br>
+            もどる
+        </button>
 
-            <button id="backCheck">
 
-    ⬅️<br>
-    もどる
-
-</button>
 
             ${complete ? `
                 <h2>🎉🎉🎉</h2>
@@ -245,8 +340,8 @@ function renderCheck() {
                 <p>ほいくえんたのしんでね💕</p>
             ` : ""}
 
-        </section>
-    `;
+    </section>
+`;
 
     document.querySelectorAll(".check-button").forEach(button => {
 
@@ -358,7 +453,31 @@ ${state.morningComplete ? "" : "<br>🔒"}
         .getElementById("fortuneButton")
         .addEventListener("click", () => {
 
-            alert("もうすぐできるよ♡");
+            // 🔐 動作確認用・裏コマンド
+            state.fortuneTapCount++;
+
+            // 3回押したら強制的に占い画面へ
+            if (state.fortuneTapCount >= 3) {
+
+                state.fortuneTapCount = 0;
+
+                state.screen = "fortune";
+                render();
+
+                return;
+            }
+
+            // 通常時
+            if (!state.morningComplete) {
+
+                alert("🔒 あさちゃれんじを がんばってね♡");
+
+                return;
+
+            }
+
+            state.screen = "fortune";
+            render();
 
         });
 
@@ -366,6 +485,21 @@ ${state.morningComplete ? "" : "<br>🔒"}
         .getElementById("jankenButton")
         .addEventListener("click", () => {
 
+            // 🔐 動作確認用・裏コマンド
+            state.debugCount++;
+
+            // 3回押したら強制的にじゃんけん画面へ
+            if (state.debugCount >= 3) {
+
+                state.debugCount = 0;
+
+                state.screen = "janken";
+                render();
+
+                return;
+            }
+
+            // 通常時
             if (!state.morningComplete) {
 
                 alert("🔒 あさちゃれんじを がんばってね♡");
@@ -388,7 +522,6 @@ ${state.morningComplete ? "" : "<br>🔒"}
             render();
 
         });
-
 }
 
 function renderFinish() {
@@ -452,6 +585,8 @@ function renderFinish() {
             state.mode = null;
 
             state.morningComplete = true;
+
+            state.morningStampReceived = false;
 
             state.screen = "start";
 
@@ -594,21 +729,33 @@ function renderMode() {
 
 function toggleMorning(id) {
 
-    // 持ち物チェックを押したら
+    // ======================================
+    // 🎒 持ち物チェックを押したら
+    // ======================================
+
     if (id === "items") {
 
-        // モード選択画面へ
-        state.screen = "mode";
-        render();
-        return;
+        // 持ち物チェック専用の状態をリセット
+        state.checked = [];
 
+        state.screen = "mode";
+
+        render();
+
+        return;
     }
 
-    // チェック音
+    // ======================================
+    // 🔔 チェック音
+    // ======================================
+
     checkSound.currentTime = 0;
     checkSound.play();
 
-    // チェック切り替え
+    // ======================================
+    // 🌸 チェック切り替え
+    // ======================================
+
     if (state.checkedMorning.includes(id)) {
 
         state.checkedMorning =
@@ -620,21 +767,38 @@ function toggleMorning(id) {
 
     }
 
-    // 全部終わった？
-    if (state.checkedMorning.length === morningList.length) {
+    // ======================================
+    // 🌸 あさちゃれんじ全部完了
+    // ======================================
+
+    const allMorningComplete =
+        morningList.every(item =>
+            state.checkedMorning.includes(item.id)
+        );
+
+    if (allMorningComplete) {
 
         finishSound.currentTime = 0;
         finishSound.play();
 
         state.morningComplete = true;
 
-        // 🌸 スタンプを1個プレゼント！
-        addStamp();
+        // 🌸 まだスタンプをもらっていなければ追加
+        if (!state.morningStampReceived) {
 
+            addStamp();
+
+            state.morningStampReceived = true;
+
+        }
+
+        // 🎁 ご褒美画面へ
         state.screen = "finish";
 
-    }
+        render();
 
+        return;
+    }
 
     render();
 
@@ -704,12 +868,14 @@ function renderStamp() {
 
         <div class="completed-card">
 
-            🏆
-            こんぷりーとしたカード
-            <strong>${state.completedCards}</strong>
-            まい
+    🏆<br>
+    こんぷりーとしたカード
 
-        </div>
+    <strong>
+        ${state.completedCards}まい
+    </strong>
+
+</div>
 
         <button id="backStamp">
 
@@ -737,9 +903,7 @@ function renderStamp() {
     // ======================================
 
     let stampTapCount = 0;
-
     let stampTapTimer = null;
-
 
     document
         .getElementById("stampTitle")
@@ -756,10 +920,10 @@ function renderStamp() {
             }, 1000);
 
 
+            // 3回タッチで保護者モード
             if (stampTapCount >= 3) {
 
                 stampTapCount = 0;
-
 
                 const code = prompt(
                     "🔐 ほごしゃモード\n\n" +
@@ -767,6 +931,7 @@ function renderStamp() {
                 );
 
 
+                // パスワードが違う
                 if (code !== "0618") {
 
                     alert("ちがうよ〜🙅‍♀️");
@@ -776,53 +941,196 @@ function renderStamp() {
                 }
 
 
-                const amount = prompt(
-                    "🌸 スタンプを何個復活する？\n\n" +
-                    "1〜4の数字を入れてね"
-                );
+                // ======================================
+                // 🔐 保護者モード画面
+                // ======================================
+
+                app.innerHTML = `
+
+                <section class="start-screen">
+
+                    <h2>
+                        🔐🌸🔐<br>
+                        ほごしゃモード
+                    </h2>
 
 
-                const count = Number(amount);
+                    <!-- 🌸 スタンプ -->
+
+                    <div class="parent-control">
+
+                        <h3>
+                            🌸 スタンプ
+                        </h3>
+
+                        <div class="parent-number">
+
+    <button id="stampPlus" class="parent-plus">
+        ＋
+    </button>
+
+    <strong id="stampValue">
+        ${state.stamps}
+    </strong>
+
+    <button id="stampMinus" class="parent-minus">
+        −
+    </button>
+
+                    </div>
 
 
-                if (
-                    !Number.isInteger(count) ||
-                    count < 1 ||
-                    count > 4
-                ) {
+                    <!-- 🏆 コンプリートカード -->
 
-                    alert("1〜4で入力してね💕");
+                   <div class="parent-number">
 
-                    return;
+    <button id="cardPlus" class="parent-plus">
+        ＋
+    </button>
 
-                }
+    <strong id="cardValue">
+        ${state.completedCards}
+    </strong>
 
+    <button id="cardMinus" class="parent-minus">
+        −
+    </button>
 
-                state.stamps += count;
+</div>
 
-
-                // 5個を超えないようにする
-                if (state.stamps > 5) {
-
-                    state.stamps = 5;
-
-                }
+                    </div>
 
 
-                localStorage.setItem(
-                    "senaStamps",
-                    state.stamps
-                );
+                    <button id="parentBack">
+
+                        ⬅️<br>
+                        おわる
+
+                    </button>
+
+                </section>
+
+                `;
 
 
-                alert(
-                    "🌸 スタンプを " +
-                    count +
-                    "こ復活したよ！💕"
-                );
+                // ======================================
+                // 🌸 スタンプ −1
+                // ======================================
+
+                document
+                    .getElementById("stampMinus")
+                    .addEventListener("click", () => {
+
+                        if (state.stamps <= 0) {
+
+                            return;
+
+                        }
+
+                        state.stamps -= 1;
+
+                        localStorage.setItem(
+                            "senaStamps",
+                            String(state.stamps)
+                        );
+
+                        document
+                            .getElementById("stampValue")
+                            .textContent = state.stamps;
+
+                    });
 
 
-                render();
+                // ======================================
+                // 🌸 スタンプ ＋1
+                // ======================================
+
+                document
+                    .getElementById("stampPlus")
+                    .addEventListener("click", () => {
+
+                        // 通常のスタンプ追加処理
+                        addStamp();
+
+                        // 表示を更新
+                        document
+                            .getElementById("stampValue")
+                            .textContent =
+                            state.stamps;
+
+                        document
+                            .getElementById("cardValue")
+                            .textContent =
+                            state.completedCards;
+
+                    });
+
+
+                // ======================================
+                // 🏆 カード −1
+                // ======================================
+
+                document
+                    .getElementById("cardMinus")
+                    .addEventListener("click", () => {
+
+                        if (state.completedCards <= 0) {
+
+                            return;
+
+                        }
+
+                        state.completedCards -= 1;
+
+                        localStorage.setItem(
+                            "senaCompletedCards",
+                            String(state.completedCards)
+                        );
+
+                        document
+                            .getElementById("cardValue")
+                            .textContent =
+                            state.completedCards;
+
+                    });
+
+
+                // ======================================
+                // 🏆 カード ＋1
+                // ======================================
+
+                document
+                    .getElementById("cardPlus")
+                    .addEventListener("click", () => {
+
+                        state.completedCards += 1;
+
+                        localStorage.setItem(
+                            "senaCompletedCards",
+                            String(state.completedCards)
+                        );
+
+                        document
+                            .getElementById("cardValue")
+                            .textContent =
+                            state.completedCards;
+
+                    });
+
+
+                // ======================================
+                // おわる
+                // ======================================
+
+                document
+                    .getElementById("parentBack")
+                    .addEventListener("click", () => {
+
+                        state.screen = "stamp";
+
+                        render();
+
+                    });
 
             }
 
@@ -935,7 +1243,7 @@ function toggleCheck(id) {
 
 }
 
-function createCalendar(year, month, nextDay) {
+function createCalendar(year, month) {
 
     const today = new Date();
 
@@ -949,8 +1257,8 @@ function createCalendar(year, month, nextDay) {
     <div class="calendar-box">
 
         <h3 class="month-title">
-💖🌈 ${month + 1}がつ 🌈💖
-</h3>
+            💖🌈 ${month + 1}がつ 🌈💖
+        </h3>
 
         <div class="calendar">
 
@@ -964,70 +1272,98 @@ function createCalendar(year, month, nextDay) {
 
     `;
 
+    // 月初までの空白
     for (let i = 0; i < startWeek; i++) {
+
         html += `<div class="day empty"></div>`;
+
     }
 
+    // 日付
     for (let d = 1; d <= lastDate; d++) {
 
         let cls = "day";
 
+        // 今日
         if (
             d === today.getDate() &&
             month === today.getMonth() &&
             year === today.getFullYear()
         ) {
+
             cls += " today";
+
         }
 
-        if (
-            nextDay &&
-            d === nextDay.getDate() &&
-            month === nextDay.getMonth() &&
-            year === nextDay.getFullYear()
-        ) {
+        // しんくんに会える日
+        const isShinDay = shinDays.some(day => {
+
+            return (
+                d === day.getDate() &&
+                month === day.getMonth() &&
+                year === day.getFullYear()
+            );
+
+        });
+
+        if (isShinDay) {
+
             cls += " shin";
-        }
 
-        let text = d;
+        }
 
         html += `
-<div class="${cls}">
-    ${text}
-</div>
-`;
+
+            <div class="${cls}">
+                ${d}
+            </div>
+
+        `;
+
     }
 
     html += `
+
         </div>
+
     </div>
+
     `;
 
     return html;
-}
 
-const days = getShinCountdown();
+}
 
 function renderCountdown() {
 
     const next = getNextShinDay();
 
-    // ★今日は何月？
+    // ★ 今日
     const today = new Date();
 
-    const year1 = today.getFullYear();
-    const month1 = today.getMonth();
+    const year = today.getFullYear();
+    const month = today.getMonth();
 
-    // ★次の月
-    const nextMonth = new Date(year1, month1 + 1, 1);
+    // ======================================
+    // 📅 今月・来月・再来月の3か月
+    // ======================================
 
-    const calendarHTML =
-        createCalendar(year1, month1, next) +
-        createCalendar(
-            nextMonth.getFullYear(),
-            nextMonth.getMonth(),
-            next
+    let calendarHTML = "";
+
+    for (let i = 0; i < 3; i++) {
+
+        const targetMonth = new Date(
+            year,
+            month + i,
+            1
         );
+
+        calendarHTML += createCalendar(
+            targetMonth.getFullYear(),
+            targetMonth.getMonth()
+        );
+
+    }
 
     app.innerHTML = `
 
@@ -1051,17 +1387,17 @@ function renderCountdown() {
 
         <div class="calendar-legend">
 
-<div class="legend-item">
-<div class="today-color"></div>
-きょう
-</div>
+            <div class="legend-item">
+                <div class="today-color"></div>
+                きょう
+            </div>
 
-<div class="legend-item">
-<div class="shin-color"></div>
-しんくんにあえるひ
-</div>
+            <div class="legend-item">
+                <div class="shin-color"></div>
+                しんくんにあえるひ
+            </div>
 
-</div>
+        </div>
 
         <button id="backCountdown">
 
@@ -1078,9 +1414,122 @@ function renderCountdown() {
         .addEventListener("click", () => {
 
             state.screen = "start";
+
             render();
 
         });
+
+}
+
+// ======================================
+// 🔮 うらない画面
+// ======================================
+
+function renderFortune() {
+
+    // 3種類からランダムに選ぶ
+    const fortune =
+        fortunes[Math.floor(Math.random() * fortunes.length)];
+
+    // メッセージをランダムに選ぶ
+    const message =
+        fortune.messages[
+        Math.floor(Math.random() * fortune.messages.length)
+        ];
+
+    // ラッキーあそび
+    const luckyPlay =
+        fortune.luckyPlay[
+        Math.floor(Math.random() * fortune.luckyPlay.length)
+        ];
+
+    // ラッキーアイテム
+    const luckyItem =
+        fortune.luckyItem[
+        Math.floor(Math.random() * fortune.luckyItem.length)
+        ];
+
+
+    app.innerHTML = `
+
+    <section class="finish-screen">
+
+        <h2>
+
+            🔮💖🔮<br>
+            きょうのうらない
+
+        </h2>
+
+
+        <div class="fortune-result">
+
+            🌈✨🌈
+
+            <h1>
+                ${fortune.title}
+            </h1>
+
+            <p>
+                ${message}
+            </p>
+
+            <div class="fortune-item">
+
+                🎀<br>
+
+                <strong>
+                    きょうのラッキーあそび
+                </strong>
+
+                <br>
+
+                ${luckyPlay}
+
+            </div>
+
+
+            <div class="fortune-item">
+
+                🧸<br>
+
+                <strong>
+                    ラッキーアイテム
+                </strong>
+
+                <br>
+
+                ${luckyItem}
+
+            </div>
+
+            🌸💖🌸
+
+        </div>
+
+
+        <button id="backFortune">
+
+            ⬅️<br>
+            もどる
+
+        </button>
+
+    </section>
+
+    `;
+
+
+    document
+        .getElementById("backFortune")
+        .addEventListener("click", () => {
+
+            state.screen = "start";
+
+            render();
+
+        });
+
 }
 
 // ======================================
@@ -1220,56 +1669,29 @@ function playJanken(player) {
 
 function addStamp() {
 
-    // 📅 今日の日付
-    const today = new Date();
+    // 🌸 スタンプを1個追加
+    state.stamps += 1;
 
-    const todayKey =
-        today.getFullYear() +
-        "-" +
-        (today.getMonth() + 1) +
-        "-" +
-        today.getDate();
+    console.log("スタンプ追加:", state.stamps);
 
-    // ⭐ 今日すでにスタンプをもらっている？
-    const lastStampDate =
-        localStorage.getItem("senaLastStampDate");
-
-    if (lastStampDate === todayKey) {
-
-        return;
-
-    }
-
-    // ⭐ スタンプ追加
-    state.stamps++;
-
-    // 📅 今日の日付を保存
-    localStorage.setItem(
-        "senaLastStampDate",
-        todayKey
-    );
-
-    // 💾 スタンプ保存
-    localStorage.setItem(
-        "senaStamps",
-        state.stamps
-    );
-
-    // ⭐ 5個たまった！
+    // ⭐ 5個たまった？
     if (state.stamps >= 5) {
 
+        // 🏆 コンプリートしたカードを1枚追加
+        state.completedCards += 1;
+
+        // 🌸 スタンプを0に戻す
         state.stamps = 0;
 
-        state.completedCards++;
-
+        // 💾 すぐ保存
         localStorage.setItem(
             "senaStamps",
-            state.stamps
+            String(state.stamps)
         );
 
         localStorage.setItem(
             "senaCompletedCards",
-            state.completedCards
+            String(state.completedCards)
         );
 
         alert(
@@ -1278,10 +1700,26 @@ function addStamp() {
             "コンプリート！！💕"
         );
 
+        console.log(
+            "カード完成！",
+            "stamps =", state.stamps,
+            "completedCards =", state.completedCards
+        );
+
+        return;
     }
 
-}
+    // 💾 5個未満でも保存
+    localStorage.setItem(
+        "senaStamps",
+        String(state.stamps)
+    );
 
+    console.log(
+        "保存しました:",
+        state.stamps
+    );
+}
 
 function renderJankenResult() {
 
