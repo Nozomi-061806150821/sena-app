@@ -64,21 +64,28 @@ const fortunes = [
             "おともだちと いっしょに あそべるかも♡",
             "「いっしょに あそぼ！」って いわれるかも💕",
             "おともだちと にこにこ できそう！",
-            "おともだちと たのしいことが はじまりそう🌸"
+            "おともだちと たのしいことが はじまりそう🌸",
+            "たのしいことが いっぱい みつかりそう♡",
+            "にこにこしていると いいことが おこるかも💕",
+            "おともだちと いっぱい わらえそう！",
+            "せんせいと たのしく おはなしできそう✨",
+            "きょうは るんるんきぶんで すごせそう🌈"
         ],
 
         luckyPlay: [
             "おままごと",
             "おえかき",
             "おにごっこ",
-            "おもちゃあそび"
+            "おもちゃあそび",
+            "しっぽとり"
         ],
 
         luckyItem: [
             "おきにいりの おもちゃ",
             "おえかきの くれよん",
             "すきな ぬいぐるみ",
-            "かわいい ハンカチ"
+            "かわいい たおる",
+            "おきにいりの おようふく"
         ]
     },
 
@@ -146,6 +153,12 @@ const shinDays = [
     new Date(2026, 8, 18), // 2026/9/18
     new Date(2026, 10, 21),// 2026/11/21
 ];
+
+// ======================================
+// 💍 結婚記念日
+// ======================================
+
+const anniversaryDay = new Date(2027, 1, 27);
 
 
 // ======================================
@@ -811,7 +824,7 @@ function renderStamp() {
 
     const stamps = [];
 
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 7; i++) {
 
         if (i < state.stamps) {
 
@@ -856,7 +869,7 @@ function renderStamp() {
             </div>
 
             <p class="stamp-count">
-                ${state.stamps} / 5
+                ${state.stamps} / 7
             </p>
 
             <p>
@@ -1211,6 +1224,30 @@ function getShinCountdown() {
 
 }
 
+
+// ======================================
+// 💍 結婚記念日まであと何日？
+// ======================================
+
+function getAnniversaryCountdown() {
+
+    const today = new Date();
+
+    today.setHours(0, 0, 0, 0);
+
+    const day = new Date(anniversaryDay);
+
+    day.setHours(0, 0, 0, 0);
+
+    const diff = Math.ceil(
+        (day - today) /
+        (1000 * 60 * 60 * 24)
+    );
+
+    return diff;
+
+}
+
 // ======================================
 // サウンド
 // ======================================
@@ -1378,6 +1415,24 @@ function renderCountdown() {
         <h1>
         あと ${getShinCountdown()} にち♡
         </h1>
+
+        <div class="anniversary-countdown">
+
+    💍💖💍
+
+    <h2>
+        けっこんきねんびまで
+    </h2>
+
+    <h1>
+        あと ${getAnniversaryCountdown()} にち♡
+    </h1>
+
+    <p>
+        🌟 よていは 2027ねん 2がつ 27にち
+    </p>
+
+</div>
 
         <div class="calendar-wrapper">
 
@@ -1675,7 +1730,7 @@ function addStamp() {
     console.log("スタンプ追加:", state.stamps);
 
     // ⭐ 5個たまった？
-    if (state.stamps >= 5) {
+    if (state.stamps >= 7) {
 
         // 🏆 コンプリートしたカードを1枚追加
         state.completedCards += 1;
