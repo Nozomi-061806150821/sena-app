@@ -1408,7 +1408,7 @@ function renderCountdown() {
 
         <h2>
         💛💚💙❤️🧡<br>
-        つぎ あえるまで<br>
+        つぎの　いべんとまで<br>
         💛💚💙❤️🧡
         </h2>
 
@@ -1425,7 +1425,7 @@ function renderCountdown() {
     </h2>
 
     <h1>
-        あと ${getAnniversaryCountdown()} にち♡
+        あと ${getAnniversaryCountdown()} にち☆
     </h1>
 
     <p>
