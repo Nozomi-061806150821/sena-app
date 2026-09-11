@@ -434,7 +434,7 @@ ${state.morningComplete ? "" : "<br>🔒"}
 
 🥰<br>
 
-つぎ あえるまで<br>
+つぎのいべんとまで<br>
 
 あと なんにち？
 
@@ -1421,7 +1421,7 @@ function renderCountdown() {
     💍💖💍
 
     <h2>
-        けっこんきねんびまで
+        あいちにいくまで
     </h2>
 
     <h1>
@@ -1449,7 +1449,7 @@ function renderCountdown() {
 
             <div class="legend-item">
                 <div class="shin-color"></div>
-                しんくんにあえるひ
+                つぎのいべんと
             </div>
 
         </div>
