@@ -150,7 +150,7 @@ const fortunes = [
 
 const shinDays = [
 
-    new Date(2026, 8, 18), // 2026/9/18
+    new Date(2026, 8, 25), // 2026/9/25
     new Date(2026, 10, 21),// 2026/11/21
 ];
 
