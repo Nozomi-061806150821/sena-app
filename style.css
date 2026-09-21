@@ -3080,3 +3080,13 @@ button {
     z-index: 1001;
 
 }
+
+/* ======================================
+   📅 しんくん以外のイベントがある日
+   ====================================== */
+
+.calendar .day.has-event {
+    background: #ffe0ef;
+    border: 2px solid #ff9dcc;
+    box-sizing: border-box;
+}

@@ -327,6 +327,41 @@ function renderCheck() {
         // 🧹 持ち物チェック終了後にリセット
         state.checked = [];
 
+        // ======================================
+        // 🌸 あさちゃれんじ全部完了チェック
+        // ======================================
+
+        const allMorningComplete =
+            morningList.every(item =>
+                state.checkedMorning.includes(item.id)
+            );
+
+        if (allMorningComplete) {
+
+            finishSound.currentTime = 0;
+            finishSound.play();
+
+            state.morningComplete = true;
+
+            // 🌸 まだスタンプをもらっていなければ追加
+            if (!state.morningStampReceived) {
+
+                addStamp();
+
+                state.morningStampReceived = true;
+
+            }
+
+            // 🎁 ご褒美画面へ
+            state.screen = "finish";
+
+            render();
+
+            return;
+
+        }
+
+        // まだ全部終わっていなければメニューへ
         state.screen = "menu";
 
         render();
@@ -1211,6 +1246,35 @@ function getAnniversaryCountdown() {
 }
 
 // ======================================
+// 🌸 スタンプを1個追加
+// ======================================
+
+function addStamp() {
+
+    state.stamps += 1;
+
+    // 7個たまったらカードコンプリート
+    if (state.stamps >= 7) {
+
+        state.stamps = 0;
+
+        state.completedCards += 1;
+
+        localStorage.setItem(
+            "senaCompletedCards",
+            String(state.completedCards)
+        );
+
+    }
+
+    localStorage.setItem(
+        "senaStamps",
+        String(state.stamps)
+    );
+
+}
+
+// ======================================
 // サウンド
 // ======================================
 const homeSound = new Audio("assets/sounds/home.mp3");
@@ -1300,7 +1364,7 @@ function createCalendar(year, month, events) {
 
         }
 
-        // YYYY-MM-DD を作る
+        // YYYY-MM-DD
         const dateString =
             `${year}-${String(month + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
 
@@ -1309,7 +1373,10 @@ function createCalendar(year, month, events) {
             event.event_date === dateString
         );
 
-        // しんくんにあえるひ
+        // ======================================
+        // 💖 しんくんにあえるひ
+        // ======================================
+
         const isShinDay = dayEvents.some(event =>
             event.event_type === "shin"
         );
@@ -1321,42 +1388,36 @@ function createCalendar(year, month, events) {
         }
 
         // ======================================
-        // 🌸 イベントがあるか
+        // 📅 イベントがある日
         // ======================================
 
-        const hasEvent = dayEvents.length > 0;
-
-        if (hasEvent) {
+        if (dayEvents.length > 0) {
 
             cls += " has-event";
 
         }
 
         // ======================================
-        // 💖 カレンダーに表示するイベント
+        // 🌸 イベントアイコン
         // ======================================
 
-        let eventHTML = "";
+        const eventHTML = dayEvents
+            .map(event => {
 
-        if (dayEvents.length > 0) {
+                const icon = event.icon || "";
 
-            eventHTML = dayEvents
-                .map(event => {
+                return `
+                    <div class="calendar-event">
+                        ${icon}
+                    </div>
+                `;
 
-                    // 今は icon カラムがなくてもOK
-                    // 将来 icon カラムを追加したら自動的に使える
-                    const icon = event.icon || "🌸";
+            })
+            .join("");
 
-                    return `
-                        <div class="calendar-event">
-                            ${icon}
-                        </div>
-                    `;
-
-                })
-                .join("");
-
-        }
+        // ======================================
+        // 📅 日付
+        // ======================================
 
         html += `
 
@@ -1387,7 +1448,6 @@ function createCalendar(year, month, events) {
 
     return html;
 }
-
 async function renderCountdown() {
 
     // ======================================
@@ -1657,7 +1717,7 @@ async function renderCountdown() {
                 const eventHTML = dayEvents
                     .map(event => `
                     <div class="event-popup-item">
-                        🌸 ${event.title}
+                        ${event.title}
                     </div>
                 `)
                     .join("");
