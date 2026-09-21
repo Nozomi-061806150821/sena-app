@@ -693,19 +693,6 @@ button:disabled {
 
 }
 
-@media(min-width:769px) {
-
-
-    button {
-
-        max-width: 600px;
-
-    }
-
-
-}
-
-
 /* =========================
    追加レスポンシブ調整
 ========================= */
@@ -2752,5 +2739,344 @@ button {
 .calendar-nav-buttons button:active {
 
     transform: scale(.92);
+
+}
+
+/* ======================================
+   💗 カレンダー イベント吹き出し
+====================================== */
+
+.calendar .day {
+
+    position: relative;
+
+    cursor: pointer;
+
+    -webkit-tap-highlight-color: transparent;
+
+}
+
+
+/* ======================================
+   💕 吹き出し本体
+====================================== */
+
+.event-popup {
+
+    position: absolute;
+
+    top: calc(100% + 12px);
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: min(220px, 72vw);
+
+    padding: 18px 14px 15px;
+
+    box-sizing: border-box;
+
+    background:
+        linear-gradient(
+            145deg,
+            #fffaff,
+            #ffe5f4
+        );
+
+    border: 3px solid #ff9dcc;
+
+    border-radius: 22px;
+
+    box-shadow:
+        0 8px 20px rgba(255, 105, 180, .22),
+        0 0 12px rgba(255, 190, 225, .45);
+
+    z-index: 1000;
+
+    animation:
+        eventPopupIn
+        .22s
+        ease-out;
+
+}
+
+
+/* ======================================
+   💗 吹き出しのしっぽ
+====================================== */
+
+.event-popup::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: -10px;
+
+    left: 50%;
+
+    width: 17px;
+
+    height: 17px;
+
+    background: #fffaff;
+
+    border-left: 3px solid #ff9dcc;
+
+    border-top: 3px solid #ff9dcc;
+
+    transform:
+        translateX(-50%)
+        rotate(45deg);
+
+}
+
+
+/* ======================================
+   ✕ 閉じる
+====================================== */
+
+.event-popup-close {
+
+    position: absolute;
+
+    top: 6px;
+
+    right: 7px;
+
+    width: 28px !important;
+
+    min-width: 28px !important;
+
+    max-width: 28px !important;
+
+    height: 28px !important;
+
+    min-height: 28px !important;
+
+    margin: 0 !important;
+
+    padding: 0 !important;
+
+    display: flex !important;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: #ffd5e9;
+
+    color: #ff5ca9;
+
+    font-family: inherit;
+
+    font-size: 20px;
+
+    font-weight: 800;
+
+    line-height: 1;
+
+    box-shadow: none;
+
+}
+
+
+/* ======================================
+   📅 日付
+====================================== */
+
+.event-popup-date {
+
+    margin:
+        3px 25px
+        12px;
+
+    color: #ff4fa3;
+
+    font-size:
+        clamp(13px, 3.5vw, 16px);
+
+    font-weight: 800;
+
+    line-height: 1.4;
+
+    text-align: center;
+
+}
+
+
+/* ======================================
+   🌸 イベント
+====================================== */
+
+.event-popup-events {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+
+}
+
+
+.event-popup-item {
+
+    padding:
+        10px 9px;
+
+    box-sizing: border-box;
+
+    background:
+        rgba(255, 255, 255, .92);
+
+    border:
+        2px solid #ffd0e5;
+
+    border-radius: 14px;
+
+    color: #a65c82;
+
+    font-size:
+        clamp(13px, 3.5vw, 16px);
+
+    font-weight: 800;
+
+    line-height: 1.5;
+
+    text-align: center;
+
+    box-shadow:
+        0 3px 7px
+        rgba(255, 105, 180, .1);
+
+}
+
+
+/* ======================================
+   ✨ 出現
+====================================== */
+
+@keyframes eventPopupIn {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateX(-50%)
+            translateY(-6px)
+            scale(.92);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateX(-50%)
+            translateY(0)
+            scale(1);
+
+    }
+
+}
+
+
+/* ======================================
+   📱 iPhone
+====================================== */
+
+@media (max-width: 500px) {
+
+    .event-popup {
+
+        width:
+            min(205px, 70vw);
+
+        padding:
+            16px 12px 13px;
+
+    }
+
+
+    .event-popup-item {
+
+        padding:
+            9px 7px;
+
+    }
+
+}
+
+
+/* ======================================
+   📱 小さいiPhone
+====================================== */
+
+@media (max-width: 380px) {
+
+    .event-popup {
+
+        width: 185px;
+
+        padding:
+            15px 10px 12px;
+
+    }
+
+
+    .event-popup-item {
+
+        padding:
+            8px 6px;
+
+        font-size: 13px;
+
+    }
+
+}
+
+
+/* ======================================
+   📱 iPad
+====================================== */
+
+@media (min-width: 501px) and (max-width: 1024px) {
+
+    .event-popup {
+
+        width: 220px;
+
+    }
+
+}
+
+
+/* ======================================
+   💻 PC
+====================================== */
+
+@media (min-width: 1025px) {
+
+    .event-popup {
+
+        width: 230px;
+
+    }
+
+}
+
+.calendar .day:has(.event-popup) {
+
+    animation: none !important;
+
+    z-index: 1001;
 
 }

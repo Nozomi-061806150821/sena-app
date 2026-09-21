@@ -157,16 +157,6 @@ const fortunes = [
 ];
 
 // ======================================
-// しんくんにあえるひ
-// ======================================
-
-const shinDays = [
-
-    new Date(2026, 8, 25), // 2026/9/25
-    new Date(2026, 10, 21),// 2026/11/21
-];
-
-// ======================================
 // 💍 結婚記念日
 // ======================================
 
@@ -1197,48 +1187,6 @@ function onClickNormal() {
     render();
 }
 
-function getNextShinDay() {
-
-    const today = new Date();
-
-    today.setHours(0, 0, 0, 0);
-
-    for (const day of shinDays) {
-
-        const d = new Date(day);
-        d.setHours(0, 0, 0, 0);
-
-        if (d >= today) {
-            return d;
-        }
-    }
-
-    return null;
-
-}
-
-function getShinCountdown() {
-
-    const next = getNextShinDay();
-
-    if (!next) {
-        return null;
-    }
-
-    const today = new Date();
-
-    today.setHours(0, 0, 0, 0);
-
-    const diff = Math.ceil(
-        (next - today) /
-        (1000 * 60 * 60 * 24)
-    );
-
-    return diff;
-
-}
-
-
 // ======================================
 // 💍 結婚記念日まであと何日？
 // ======================================
@@ -1294,22 +1242,21 @@ function toggleCheck(id) {
 
 }
 
-function createCalendar(year, month) {
+// ======================================
+// 📅 カレンダー作成
+// ======================================
+
+function createCalendar(year, month, events) {
 
     const today = new Date();
-
-    const firstDay = new Date(year, month, 1);
-    const lastDate = new Date(year, month + 1, 0).getDate();
-
-    const startWeek = firstDay.getDay();
 
     let html = `
 
     <div class="calendar-box">
 
         <h3 class="month-title">
-    🌈 ${year}ねん ${month + 1}がつ 🌈
-</h3>
+            🌈 ${year}ねん ${month + 1}がつ 🌈
+        </h3>
 
         <div class="calendar">
 
@@ -1323,10 +1270,17 @@ function createCalendar(year, month) {
 
     `;
 
+    const firstDay = new Date(year, month, 1);
+    const lastDate = new Date(year, month + 1, 0).getDate();
+
+    const startWeek = firstDay.getDay();
+
     // 月初までの空白
     for (let i = 0; i < startWeek; i++) {
 
-        html += `<div class="day empty"></div>`;
+        html += `
+            <div class="day empty"></div>
+        `;
 
     }
 
@@ -1346,16 +1300,19 @@ function createCalendar(year, month) {
 
         }
 
-        // しんくんに会える日
-        const isShinDay = shinDays.some(day => {
+        // YYYY-MM-DD を作る
+        const dateString =
+            `${year}-${String(month + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
 
-            return (
-                d === day.getDate() &&
-                month === day.getMonth() &&
-                year === day.getFullYear()
-            );
+        // この日のイベント
+        const dayEvents = events.filter(event =>
+            event.event_date === dateString
+        );
 
-        });
+        // しんくんにあえるひ
+        const isShinDay = dayEvents.some(event =>
+            event.event_type === "shin"
+        );
 
         if (isShinDay) {
 
@@ -1365,11 +1322,16 @@ function createCalendar(year, month) {
 
         html += `
 
-            <div class="${cls}">
-                ${d}
-            </div>
+    <div
+        class="${cls}"
+        data-date="${dateString}"
+    >
 
-        `;
+        ${d}
+
+    </div>
+
+`;
 
     }
 
@@ -1382,24 +1344,61 @@ function createCalendar(year, month) {
     `;
 
     return html;
-
 }
 
-function renderCountdown() {
+async function renderCountdown() {
 
-    const next = getNextShinDay();
+    // ======================================
+    // ☁️ Supabaseからイベントを取得
+    // ======================================
 
-    // ★ 今日
+    const events = await loadEventsFromSupabase();
+
+    // ======================================
+    // 💖 次のしんくんにあえるひ
+    // ======================================
+
+    const nextShin = getNextShinEvent(events);
+
+    // ======================================
+    // 📅 今日
+    // ======================================
+
     const today = new Date();
 
+    today.setHours(0, 0, 0, 0);
+
+    // ======================================
+    // 💖 しんくんカウントダウン
+    // ======================================
+
+    let shinCountdownText = "よていは まだないよ♡";
+
+    if (nextShin) {
+
+        const diff = Math.ceil(
+            (nextShin.date - today) /
+            (1000 * 60 * 60 * 24)
+        );
+
+        shinCountdownText = `あと ${diff} にち♡`;
+
+    }
+
+    // ======================================
     // 📅 表示する最初の月
+    // ======================================
+
     const startMonth = new Date(
         today.getFullYear(),
         state.calendarStart,
         1
     );
 
+    // ======================================
     // 📅 2か月分のカレンダーを作成
+    // ======================================
+
     let calendarHTML = "";
 
     for (let i = 0; i < 2; i++) {
@@ -1412,10 +1411,33 @@ function renderCountdown() {
 
         calendarHTML += createCalendar(
             targetMonth.getFullYear(),
-            targetMonth.getMonth()
+            targetMonth.getMonth(),
+            events
         );
 
     }
+
+    // ======================================
+    // 📅 カレンダーのタイトル
+    // ======================================
+
+    const secondMonth = new Date(
+        startMonth.getFullYear(),
+        startMonth.getMonth() + 1,
+        1
+    );
+
+    const calendarYearText =
+        startMonth.getFullYear() === secondMonth.getFullYear()
+            ? `${startMonth.getFullYear()}ねん`
+            : `${startMonth.getFullYear()}ねん・${secondMonth.getFullYear()}ねん`;
+
+    const calendarPeriodText =
+        `${startMonth.getMonth() + 1}がつ・${secondMonth.getMonth() + 1}がつ`;
+
+    // ======================================
+    // 🖥️ 画面
+    // ======================================
 
     app.innerHTML = `
 
@@ -1423,13 +1445,16 @@ function renderCountdown() {
 
         <h2>
             💛💚💙❤️🧡<br>
-            つぎの　いべんとまで<br>
+            つぎの いべんとまで<br>
             💛💚💙❤️🧡
         </h2>
 
         <h1>
-            あと ${getShinCountdown()} にち♡
+            ${shinCountdownText}
         </h1>
+
+
+        <!-- 💍 結婚記念日 -->
 
         <div class="anniversary-countdown">
 
@@ -1449,34 +1474,32 @@ function renderCountdown() {
 
         </div>
 
+
         <!-- 📅 カレンダー切り替え -->
+
         <div class="calendar-navigation">
 
-    <h3 class="calendar-period-title">
-        ${new Date(
-        new Date().getFullYear(),
-        state.calendarStart,
-        1
-    ).getFullYear()}ねん
-        ${new Date(
-        new Date().getFullYear(),
-        state.calendarStart,
-        1
-    ).getMonth() + 1}がつ・
-        ${new Date(
-        new Date().getFullYear(),
-        state.calendarStart + 1,
-        1
-    ).getMonth() + 1}がつ
-    </h3>
+            <h3 class="calendar-period-title">
+                ${calendarYearText}<br>
+                ${calendarPeriodText}
+            </h3>
 
-    <div class="calendar-nav-buttons">
+            <div class="calendar-nav-buttons">
 
-        <button id="prevCalendar">〈</button>
+                <button id="prevCalendar">
+                    〈
+                </button>
 
-        <button id="nextCalendar">〉</button>
+                <button id="nextCalendar">
+                    〉
+                </button>
 
-    </div>
+            </div>
+
+        </div>
+
+
+        <!-- 📅 カレンダー -->
 
         <div class="calendar-wrapper">
 
@@ -1484,29 +1507,47 @@ function renderCountdown() {
 
         </div>
 
+
+        <!-- 📖 凡例 -->
+
         <div class="calendar-legend">
 
             <div class="legend-item">
+
                 <div class="today-color"></div>
+
                 きょう
+
             </div>
 
             <div class="legend-item">
+
                 <div class="shin-color"></div>
-                つぎのいべんと
+
+                しんくんに あえるひ
+
             </div>
 
         </div>
 
+
+        <!-- ⬅️ 戻る -->
+
         <button id="backCountdown">
+
             ⬅️ もどる
+
         </button>
 
     </section>
 
     `;
 
-    // 〈 前の月へ（2か月分戻る）
+
+    // ======================================
+    // 〈 前の月へ
+    // ======================================
+
     document
         .getElementById("prevCalendar")
         .addEventListener("click", () => {
@@ -1517,7 +1558,11 @@ function renderCountdown() {
 
         });
 
-    // 〉 次の月へ（2か月分進む）
+
+    // ======================================
+    // 〉 次の月へ
+    // ======================================
+
     document
         .getElementById("nextCalendar")
         .addEventListener("click", () => {
@@ -1528,7 +1573,165 @@ function renderCountdown() {
 
         });
 
-    // 戻るボタン
+// ======================================
+// 📅 カレンダーの日付をタップ
+// ======================================
+
+document
+    .querySelectorAll(".calendar .day:not(.empty)")
+    .forEach(day => {
+
+        day.addEventListener("click", () => {
+
+            const date = day.dataset.date;
+
+            // その日のイベントを取得
+            const dayEvents = events.filter(event =>
+                event.event_date === date
+            );
+
+            // イベントがない日は何もしない
+            if (dayEvents.length === 0) {
+                return;
+            }
+
+
+            // ======================================
+            // 💗 すでに開いている吹き出しを閉じる
+            // ======================================
+
+            const oldPopup =
+                document.querySelector(".event-popup");
+
+            if (oldPopup) {
+                oldPopup.remove();
+            }
+
+
+            // ======================================
+            // 🌸 イベント内容
+            // ======================================
+
+            const eventHTML = dayEvents
+                .map(event => `
+                    <div class="event-popup-item">
+                        🌸 ${event.title}
+                    </div>
+                `)
+                .join("");
+
+
+            // ======================================
+            // 💗 吹き出しを作る
+            // ======================================
+
+            const popup =
+                document.createElement("div");
+
+            popup.className = "event-popup";
+
+
+            // 日付を見やすくする
+            const [year, month, dayNumber] =
+                date.split("-");
+
+
+            popup.innerHTML = `
+
+                <button
+                    class="event-popup-close"
+                    aria-label="とじる"
+                >
+                    ×
+                </button>
+
+                <div class="event-popup-date">
+                    ${month}がつ${dayNumber}にち
+                </div>
+
+                <div class="event-popup-events">
+                    ${eventHTML}
+                </div>
+
+            `;
+
+
+            // ======================================
+            // 📍 日付の中に追加
+            // ======================================
+
+            day.appendChild(popup);
+
+
+            // ======================================
+            // 📱 画面からはみ出さないように調整
+            // ======================================
+
+            requestAnimationFrame(() => {
+
+                const rect =
+                    popup.getBoundingClientRect();
+
+                const margin = 8;
+
+                let shiftX = 0;
+
+
+                // 左にはみ出す
+                if (rect.left < margin) {
+
+                    shiftX =
+                        margin - rect.left;
+
+                }
+
+
+                // 右にはみ出す
+                if (
+                    rect.right >
+                    window.innerWidth - margin
+                ) {
+
+                    shiftX =
+                        window.innerWidth -
+                        margin -
+                        rect.right;
+
+                }
+
+
+                if (shiftX !== 0) {
+
+                    popup.style.marginLeft =
+                        `${shiftX}px`;
+
+                }
+
+            });
+
+
+            // ======================================
+            // ✕ 閉じる
+            // ======================================
+
+            popup
+                .querySelector(".event-popup-close")
+                .addEventListener("click", (e) => {
+
+                    e.stopPropagation();
+
+                    popup.remove();
+
+                });
+
+        });
+
+    });
+
+    // ======================================
+    // ⬅️ 戻る
+    // ======================================
+
     document
         .getElementById("backCountdown")
         .addEventListener("click", () => {
@@ -2168,3 +2371,51 @@ async function loadEventsFromSupabase() {
     return data;
 
 }
+
+// ======================================
+// 次の「しんくんにあえるひ」を取得
+// ======================================
+
+function getNextShinEvent(events) {
+
+    const today = new Date();
+
+    today.setHours(0, 0, 0, 0);
+
+    const shinEvents = events
+        .filter(event => event.event_type === "shin")
+        .map(event => {
+
+            const [year, month, day] = event.event_date
+                .split("-")
+                .map(Number);
+
+            const date = new Date(year, month - 1, day);
+
+            return {
+                ...event,
+                date: date
+            };
+
+        })
+        .filter(event => event.date >= today)
+        .sort((a, b) => a.date - b.date);
+
+    return shinEvents[0] || null;
+}
+
+// ======================================
+// 次のしんくん動作確認
+// ======================================
+
+async function testNextShinEvent() {
+
+    const events = await loadEventsFromSupabase();
+
+    const nextShin = getNextShinEvent(events);
+
+    console.log("次のしんくんにあえるひ：", nextShin);
+
+}
+
+testNextShinEvent();
