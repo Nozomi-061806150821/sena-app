@@ -1320,18 +1320,60 @@ function createCalendar(year, month, events) {
 
         }
 
+        // ======================================
+        // 🌸 イベントがあるか
+        // ======================================
+
+        const hasEvent = dayEvents.length > 0;
+
+        if (hasEvent) {
+
+            cls += " has-event";
+
+        }
+
+        // ======================================
+        // 💖 カレンダーに表示するイベント
+        // ======================================
+
+        let eventHTML = "";
+
+        if (dayEvents.length > 0) {
+
+            eventHTML = dayEvents
+                .map(event => {
+
+                    // 今は icon カラムがなくてもOK
+                    // 将来 icon カラムを追加したら自動的に使える
+                    const icon = event.icon || "🌸";
+
+                    return `
+                        <div class="calendar-event">
+                            ${icon}
+                        </div>
+                    `;
+
+                })
+                .join("");
+
+        }
+
         html += `
 
-    <div
-        class="${cls}"
-        data-date="${dateString}"
-    >
+        <div
+            class="${cls}"
+            data-date="${dateString}"
+        >
 
-        ${d}
+            <div class="calendar-day-number">
+                ${d}
+            </div>
 
-    </div>
+            ${eventHTML}
 
-`;
+        </div>
+
+        `;
 
     }
 
@@ -1573,70 +1615,70 @@ async function renderCountdown() {
 
         });
 
-// ======================================
-// 📅 カレンダーの日付をタップ
-// ======================================
+    // ======================================
+    // 📅 カレンダーの日付をタップ
+    // ======================================
 
-document
-    .querySelectorAll(".calendar .day:not(.empty)")
-    .forEach(day => {
+    document
+        .querySelectorAll(".calendar .day:not(.empty)")
+        .forEach(day => {
 
-        day.addEventListener("click", () => {
+            day.addEventListener("click", () => {
 
-            const date = day.dataset.date;
+                const date = day.dataset.date;
 
-            // その日のイベントを取得
-            const dayEvents = events.filter(event =>
-                event.event_date === date
-            );
+                // その日のイベントを取得
+                const dayEvents = events.filter(event =>
+                    event.event_date === date
+                );
 
-            // イベントがない日は何もしない
-            if (dayEvents.length === 0) {
-                return;
-            }
-
-
-            // ======================================
-            // 💗 すでに開いている吹き出しを閉じる
-            // ======================================
-
-            const oldPopup =
-                document.querySelector(".event-popup");
-
-            if (oldPopup) {
-                oldPopup.remove();
-            }
+                // イベントがない日は何もしない
+                if (dayEvents.length === 0) {
+                    return;
+                }
 
 
-            // ======================================
-            // 🌸 イベント内容
-            // ======================================
+                // ======================================
+                // 💗 すでに開いている吹き出しを閉じる
+                // ======================================
 
-            const eventHTML = dayEvents
-                .map(event => `
+                const oldPopup =
+                    document.querySelector(".event-popup");
+
+                if (oldPopup) {
+                    oldPopup.remove();
+                }
+
+
+                // ======================================
+                // 🌸 イベント内容
+                // ======================================
+
+                const eventHTML = dayEvents
+                    .map(event => `
                     <div class="event-popup-item">
                         🌸 ${event.title}
                     </div>
                 `)
-                .join("");
+                    .join("");
 
 
-            // ======================================
-            // 💗 吹き出しを作る
-            // ======================================
+                // ======================================
+                // 💗 吹き出しを作る
+                // ======================================
 
-            const popup =
-                document.createElement("div");
+                const popup =
+                    document.createElement("div");
 
-            popup.className = "event-popup";
-
-
-            // 日付を見やすくする
-            const [year, month, dayNumber] =
-                date.split("-");
+                popup.className = "event-popup";
 
 
-            popup.innerHTML = `
+                // 日付を見やすくする
+                const [year, month, dayNumber] =
+                    date.split("-");
+
+
+                popup.innerHTML = `
 
                 <button
                     class="event-popup-close"
@@ -1656,77 +1698,77 @@ document
             `;
 
 
-            // ======================================
-            // 📍 日付の中に追加
-            // ======================================
+                // ======================================
+                // 📍 日付の中に追加
+                // ======================================
 
-            day.appendChild(popup);
-
-
-            // ======================================
-            // 📱 画面からはみ出さないように調整
-            // ======================================
-
-            requestAnimationFrame(() => {
-
-                const rect =
-                    popup.getBoundingClientRect();
-
-                const margin = 8;
-
-                let shiftX = 0;
+                day.appendChild(popup);
 
 
-                // 左にはみ出す
-                if (rect.left < margin) {
+                // ======================================
+                // 📱 画面からはみ出さないように調整
+                // ======================================
 
-                    shiftX =
-                        margin - rect.left;
+                requestAnimationFrame(() => {
 
-                }
+                    const rect =
+                        popup.getBoundingClientRect();
 
+                    const margin = 8;
 
-                // 右にはみ出す
-                if (
-                    rect.right >
-                    window.innerWidth - margin
-                ) {
-
-                    shiftX =
-                        window.innerWidth -
-                        margin -
-                        rect.right;
-
-                }
+                    let shiftX = 0;
 
 
-                if (shiftX !== 0) {
+                    // 左にはみ出す
+                    if (rect.left < margin) {
 
-                    popup.style.marginLeft =
-                        `${shiftX}px`;
+                        shiftX =
+                            margin - rect.left;
 
-                }
-
-            });
+                    }
 
 
-            // ======================================
-            // ✕ 閉じる
-            // ======================================
+                    // 右にはみ出す
+                    if (
+                        rect.right >
+                        window.innerWidth - margin
+                    ) {
 
-            popup
-                .querySelector(".event-popup-close")
-                .addEventListener("click", (e) => {
+                        shiftX =
+                            window.innerWidth -
+                            margin -
+                            rect.right;
 
-                    e.stopPropagation();
+                    }
 
-                    popup.remove();
+
+                    if (shiftX !== 0) {
+
+                        popup.style.marginLeft =
+                            `${shiftX}px`;
+
+                    }
 
                 });
 
-        });
 
-    });
+                // ======================================
+                // ✕ 閉じる
+                // ======================================
+
+                popup
+                    .querySelector(".event-popup-close")
+                    .addEventListener("click", (e) => {
+
+                        e.stopPropagation();
+
+                        popup.remove();
+
+                    });
+
+            });
+
+        });
 
     // ======================================
     // ⬅️ 戻る
