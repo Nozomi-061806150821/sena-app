@@ -4,7 +4,7 @@ body {
 
     font-family: "M PLUS Rounded 1c", sans-serif;
 
-    background: linear-gradient(#E8E0F8, #F5EFFD);
+    background: linear-gradient(#cdb3ff, #F5EFFD);
 
     display: flex;
 
@@ -456,13 +456,10 @@ button:disabled {
 
 
 .calendar-box {
-
     width: 100%;
-
     max-width: 340px;
-
+    box-sizing: border-box;
 }
-
 
 .calendar {
 
@@ -563,23 +560,27 @@ button:disabled {
 
 }
 
-
-
+/* カレンダーの月タイトル */
 .month-title {
-
-    font-size: clamp(22px, 5vw, 34px);
-
+    font-size: clamp(15px, 4vw, 30px);
     color: #ff4da6;
-
     text-align: center;
 
-    margin-bottom: 20px;
+    margin: 0 auto 20px;
+    padding: 0;
+
+    /* 絶対に途中で改行しない */
+    white-space: nowrap;
+
+    /* 親の幅に無理やり合わせない */
+    width: max-content;
+    max-width: none;
+
+    line-height: 1.3;
 
     text-shadow:
-
         2px 2px white,
         0 0 10px #ffd8ec;
-
 }
 
 
@@ -850,92 +851,1233 @@ button {
 
 }
 
-/* =========================
-   じゃんけん
-========================= */
+/* =====================================================
+   👑✨ じゃんけんたいむ
+===================================================== */
 
-.hand {
 
-    background: linear-gradient(180deg,
-            #ff9cd5,
-            #ff5db0);
+/* =====================================================
+   じゃんけん画面
+===================================================== */
 
-}
+.janken-screen {
 
-.hand:nth-of-type(2) {
+    position: relative;
 
-    background: linear-gradient(180deg,
-            #b88cff,
-            #8d63ff);
+    width: 100%;
 
-}
+    min-height: 100vh;
 
-.hand:nth-of-type(3) {
+    padding: 10px 0 40px;
 
-    background: linear-gradient(180deg,
-            #8ee7ff,
-            #3fc9ff);
+    box-sizing: border-box;
+
+    overflow: hidden;
 
 }
 
-.hand {
 
-    background: linear-gradient(180deg,
-            #ff9cd5,
-            #ff5db0);
+/* =====================================================
+   キラキラ
+===================================================== */
 
-}
+.janken-sparkle {
 
-.hand:nth-of-type(2) {
+    position: absolute;
 
-    background: linear-gradient(180deg,
-            #b88cff,
-            #8d63ff);
+    pointer-events: none;
 
-}
+    font-size: clamp(20px, 5vw, 38px);
 
-.hand:nth-of-type(3) {
+    animation: jankenSparkle 2s infinite ease-in-out;
 
-    background: linear-gradient(180deg,
-            #8ee7ff,
-            #3fc9ff);
+    z-index: 0;
 
 }
 
-/* もういっかい */
-#again {
-
-    background: linear-gradient(180deg,
-            #ffcf6b,
-            #ffb100);
-
+.sparkle-1 {
+    top: 5%;
+    left: 5%;
 }
 
-すると 🩷 ぐー 💜 ちょき 🩵 ぱー 💛 もういっかい！ になる✨ さらに可愛くするなら… 「もういっかい！」は子どもが何回も押すボタンだから、動かしちゃおう😍 #again {
-
-    background: linear-gradient(180deg,
-            #ffd86e,
-            #ffb300);
-
-    animation: againJump 1.2s infinite;
-
+.sparkle-2 {
+    top: 14%;
+    right: 6%;
+    animation-delay: .4s;
 }
 
-@keyframes againJump {
+.sparkle-3 {
+    top: 42%;
+    left: 2%;
+    animation-delay: .8s;
+}
+
+.sparkle-4 {
+    top: 48%;
+    right: 3%;
+    animation-delay: 1.2s;
+}
+
+.sparkle-5 {
+    bottom: 18%;
+    left: 8%;
+    animation-delay: 1.6s;
+}
+
+
+@keyframes jankenSparkle {
+
+    0%,
+    100% {
+        transform: scale(.8) rotate(0deg);
+        opacity: .5;
+    }
 
     50% {
-
-        transform: translateY(-5px);
-
+        transform: scale(1.25) rotate(15deg);
+        opacity: 1;
     }
 
 }
 
-.locked{
 
-    color:#888;
-    opacity:.7;
-    filter:saturate(.6);
+/* =====================================================
+   タイトル
+===================================================== */
+
+.janken-title-area {
+
+    position: relative;
+
+    z-index: 2;
+
+    text-align: center;
+
+    margin-bottom: 12px;
+
+}
+
+
+.janken-crown {
+
+    font-size: clamp(24px, 6vw, 42px);
+
+    animation: crownFloat 2s infinite ease-in-out;
+
+}
+
+
+@keyframes crownFloat {
+
+    50% {
+        transform: translateY(-6px);
+    }
+
+}
+
+
+.janken-title {
+
+    margin: 4px 0;
+
+    color: #8064d8;
+
+    font-size: clamp(28px, 7vw, 44px);
+
+    font-weight: 900;
+
+    text-shadow:
+        0 3px 0 white,
+        0 5px 10px rgba(128, 100, 216, .25);
+
+}
+
+
+.janken-subtitle {
+
+    margin: 0;
+
+    color: #6f72b8;
+
+    font-size: clamp(16px, 4vw, 22px);
+
+    font-weight: bold;
+
+}
+
+
+/* =====================================================
+   キャラクターバトル
+===================================================== */
+
+.janken-battle {
+
+    position: relative;
+
+    z-index: 2;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: clamp(8px, 3vw, 25px);
+
+    margin: 12px auto 14px;
+
+    max-width: 600px;
+
+}
+
+
+.janken-character {
+
+    width: 40%;
+
+    max-width: 190px;
+
+    text-align: center;
+
+}
+
+
+.character-name {
+
+    display: inline-block;
+
+    padding: 6px 12px;
+
+    margin-bottom: 5px;
+
+    border-radius: 999px;
+
+    background: white;
+
+    color: #7259c8;
+
+    font-size: clamp(13px, 3.5vw, 18px);
+
+    font-weight: bold;
+
+    box-shadow: 0 4px 12px rgba(100, 80, 180, .15);
+
+}
+
+
+.character-image-wrap {
+
+    position: relative;
+
+    padding: 8px;
+
+    border-radius: 30px;
+
+    background:
+        linear-gradient(135deg,
+            rgba(255, 255, 255, .95),
+            rgba(225, 220, 255, .8));
+
+    border: 3px solid rgba(255, 255, 255, .9);
+
+    box-shadow:
+        0 8px 20px rgba(100, 80, 180, .18),
+        0 0 20px rgba(190, 170, 255, .35);
+
+    animation: characterFloat 2.5s infinite ease-in-out;
+
+}
+
+
+.cat-character .character-image-wrap {
+
+    animation-delay: .3s;
+
+}
+
+
+@keyframes characterFloat {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-7px);
+    }
+
+}
+
+
+.janken-character-image {
+
+    display: block;
+
+    width: 100%;
+
+    height: auto;
+
+    max-height: 170px;
+
+    object-fit: contain;
+
+}
+
+
+.character-label {
+
+    margin-top: 5px;
+
+    color: #8580b8;
+
+    font-size: clamp(12px, 3vw, 16px);
+
+    font-weight: bold;
+
+}
+
+
+/* =====================================================
+   VS
+===================================================== */
+
+.janken-vs {
+
+    flex-shrink: 0;
+
+    text-align: center;
+
+}
+
+
+.vs-star {
+
+    font-size: clamp(15px, 4vw, 25px);
+
+    animation: vsSparkle 1s infinite alternate;
+
+}
+
+
+.vs-text {
+
+    color: #ff69b4;
+
+    font-size: clamp(24px, 6vw, 38px);
+
+    font-weight: 900;
+
+    text-shadow:
+        0 3px white,
+        0 5px 10px rgba(255, 100, 180, .25);
+
+}
+
+
+@keyframes vsSparkle {
+
+    from {
+        transform: scale(.8) rotate(-10deg);
+    }
+
+    to {
+        transform: scale(1.2) rotate(10deg);
+    }
+
+}
+
+
+/* =====================================================
+   メッセージ
+===================================================== */
+
+.janken-message {
+
+    position: relative;
+
+    z-index: 2;
+
+    width: fit-content;
+
+    max-width: 90%;
+
+    margin: 8px auto 15px;
+
+    padding: 10px 22px;
+
+    box-sizing: border-box;
+
+    border-radius: 25px;
+
+    background: rgba(255, 255, 255, .88);
+
+    border: 2px solid rgba(190, 175, 255, .6);
+
+    color: #7167a8;
+
+    font-size: clamp(15px, 3.8vw, 20px);
+
+    font-weight: bold;
+
+    text-align: center;
+
+    box-shadow: 0 5px 15px rgba(100, 80, 180, .12);
+
+}
+
+
+/* =====================================================
+   手のボタン
+===================================================== */
+
+.janken-hands {
+
+    position: relative;
+
+    z-index: 3;
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: clamp(8px, 2.5vw, 16px);
+
+    width: 100%;
+
+    max-width: 650px;
+
+    margin: 0 auto;
+
+}
+
+
+.janken-hand {
+
+    position: relative;
+
+    width: 30%;
+
+    max-width: 180px;
+
+    min-height: 145px;
+
+    margin: 0;
+
+    padding: 14px 8px;
+
+    border: 4px solid white;
+
+    border-radius: 28px;
+
+    box-shadow:
+        0 8px 0 rgba(100, 80, 180, .12),
+        0 12px 22px rgba(100, 80, 180, .15);
+
+    cursor: pointer;
+
+    transition:
+        transform .15s ease,
+        box-shadow .15s ease;
+
+}
+
+
+.janken-hand:hover {
+
+    transform: translateY(-7px) scale(1.03);
+
+}
+
+
+.janken-hand:active {
+
+    transform: translateY(3px) scale(.96);
+
+}
+
+
+.janken-hand.selected {
+
+    animation: handSelected .35s ease;
+
+}
+
+
+@keyframes handSelected {
+
+    50% {
+        transform: scale(1.1) rotate(-2deg);
+    }
+
+}
+
+
+.hand-rock {
+
+    background:
+        linear-gradient(180deg,
+            #ffb7e2,
+            #ff75c1);
+
+}
+
+
+.hand-scissors {
+
+    background:
+        linear-gradient(180deg,
+            #c9b1ff,
+            #9674ed);
+
+}
+
+
+.hand-paper {
+
+    background:
+        linear-gradient(180deg,
+            #a5ecff,
+            #61d6f5);
+
+}
+
+
+.hand-icon {
+
+    display: block;
+
+    font-size: clamp(50px, 13vw, 75px);
+
+    line-height: 1;
+
+    filter: drop-shadow(0 4px 2px rgba(0, 0, 0, .12));
+
+}
+
+
+.hand-name {
+
+    display: block;
+
+    margin-top: 10px;
+
+    color: white;
+
+    font-size: clamp(19px, 4.5vw, 27px);
+
+    font-weight: 900;
+
+    text-shadow: 0 2px 3px rgba(80, 50, 130, .2);
+
+}
+
+
+.hand-decoration {
+
+    position: absolute;
+
+    right: 8px;
+
+    top: 7px;
+
+    font-size: clamp(15px, 4vw, 25px);
+
+    animation: decorationTwinkle 1.2s infinite alternate;
+
+}
+
+
+@keyframes decorationTwinkle {
+
+    from {
+        transform: scale(.8);
+        opacity: .6;
+    }
+
+    to {
+        transform: scale(1.2);
+        opacity: 1;
+    }
+
+}
+
+
+/* =====================================================
+   もどるボタン
+===================================================== */
+
+.janken-back-button {
+
+    position: relative;
+
+    z-index: 3;
+
+    width: 70%;
+
+    max-width: 350px;
+
+    min-height: 70px;
+
+    margin: 25px auto 0;
+
+    background:
+        linear-gradient(180deg,
+            #ffffff,
+            #eeeaff);
+
+    color: #7563b5;
+
+    border: 3px solid #d5caff;
+
+    box-shadow:
+        0 6px 0 #c9bde9,
+        0 10px 15px rgba(100, 80, 180, .12);
+
+}
+
+
+.janken-back-button:hover {
+
+    transform: translateY(-3px);
+
+}
+
+
+/* =====================================================
+   結果画面
+===================================================== */
+
+.janken-result-screen {
+
+    position: relative;
+
+    min-height: 100vh;
+
+    padding: 15px 0 40px;
+
+    box-sizing: border-box;
+
+    overflow: hidden;
+
+    text-align: center;
+
+}
+
+
+/* =====================================================
+   結果キラキラ
+===================================================== */
+
+.result-sparkle {
+
+    position: absolute;
+
+    pointer-events: none;
+
+    font-size: clamp(22px, 6vw, 42px);
+
+    animation: resultSparkle 1.5s infinite alternate;
+
+}
+
+
+.result-sparkle-1 {
+    top: 5%;
+    left: 5%;
+}
+
+.result-sparkle-2 {
+    top: 15%;
+    right: 5%;
+    animation-delay: .3s;
+}
+
+.result-sparkle-3 {
+    top: 48%;
+    left: 3%;
+    animation-delay: .6s;
+}
+
+.result-sparkle-4 {
+    top: 45%;
+    right: 4%;
+    animation-delay: .9s;
+}
+
+.result-sparkle-5 {
+    bottom: 15%;
+    left: 8%;
+    animation-delay: 1.2s;
+}
+
+
+@keyframes resultSparkle {
+
+    from {
+        transform: scale(.7) rotate(-10deg);
+        opacity: .4;
+    }
+
+    to {
+        transform: scale(1.25) rotate(10deg);
+        opacity: 1;
+    }
+
+}
+
+
+/* =====================================================
+   じゃん！けん！ぽん！
+===================================================== */
+
+.janken-pon {
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 5px;
+
+    margin-bottom: 8px;
+
+    color: #7864c7;
+
+    font-size: clamp(16px, 4vw, 23px);
+
+    font-weight: 900;
+
+}
+
+
+.janken-pon span {
+
+    animation: ponText .8s both;
+
+}
+
+
+.janken-pon span:nth-child(1) {
+    animation-delay: .05s;
+}
+
+.janken-pon span:nth-child(2) {
+    animation-delay: .25s;
+}
+
+.janken-pon strong {
+
+    color: #ff5fb4;
+
+    font-size: clamp(20px, 5vw, 30px);
+
+    animation:
+        ponText .8s .45s both,
+        ponBig .7s 1.2s ease-in-out;
+
+}
+
+
+@keyframes ponText {
+
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    70% {
+        transform: scale(1.25);
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+}
+
+
+@keyframes ponBig {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.25);
+    }
+
+}
+
+
+/* =====================================================
+   結果タイトル
+===================================================== */
+
+.result-crown {
+
+    font-size: clamp(25px, 7vw, 45px);
+
+    animation: resultCrown .8s ease-out;
+
+}
+
+
+@keyframes resultCrown {
+
+    0% {
+        transform: scale(0) rotate(-20deg);
+    }
+
+    70% {
+        transform: scale(1.2) rotate(10deg);
+    }
+
+    100% {
+        transform: scale(1) rotate(0);
+    }
+
+}
+
+
+.result-title h2 {
+
+    margin: 3px 0 15px;
+
+    color: #8064d8;
+
+    font-size: clamp(24px, 6vw, 38px);
+
+    text-shadow:
+        0 3px white,
+        0 5px 10px rgba(100, 80, 180, .18);
+
+}
+
+
+/* =====================================================
+   結果バトル
+===================================================== */
+
+.result-battle {
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: clamp(8px, 3vw, 25px);
+
+}
+
+
+.result-player {
+
+    width: 38%;
+
+    max-width: 180px;
+
+}
+
+
+.result-name {
+
+    margin-bottom: 6px;
+
+    color: #7162ad;
+
+    font-size: clamp(14px, 3.5vw, 20px);
+
+    font-weight: 900;
+
+}
+
+
+.result-hand-card {
+
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 100%;
+
+    aspect-ratio: 1 / 1;
+
+    box-sizing: border-box;
+
+    border: 4px solid white;
+
+    border-radius: 30px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 9px 0 rgba(100, 80, 180, .12),
+        0 15px 25px rgba(100, 80, 180, .16);
+
+    animation: handReveal .7s cubic-bezier(.2, 1.4, .4, 1) both;
+
+}
+
+
+.player-card {
+
+    background:
+        linear-gradient(145deg,
+            #ffd5ed,
+            #ff94cb);
+
+    animation-delay: .3s;
+
+}
+
+
+.cpu-card {
+
+    background:
+        linear-gradient(145deg,
+            #d6cbff,
+            #a38bea);
+
+    animation-delay: .5s;
+
+}
+
+
+@keyframes handReveal {
+
+    0% {
+        transform: scale(0) rotate(-15deg);
+        opacity: 0;
+    }
+
+    70% {
+        transform: scale(1.1) rotate(3deg);
+    }
+
+    100% {
+        transform: scale(1) rotate(0);
+        opacity: 1;
+    }
+
+}
+
+
+.result-hand-icon {
+
+    position: relative;
+
+    z-index: 2;
+
+    font-size: clamp(65px, 16vw, 105px);
+
+    line-height: 1;
+
+    filter:
+        drop-shadow(0 6px 3px rgba(0, 0, 0, .15));
+
+}
+
+
+.card-shine {
+
+    position: absolute;
+
+    width: 50%;
+
+    height: 150%;
+
+    top: -25%;
+
+    left: -70%;
+
+    transform: rotate(25deg);
+
+    background: rgba(255, 255, 255, .35);
+
+    animation: cardShine 2.5s 1s infinite;
+
+}
+
+
+@keyframes cardShine {
+
+    0% {
+        left: -70%;
+    }
+
+    45%,
+    100% {
+        left: 130%;
+    }
+
+}
+
+
+.result-hand-name {
+
+    margin-top: 7px;
+
+    color: #7768ae;
+
+    font-size: clamp(17px, 4vw, 24px);
+
+    font-weight: 900;
+
+}
+
+
+/* =====================================================
+   VS
+===================================================== */
+
+.result-vs {
+
+    flex-shrink: 0;
+
+    color: #ff64b4;
+
+    font-size: clamp(18px, 5vw, 30px);
+
+    font-weight: 900;
+
+}
+
+
+.result-vs strong {
+
+    display: block;
+
+    margin: 3px 0;
+
+    font-size: clamp(25px, 6vw, 38px);
+
+    text-shadow: 0 3px white;
+
+}
+
+
+/* =====================================================
+   結果メッセージ
+===================================================== */
+
+.result-message-box {
+
+    width: 90%;
+
+    max-width: 550px;
+
+    margin: 18px auto;
+
+    padding: 15px;
+
+    box-sizing: border-box;
+
+    border-radius: 30px;
+
+    background: rgba(255, 255, 255, .9);
+
+    border: 3px solid #ddd4ff;
+
+    box-shadow: 0 8px 20px rgba(100, 80, 180, .12);
+
+    animation: messagePop .6s .7s both;
+
+}
+
+
+@keyframes messagePop {
+
+    0% {
+        transform: scale(.7);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+}
+
+
+.result-main-message {
+
+    color: #ff58af;
+
+    font-size: clamp(27px, 7vw, 43px);
+
+    font-weight: 900;
+
+}
+
+
+.result-sub-message {
+
+    margin-top: 4px;
+
+    color: #766da8;
+
+    font-size: clamp(15px, 3.8vw, 20px);
+
+    font-weight: bold;
+
+}
+
+
+/* =====================================================
+   勝ち・負け・あいこ
+===================================================== */
+
+.janken-win .result-message-box {
+
+    border-color: #ffd36e;
+
+    box-shadow:
+        0 0 25px rgba(255, 205, 100, .35),
+        0 8px 20px rgba(100, 80, 180, .12);
+
+}
+
+
+.janken-win .result-main-message {
+
+    color: #ffae00;
+
+    animation: winMessage .7s 1s infinite alternate;
+
+}
+
+
+@keyframes winMessage {
+
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.08);
+    }
+
+}
+
+
+.janken-lose .result-main-message {
+
+    color: #9b83d8;
+
+}
+
+
+.janken-draw .result-main-message {
+
+    color: #5ecde8;
+
+}
+
+
+/* =====================================================
+   もういっかい
+===================================================== */
+
+.janken-again-button {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    width: 90%;
+
+    max-width: 500px;
+
+    min-height: 85px;
+
+    margin: 12px auto;
+
+    padding: 15px;
+
+    border: 4px solid white;
+
+    border-radius: 35px;
+
+    background:
+        linear-gradient(180deg,
+            #c9b0ff,
+            #9675e9);
+
+    color: white;
+
+    font-size: clamp(22px, 5vw, 32px);
+
+    font-weight: 900;
+
+    text-shadow: 0 3px 5px rgba(80, 50, 130, .25);
+
+    box-shadow:
+        0 7px 0 #7d61c9,
+        0 12px 20px rgba(100, 80, 180, .18);
+
+    cursor: pointer;
+
+    animation: againPop 1.5s infinite ease-in-out;
+
+}
+
+
+@keyframes againPop {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-5px);
+    }
+
+}
+
+
+.janken-again-button:hover {
+
+    transform: translateY(-5px);
+
+}
+
+
+.janken-again-button:active {
+
+    transform: translateY(3px);
+
+}
+
+
+.again-star {
+
+    font-size: clamp(17px, 4vw, 25px);
+
+}
+
+
+/* =====================================================
+   結果画面のもどる
+===================================================== */
+
+.janken-result-screen .janken-back-button {
+
+    margin-top: 20px;
 
 }
 
@@ -945,62 +2087,60 @@ button {
 
 .stamp-screen {
 
-    text-align:center;
+    text-align: center;
 
-    animation:pop .4s;
+    animation: pop .4s;
 
 }
 
 
 .stamp-screen h2 {
 
-    margin-bottom:25px;
+    margin-bottom: 25px;
 
 }
 
 
 .stamp-card {
 
-    width:100%;
+    width: 100%;
 
-    max-width:560px;
+    max-width: 560px;
 
-    margin:20px auto;
+    margin: 20px auto;
 
-    padding:30px 20px;
+    padding: 30px 20px;
 
-    box-sizing:border-box;
+    box-sizing: border-box;
 
     background:
 
-        linear-gradient(
-            135deg,
+        linear-gradient(135deg,
             #fff7fc,
-            #ffe5f3
-        );
+            #ffe5f3);
 
-    border-radius:35px;
+    border-radius: 35px;
 
-    border:5px solid #ff9ed3;
+    border: 5px solid #ff9ed3;
 
     box-shadow:
 
-        0 10px 25px rgba(255,105,180,.25),
+        0 10px 25px rgba(255, 105, 180, .25),
 
-        inset 0 0 20px rgba(255,255,255,.8);
+        inset 0 0 20px rgba(255, 255, 255, .8);
 
 }
 
 
 .stamp-card h3 {
 
-    margin:0 0 25px;
+    margin: 0 0 25px;
 
-    font-size:clamp(24px,5vw,34px);
+    font-size: clamp(24px, 5vw, 34px);
 
-    color:#ff5cab;
+    color: #ff5cab;
 
-    line-height:1.5;
+    line-height: 1.5;
 
 }
 
@@ -1025,27 +2165,27 @@ button {
 
 .stamp {
 
-    width:65px;
+    width: 65px;
 
-    height:65px;
+    height: 65px;
 
-    border-radius:50%;
+    border-radius: 50%;
 
-    display:flex;
+    display: flex;
 
-    justify-content:center;
+    justify-content: center;
 
-    align-items:center;
+    align-items: center;
 
-    font-size:35px;
+    font-size: 35px;
 
-    background:#fff;
+    background: #fff;
 
-    border:4px dashed #ffc4df;
+    border: 4px dashed #ffc4df;
 
-    box-sizing:border-box;
+    box-sizing: border-box;
 
-    color:#ffc9e3;
+    color: #ffc9e3;
 
 }
 
@@ -1054,21 +2194,19 @@ button {
 
     background:
 
-        radial-gradient(
-            circle,
+        radial-gradient(circle,
             #fff 20%,
-            #ffd1e8 100%
-        );
+            #ffd1e8 100%);
 
-    border:4px solid #ff72b8;
+    border: 4px solid #ff72b8;
 
-    animation:stampPop .4s;
+    animation: stampPop .4s;
 
     box-shadow:
 
-        0 5px 12px rgba(255,105,180,.25),
+        0 5px 12px rgba(255, 105, 180, .25),
 
-        0 0 15px rgba(255,180,220,.7);
+        0 0 15px rgba(255, 180, 220, .7);
 
 }
 
@@ -1077,23 +2215,23 @@ button {
 
     0% {
 
-        transform:scale(.5) rotate(-20deg);
+        transform: scale(.5) rotate(-20deg);
 
-        opacity:0;
+        opacity: 0;
 
     }
 
     70% {
 
-        transform:scale(1.15) rotate(8deg);
+        transform: scale(1.15) rotate(8deg);
 
     }
 
     100% {
 
-        transform:scale(1) rotate(0);
+        transform: scale(1) rotate(0);
 
-        opacity:1;
+        opacity: 1;
 
     }
 
@@ -1102,55 +2240,53 @@ button {
 
 .stamp-count {
 
-    font-size:32px;
+    font-size: 32px;
 
-    color:#ff4fa3;
+    color: #ff4fa3;
 
-    font-weight:800;
+    font-weight: 800;
 
 }
 
 
 .completed-card {
 
-    margin:25px auto;
+    margin: 25px auto;
 
-    padding:20px;
+    padding: 20px;
 
-    max-width:500px;
+    max-width: 500px;
 
-    box-sizing:border-box;
+    box-sizing: border-box;
 
-    border-radius:25px;
+    border-radius: 25px;
 
     background:
 
-        linear-gradient(
-            135deg,
+        linear-gradient(135deg,
             #fff3b0,
-            #ffd75e
-        );
+            #ffd75e);
 
-    color:#a86b00;
+    color: #a86b00;
 
-    font-size:20px;
+    font-size: 20px;
 
-    font-weight:800;
+    font-weight: 800;
 
     box-shadow:
 
-        0 8px 18px rgba(255,190,0,.2);
+        0 8px 18px rgba(255, 190, 0, .2);
 
 }
 
 
 .completed-card strong {
 
-    font-size:32px;
+    font-size: 32px;
 
-    color:#ff8c00;
+    color: #ff8c00;
 
-    margin:0 5px;
+    margin: 0 5px;
 
 }
 
@@ -1408,11 +2544,9 @@ button {
 
     box-sizing: border-box;
 
-    background: linear-gradient(
-        135deg,
-        #fffaff,
-        #ffe8f6
-    );
+    background: linear-gradient(135deg,
+            #fffaff,
+            #ffe8f6);
 
     border: 4px solid #ffb5dc;
 
@@ -1506,5 +2640,117 @@ button {
         transform: scale(1);
 
     }
+
+}
+
+/* ======================================
+   📅 カレンダー月切り替え
+====================================== */
+
+.calendar-navigation {
+    width: 100%;
+    margin: 20px auto;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+
+/* 月タイトル */
+
+.calendar-period-title {
+    margin: 0;
+    padding: 0;
+
+    font-size: clamp(16px, 3.5vw, 26px);
+    line-height: 1.3;
+
+    color: #ff4da6;
+    text-align: center;
+
+    /* 改行させない */
+    white-space: nowrap;
+
+    /* 見出し自身が縮みすぎないようにする */
+    width: max-content;
+    max-width: 100%;
+
+    box-sizing: border-box;
+}
+
+/* 左右ボタン */
+
+.calendar-nav-buttons {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: 18px;
+}
+
+
+/* カレンダー専用ボタン */
+
+.calendar-nav-buttons button {
+
+    width: 48px;
+    min-width: 48px;
+    max-width: 48px;
+
+    height: 42px;
+    min-height: 42px;
+
+    padding: 0;
+    margin: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    box-sizing: border-box;
+
+    border: 2px solid #ffb6d9;
+    border-radius: 14px;
+
+    background: linear-gradient(
+        135deg,
+        #ffe0f0,
+        #f5e4ff
+    );
+
+    color: #ff4fa3;
+
+    font-size: 20px;
+    font-weight: bold;
+
+    line-height: 1;
+
+    box-shadow:
+        0 3px 6px rgba(255, 150, 200, .25);
+
+    flex: 0 0 48px;
+
+    cursor: pointer;
+
+    transition: .15s;
+}
+
+
+.calendar-nav-buttons button:hover {
+
+    transform: translateY(-2px);
+
+}
+
+
+.calendar-nav-buttons button:active {
+
+    transform: scale(.92);
 
 }

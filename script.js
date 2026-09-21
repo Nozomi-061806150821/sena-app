@@ -1,4 +1,16 @@
 // ======================================
+// Supabase 接続
+// ======================================
+
+const SUPABASE_URL = "https://ucgmplxcfsaiqcmqnuzv.supabase.co";
+const SUPABASE_KEY = "sb_publishable_XzAlNY6JAiiOmnHUF2LCEw_EPefqeLQ";
+
+const supabaseClient = supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+// ======================================
 // 持ち物データ
 // ======================================
 
@@ -168,6 +180,8 @@ const anniversaryDay = new Date(2027, 1, 27);
 const state = {
 
     screen: "start",
+
+    calendarStart: new Date().getMonth(),
 
     mode: null,
 
@@ -1294,8 +1308,8 @@ function createCalendar(year, month) {
     <div class="calendar-box">
 
         <h3 class="month-title">
-            💖🌈 ${month + 1}がつ 🌈💖
-        </h3>
+    🌈 ${year}ねん ${month + 1}がつ 🌈
+</h3>
 
         <div class="calendar">
 
@@ -1378,20 +1392,21 @@ function renderCountdown() {
     // ★ 今日
     const today = new Date();
 
-    const year = today.getFullYear();
-    const month = today.getMonth();
+    // 📅 表示する最初の月
+    const startMonth = new Date(
+        today.getFullYear(),
+        state.calendarStart,
+        1
+    );
 
-    // ======================================
-    // 📅 今月・来月・再来月の3か月
-    // ======================================
-
+    // 📅 2か月分のカレンダーを作成
     let calendarHTML = "";
 
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 2; i++) {
 
         const targetMonth = new Date(
-            year,
-            month + i,
+            startMonth.getFullYear(),
+            startMonth.getMonth() + i,
             1
         );
 
@@ -1407,32 +1422,61 @@ function renderCountdown() {
     <section class="finish-screen">
 
         <h2>
-        💛💚💙❤️🧡<br>
-        つぎの　いべんとまで<br>
-        💛💚💙❤️🧡
+            💛💚💙❤️🧡<br>
+            つぎの　いべんとまで<br>
+            💛💚💙❤️🧡
         </h2>
 
         <h1>
-        あと ${getShinCountdown()} にち♡
+            あと ${getShinCountdown()} にち♡
         </h1>
 
         <div class="anniversary-countdown">
 
-    💍💖💍
+            💗💗💗
 
-    <h2>
-        あいちにいくまで
-    </h2>
+            <h2>
+                あいちにいくまで
+            </h2>
 
-    <h1>
-        あと ${getAnniversaryCountdown()} にち☆
-    </h1>
+            <h1>
+                あと ${getAnniversaryCountdown()} にち☆
+            </h1>
 
-    <p>
-        🌟 よていは 2027ねん 2がつ 27にち
-    </p>
+            <p>
+                🌟 よていは 2027ねん 2がつ 27にち
+            </p>
 
-</div>
+        </div>
+
+        <!-- 📅 カレンダー切り替え -->
+        <div class="calendar-navigation">
+
+    <h3 class="calendar-period-title">
+        ${new Date(
+        new Date().getFullYear(),
+        state.calendarStart,
+        1
+    ).getFullYear()}ねん
+        ${new Date(
+        new Date().getFullYear(),
+        state.calendarStart,
+        1
+    ).getMonth() + 1}がつ・
+        ${new Date(
+        new Date().getFullYear(),
+        state.calendarStart + 1,
+        1
+    ).getMonth() + 1}がつ
+    </h3>
+
+    <div class="calendar-nav-buttons">
+
+        <button id="prevCalendar">〈</button>
+
+        <button id="nextCalendar">〉</button>
+
+    </div>
 
         <div class="calendar-wrapper">
 
@@ -1455,15 +1499,36 @@ function renderCountdown() {
         </div>
 
         <button id="backCountdown">
-
             ⬅️ もどる
-
         </button>
 
     </section>
 
     `;
 
+    // 〈 前の月へ（2か月分戻る）
+    document
+        .getElementById("prevCalendar")
+        .addEventListener("click", () => {
+
+            state.calendarStart -= 1;
+
+            renderCountdown();
+
+        });
+
+    // 〉 次の月へ（2か月分進む）
+    document
+        .getElementById("nextCalendar")
+        .addEventListener("click", () => {
+
+            state.calendarStart += 1;
+
+            renderCountdown();
+
+        });
+
+    // 戻るボタン
     document
         .getElementById("backCountdown")
         .addEventListener("click", () => {
@@ -1594,64 +1659,184 @@ function renderFortune() {
 function renderJanken() {
 
     app.innerHTML = `
+<section class="janken-screen">
 
-<section class="start-screen">
+    <!-- キラキラ -->
+    <div class="janken-sparkle sparkle-1">✨</div>
+    <div class="janken-sparkle sparkle-2">💎</div>
+    <div class="janken-sparkle sparkle-3">✨</div>
+    <div class="janken-sparkle sparkle-4">💖</div>
+    <div class="janken-sparkle sparkle-5">⭐</div>
 
-<h2>
+    <!-- タイトル -->
+    <div class="janken-title-area">
 
-🐰💕🐱<br>
-じゃんけんたいむ
+        <div class="janken-crown">
+            👑✨👑
+        </div>
 
-</h2>
+        <h2 class="janken-title">
+            じゃんけんたいむ
+        </h2>
 
-<div style="
-display:flex;
-justify-content:center;
-gap:30px;
-margin:30px 0;
-">
+        <p class="janken-subtitle">
+            どっちが かつかな？
+        </p>
 
-<img
-src="assets/images/rabbit.png"
-style="width:150px;">
+    </div>
 
-<img
-src="assets/images/cat.png"
-style="width:150px;">
 
-</div>
+    <!-- キャラクターバトル -->
+    <div class="janken-battle">
 
-<p>
+        <!-- うさぎ -->
+        <div class="janken-character rabbit-character">
 
-ぐー・ちょき・ぱーを
-えらんでね♡
+            <div class="character-name">
+                🐰 うさぎちゃん
+            </div>
 
-</p>
+            <div class="character-image-wrap">
+                <img
+                    src="assets/images/rabbit.png"
+                    class="janken-character-image"
+                >
+            </div>
 
-<button class="hand" data-hand="rock">
-✊<br>ぐー
-</button>
+            <div class="character-label">
+                がんばれ〜！
+            </div>
 
-<button class="hand" data-hand="scissors">
-✌️<br>ちょき
-</button>
+        </div>
 
-<button class="hand" data-hand="paper">
-✋<br>ぱー
-</button>
 
-<button id="backJanken">
-⬅️<br>
-もどる
-</button>
+        <!-- VS -->
+        <div class="janken-vs">
+
+            <div class="vs-star">✨</div>
+
+            <div class="vs-text">
+                VS
+            </div>
+
+            <div class="vs-star">✨</div>
+
+        </div>
+
+
+        <!-- ねこ -->
+        <div class="janken-character cat-character">
+
+            <div class="character-name">
+                🐱 ねこちゃん
+            </div>
+
+            <div class="character-image-wrap">
+                <img
+                    src="assets/images/cat.png"
+                    class="janken-character-image"
+                >
+            </div>
+
+            <div class="character-label">
+                まけないよ〜！
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- セリフ -->
+    <div class="janken-message">
+        ✨ ぐー・ちょき・ぱー ✨
+        <br>
+        すきなのを えらんでね♡
+    </div>
+
+
+    <!-- 手のボタン -->
+    <div class="janken-hands">
+
+        <button class="janken-hand hand-rock" data-hand="rock">
+
+            <span class="hand-icon">
+                ✊
+            </span>
+
+            <span class="hand-name">
+                ぐー
+            </span>
+
+            <span class="hand-decoration">
+                💎
+            </span>
+
+        </button>
+
+
+        <button class="janken-hand hand-scissors" data-hand="scissors">
+
+            <span class="hand-icon">
+                ✌️
+            </span>
+
+            <span class="hand-name">
+                ちょき
+            </span>
+
+            <span class="hand-decoration">
+                ⭐
+            </span>
+
+        </button>
+
+
+        <button class="janken-hand hand-paper" data-hand="paper">
+
+            <span class="hand-icon">
+                ✋
+            </span>
+
+            <span class="hand-name">
+                ぱー
+            </span>
+
+            <span class="hand-decoration">
+                💖
+            </span>
+
+        </button>
+
+    </div>
+
+
+    <!-- もどる -->
+    <button id="backJanken" class="janken-back-button">
+        ⬅️
+        <br>
+        もどる
+    </button>
 
 </section>
-
 `;
 
-    document.querySelectorAll(".hand").forEach(button => {
+
+    // ======================================
+    // 手のボタン
+    // ======================================
+
+    document.querySelectorAll(".janken-hand").forEach(button => {
 
         button.addEventListener("click", () => {
+
+            // 連打防止
+            document.querySelectorAll(".janken-hand").forEach(btn => {
+                btn.disabled = true;
+            });
+
+            // 押したボタンをちょっと強調
+            button.classList.add("selected");
 
             playJanken(button.dataset.hand);
 
@@ -1659,202 +1844,327 @@ style="width:150px;">
 
     });
 
-    document
-        .getElementById("backJanken")
-        .addEventListener("click", () => {
+    // ======================================
+    // もどる
+    // ======================================
 
-            state.screen = "start";
+    document.getElementById("backJanken").addEventListener("click", () => {
 
-            render();
+        state.screen = "start";
+        render();
 
-        });
+    });
 
 }
 
-function playJanken(player) {
+// ======================================
+// じゃんけんの勝負処理
+// ======================================
 
-    const hands = [
-        "rock",
-        "scissors",
-        "paper"
-    ];
+function playJanken(hand) {
 
-    const cpu =
-        hands[Math.floor(Math.random() * 3)];
+    // せなが選んだ手
+    state.playerHand = hand;
 
-    state.playerHand = player;
+    // ねこちゃんの手をランダムに決める
+    const hands = ["rock", "scissors", "paper"];
 
-    state.cpuHand = cpu;
+    state.cpuHand =
+        hands[Math.floor(Math.random() * hands.length)];
 
-    if (player === cpu) {
+    // 勝ち負けを判定
+    if (state.playerHand === state.cpuHand) {
 
-        state.result = "🤝 あいこ！";
+        state.result = "あいこ";
 
-    }
+    } else if (
+        (state.playerHand === "rock" &&
+            state.cpuHand === "scissors") ||
 
-    else if (
+        (state.playerHand === "scissors" &&
+            state.cpuHand === "paper") ||
 
-        player === "rock" && cpu === "scissors" ||
-
-        player === "scissors" && cpu === "paper" ||
-
-        player === "paper" && cpu === "rock"
-
+        (state.playerHand === "paper" &&
+            state.cpuHand === "rock")
     ) {
 
-        state.result = "🎉 かった！！";
+        state.result = "かった";
+
+    } else {
+
+        state.result = "まけ";
 
     }
 
-    else {
-
-        state.result = "🥺 まけちゃった";
-
-    }
-
+    // 結果画面へ！
     state.screen = "jankenResult";
 
     render();
+}
+
+// ======================================
+// じゃんけんの手の名前
+// ======================================
+
+function getHandName(hand) {
+
+    const names = {
+        rock: "ぐー！",
+        scissors: "ちょき！",
+        paper: "ぱー！"
+    };
+
+    return names[hand] || "";
 
 }
 
 // ======================================
-// 🌸 スタンプを1個追加
+// じゃんけん結果
 // ======================================
-
-function addStamp() {
-
-    // 🌸 スタンプを1個追加
-    state.stamps += 1;
-
-    console.log("スタンプ追加:", state.stamps);
-
-    // ⭐ 5個たまった？
-    if (state.stamps >= 7) {
-
-        // 🏆 コンプリートしたカードを1枚追加
-        state.completedCards += 1;
-
-        // 🌸 スタンプを0に戻す
-        state.stamps = 0;
-
-        // 💾 すぐ保存
-        localStorage.setItem(
-            "senaStamps",
-            String(state.stamps)
-        );
-
-        localStorage.setItem(
-            "senaCompletedCards",
-            String(state.completedCards)
-        );
-
-        alert(
-            "🎉🎉🎉\n\n" +
-            "スタンプカード\n" +
-            "コンプリート！！💕"
-        );
-
-        console.log(
-            "カード完成！",
-            "stamps =", state.stamps,
-            "completedCards =", state.completedCards
-        );
-
-        return;
-    }
-
-    // 💾 5個未満でも保存
-    localStorage.setItem(
-        "senaStamps",
-        String(state.stamps)
-    );
-
-    console.log(
-        "保存しました:",
-        state.stamps
-    );
-}
 
 function renderJankenResult() {
 
     const icon = {
-
         rock: "✊",
-
         scissors: "✌️",
-
         paper: "✋"
-
     };
 
+
+    // ======================================
+    // 結果によって表示を変更
+    // ======================================
+
+    let resultClass = "";
+    let resultMessage = "";
+    let resultSubMessage = "";
+    let resultIcon = "";
+
+    if (state.result.includes("かった")) {
+
+        resultClass = "janken-win";
+
+        resultMessage = "かったーーー！！";
+
+        resultSubMessage = "すごい！ せなちゃんの かち♡";
+
+        resultIcon = "👑✨";
+
+    }
+    else if (state.result.includes("まけ")) {
+
+        resultClass = "janken-lose";
+
+        resultMessage = "まけちゃった〜";
+
+        resultSubMessage = "もういっかい ちょうせんしよう♡";
+
+        resultIcon = "🌸💖";
+
+    }
+    else {
+
+        resultClass = "janken-draw";
+
+        resultMessage = "あいこーーー！";
+
+        resultSubMessage = "もういっかい しょうぶ♡";
+
+        resultIcon = "✨💎✨";
+
+    }
+
+
     app.innerHTML = `
+<section class="janken-result-screen ${resultClass}">
 
-<section class="finish-screen">
+    <!-- 背景キラキラ -->
+    <div class="result-sparkle result-sparkle-1">✨</div>
+    <div class="result-sparkle result-sparkle-2">💖</div>
+    <div class="result-sparkle result-sparkle-3">⭐</div>
+    <div class="result-sparkle result-sparkle-4">💎</div>
+    <div class="result-sparkle result-sparkle-5">✨</div>
 
-<h2>
 
-じゃーーーん<br>
-けー－－－－ん！！
+    <!-- じゃんけん演出 -->
+    <div class="janken-pon">
 
-</h2>
+        <span>じゃん！</span>
+        <span>けん！</span>
+        <strong>ぽーーん！！</strong>
 
-<div style="font-size:90px;">
+    </div>
 
-💃 ${icon[state.playerHand]}
 
-<br><br>
+    <!-- タイトル -->
+    <div class="result-title">
 
-VS
+        <div class="result-crown">
+            ${resultIcon}
+        </div>
 
-<br><br>
+        <h2>
+            しょうぶの けっか！
+        </h2>
 
-🐱 ${icon[state.cpuHand]}
+    </div>
 
-</div>
 
-<h1>
+    <!-- バトル -->
+    <div class="result-battle">
 
-${state.result}
 
-</h1>
+        <!-- せな側 -->
+        <div class="result-player">
 
-<button id="again">
+            <div class="result-name">
+                💖 せなちゃん
+            </div>
 
-🌸<br>
-もういっかい！
+            <div class="result-hand-card player-card">
 
-</button>
+                <div class="card-shine"></div>
 
-<button id="backJanken">
+                <span class="result-hand-icon">
+                    ${icon[state.playerHand]}
+                </span>
 
-⬅️<br>
-もどる
+            </div>
 
-</button>
+            <div class="result-hand-name">
+                ${getHandName(state.playerHand)}
+            </div>
+
+        </div>
+
+
+        <!-- VS -->
+        <div class="result-vs">
+
+            <div>✨</div>
+
+            <strong>VS</strong>
+
+            <div>✨</div>
+
+        </div>
+
+
+        <!-- ねこ側 -->
+        <div class="result-player">
+
+            <div class="result-name">
+                🐱 ねこちゃん
+            </div>
+
+            <div class="result-hand-card cpu-card">
+
+                <div class="card-shine"></div>
+
+                <span class="result-hand-icon">
+                    ${icon[state.cpuHand]}
+                </span>
+
+            </div>
+
+            <div class="result-hand-name">
+                ${getHandName(state.cpuHand)}
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- 結果 -->
+    <div class="result-message-box">
+
+        <div class="result-main-message">
+            ${resultMessage}
+        </div>
+
+        <div class="result-sub-message">
+            ${resultSubMessage}
+        </div>
+
+    </div>
+
+
+    <!-- もういっかい -->
+    <button id="again" class="janken-again-button">
+
+        <span class="again-star">✨</span>
+
+        <span>
+            もういっかい！
+        </span>
+
+        <span class="again-star">✨</span>
+
+    </button>
+
+
+    <!-- もどる -->
+    <button id="backJanken" class="janken-back-button">
+
+        ⬅️
+        <br>
+        もどる
+
+    </button>
 
 </section>
-
 `;
 
-    document
-        .getElementById("again")
-        .addEventListener("click", () => {
 
-            state.screen = "janken";
+    // ======================================
+    // もういっかい
+    // ======================================
 
-            render();
+    document.getElementById("again").addEventListener("click", () => {
 
-        });
+        state.screen = "janken";
 
-    document
-        .getElementById("backJanken")
-        .addEventListener("click", () => {
+        render();
 
-            state.screen = "start";
+    });
 
-            render();
 
-        });
+    // ======================================
+    // もどる
+    // ======================================
+
+    document.getElementById("backJanken").addEventListener("click", () => {
+
+        state.screen = "start";
+
+        render();
+
+    });
+
+}
+
+// ======================================
+// Supabase イベント取得
+// ======================================
+
+async function loadEventsFromSupabase() {
+
+    const { data, error } = await supabaseClient
+        .from("events")
+        .select("*")
+        .order("event_date", { ascending: true });
+
+    if (error) {
+
+        console.error("イベント取得エラー:", error);
+
+        return [];
+
+    }
+
+    console.log("Supabaseから取得したイベント：", data);
+
+    return data;
 
 }
