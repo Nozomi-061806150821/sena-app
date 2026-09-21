@@ -3083,9 +3083,9 @@ button {
 
 /* ======================================
    📅 しんくん以外のイベントがある日
-   ====================================== */
+====================================== */
 
-.calendar .day.has-event {
+.calendar .day.has-event:not(.shin) {
     background: #ffe0ef;
     border: 2px solid #ff9dcc;
     box-sizing: border-box;
